@@ -1,5 +1,6 @@
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.serialization")
     id("com.android.library")
 }
 
@@ -20,7 +21,11 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(Kotlin.Coroutines.core)
+                implementation(Kotlin.Serialization.plugin)
                 implementation(Koin.core)
+                implementation(Ktor.ktorCore)
+                implementation(Ktor.ktorSerialization)
+                implementation(Ktor.logging)
             }
         }
         val commonTest by getting {
@@ -30,6 +35,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
+                implementation(Ktor.ktorAndroid)
                 implementation(Kotlin.Coroutines.android)
             }
         }
@@ -38,6 +44,9 @@ kotlin {
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
         val iosMain by creating {
+            dependencies {
+                implementation(Ktor.ktoriOS)
+            }
             dependsOn(commonMain)
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
