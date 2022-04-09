@@ -11,6 +11,8 @@ android {
         targetSdk = Versions.targetsdk
         versionCode = 1
         versionName = "1.0"
+
+        buildConfigField("String","BASE_PATH", "\"https://api.github.com\"")
     }
 
     buildFeatures {
@@ -41,5 +43,8 @@ dependencies {
     implementation(Compose.activity)
     implementation(Compose.material)
 
-
+    // DI
+    implementation(Koin.core)
+    implementation(Koin.android)
+    implementation(Koin.compose)
 }
