@@ -42,6 +42,9 @@ dependencies {
     implementation(Compose.runtime)
     implementation(Compose.activity)
     implementation(Compose.material)
+    implementation(Compose.coilCompose)
+    implementation(Compose.navigation)
+    implementation(Compose.preview)
 
     // DI
     implementation(Koin.core)
