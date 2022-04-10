@@ -8,6 +8,7 @@ object Dimens {
     val tiny: Dp = 8.dp
     val default: Dp = 16.dp
     val big: Dp = 32.dp
-    val cardHeight = 130.dp
+    val cardHeight = 100.dp
     val imageSize = 50.dp
+    val bigImageSize = 130.dp
 }

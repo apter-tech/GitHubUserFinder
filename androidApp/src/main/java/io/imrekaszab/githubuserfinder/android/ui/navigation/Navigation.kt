@@ -18,12 +18,12 @@ fun Navigation() {
             GitHubUserListScreen(navController = navController)
         }
         composable(
-            route = GitHubUserScreens.GitHubUserDetailScreen.route + "/{userId}",
-            arguments = listOf(navArgument(name = "userId") {
-                type = NavType.IntType
+            route = GitHubUserScreens.GitHubUserDetailScreen.route + "/{userName}",
+            arguments = listOf(navArgument(name = "userName") {
+                type = NavType.StringType
             })
         ) { entry ->
-            GitHubUserDetailScreen(navController, entry.arguments?.getInt("userId"))
+            GitHubUserDetailScreen(navController, entry.arguments?.getString("userName"))
         }
     }
 }

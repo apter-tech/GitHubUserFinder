@@ -23,16 +23,16 @@ import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
 
 @Composable
-fun GitHubProjectRow(item: GitHubUser, onItemCLick: (Int) -> Unit) {
+fun GitHubProjectRow(item: GitHubUser, onItemCLick: (String) -> Unit) {
     Card(
         modifier = Modifier
-            .padding(Dimens.extraTiny)
+            .padding(Dimens.tiny)
             .fillMaxWidth()
             .height(Dimens.cardHeight)
             .clickable {
-                onItemCLick(item.id)
+                onItemCLick(item.login)
             },
-        shape = RoundedCornerShape(corner = CornerSize(16.dp)),
+        shape = MaterialTheme.shapes.large,
         elevation = Dimens.tiny
     ) {
         Row(

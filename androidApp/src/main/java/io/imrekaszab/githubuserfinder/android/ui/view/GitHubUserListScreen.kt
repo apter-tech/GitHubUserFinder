@@ -34,9 +34,9 @@ fun GitHubUserListScreen(navController: NavController) {
 fun GitHubUserListView(navController: NavController, itemList: List<GitHubUser>) {
     LazyColumn {
         items(items = itemList) {
-            GitHubProjectRow(item = it) { userId ->
+            GitHubProjectRow(item = it) { userName ->
                 navController.navigate(
-                    GitHubUserScreens.GitHubUserDetailScreen.route + "/$userId"
+                    GitHubUserScreens.GitHubUserDetailScreen.route + "/$userName"
                 )
             }
         }
