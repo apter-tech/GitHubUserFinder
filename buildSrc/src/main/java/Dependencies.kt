@@ -10,6 +10,8 @@ object Versions {
     const val compose = "1.1.0"
     const val composeActivity = "1.4.0"
     const val composeCompiler = "1.1.0"
+    const val composeCoil = "1.4.0"
+    const val composeNavigation = "2.4.1"
 
     const val koin = "3.1.4"
     const val ktor = "1.6.8"
@@ -38,6 +40,9 @@ object Compose {
     const val runtime = "androidx.compose.runtime:runtime:${Versions.compose}"
     const val activity = "androidx.activity:activity-compose:${Versions.composeActivity}"
     const val material = "androidx.compose.material:material:${Versions.compose}"
+    const val coilCompose = "io.coil-kt:coil-compose:${Versions.composeCoil}"
+    const val navigation = "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
+    const val preview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
 }
 
 object Koin {

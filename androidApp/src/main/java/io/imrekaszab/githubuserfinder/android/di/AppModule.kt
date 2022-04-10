@@ -1,5 +1,6 @@
 package io.imrekaszab.githubuserfinder.android.di
 
+import io.imrekaszab.githubuserfinder.android.viewmodel.GitHubUserListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

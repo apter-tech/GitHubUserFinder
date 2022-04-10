@@ -1,9 +1,10 @@
 <resources>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/blueGray700</item>
+        <item name="colorPrimaryDark">@color/blueGray900</item>
+        <item name="colorAccent">@color/blueGray700</item>
+        <item name="android:statusBarColor">@color/status_bar</item>
+        <item name="android:background">@color/status_bar</item>
     </style>
-
 </resources>
