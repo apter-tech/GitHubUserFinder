@@ -1,10 +1,14 @@
 import SwiftUI
-import shared
 
 struct ContentView: View {
-	var body: some View {
-		Text("iOS")
-	}
+    var body: some View {
+        NavigationView {
+            GitHubUserListScreen()
+                .navigationBarTitle(Text("GitHubUserFinder"))
+
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
