@@ -1,20 +1,35 @@
 package io.imrekaszab.githubuserfinder.android
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import io.imrekaszab.githubuserfinder.Greeting
-import android.widget.TextView
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
+import io.imrekaszab.githubuserfinder.android.ui.navigation.Navigation
+import io.imrekaszab.githubuserfinder.android.ui.theme.GitHubUserFinderTheme
 
-fun greet(): String {
-    return Greeting().greeting()
-}
-
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContent {
+            GitHubUserFinderApp {
+                Navigation()
+            }
+        }
+    }
+}
 
-        val tv: TextView = findViewById(R.id.text_view)
-        tv.text = greet()
+@Composable
+fun GitHubUserFinderApp(content: @Composable () -> Unit) {
+    GitHubUserFinderTheme {
+        content()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview() {
+    GitHubUserFinderApp {
+        Navigation()
     }
 }

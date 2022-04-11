@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.imrekaszab.githubuserfinder.android">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+        android:name=".GitHubUsersApplication"
         android:allowBackup="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">

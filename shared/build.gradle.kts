@@ -1,5 +1,6 @@
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.serialization")
     id("com.android.library")
 }
 
@@ -17,18 +18,35 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation(Kotlin.Coroutines.core)
+                implementation(Kotlin.Serialization.plugin)
+                implementation(Koin.core)
+                implementation(Ktor.ktorCore)
+                implementation(Ktor.ktorSerialization)
+                implementation(Ktor.logging)
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(Ktor.ktorAndroid)
+                implementation(Kotlin.Coroutines.android)
+            }
+        }
         val androidTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
         val iosMain by creating {
+            dependencies {
+                implementation(Ktor.ktoriOS)
+            }
             dependsOn(commonMain)
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
@@ -47,10 +65,10 @@ kotlin {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = Versions.targetsdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdk = 23
-        targetSdk = 32
+        minSdk = Versions.minsdk
+        targetSdk = Versions.targetsdk
     }
 }
