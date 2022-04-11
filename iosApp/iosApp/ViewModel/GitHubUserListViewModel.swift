@@ -34,4 +34,15 @@ class GitHubUserListViewModel: ObservableObject {
             self.isLoading = false
         }
     }
+
+    @MainActor
+    public func refreshUserDetails(with userName: String) async {
+        self.isLoading = true
+
+        do {
+            try await service.refreshUserDetails(userName: userName)
+        } catch {
+            self.isLoading = false
+        }
+    }
 }

@@ -10,12 +10,47 @@ import SwiftUI
 import shared
 
 struct GitHubUserDetailsScreen: View {
-    var item: GitHubUser
+    @ObservedObject private var viewModel = GitHubUserDetailsViewModel()
+    var userName: String
 
     var body: some View {
         ScrollView {
-            // TODO
+            if let userDetails = viewModel.userDetails {
+                VStack {
+                    if userDetails.name != userName {
+                        Text(userDetails.name)
+                            .font(.title)
+                            .foregroundColor(.primary)
+                    }
+                    AsyncImage(url: URL(string: userDetails.avatarUrl)!) { image in
+                        image.resizable().scaledToFill()
+                    } placeholder: { Color.gray }
+                    .frame(width: 100, height: 100)
+                    .cornerRadius(16)
+                    GitHubUserDetailBioView(bio: userDetails.bio)
+                    VStack {
+                        GitHubUserDetailItemView(label: "Followers", value: String(userDetails.followers))
+                        GitHubUserDetailItemView(label: "Following", value: String(userDetails.following))
+                        GitHubUserDetailItemView(label: "Public repos", value: String(userDetails.publicRepos))
+                        GitHubUserDetailItemView(label: "Company", value: userDetails.company)
+                        GitHubUserDetailItemView(label: "Location", value: userDetails.location)
+                        GitHubUserDetailItemView(label: "Email", value: userDetails.email)
+                        GitHubUserDetailItemView(label: "Blog", value: userDetails.blog)
+                        GitHubUserDetailItemView(label: "Twitter", value: userDetails.twitterUsername)
+                    }
+                }
+            }
         }
-        .navigationBarTitle(Text(item.login))
+        .navigationBarTitle(Text(userName))
+        .onAppear {
+            refreshUserDetails()
+        }
+    }
+
+    func refreshUserDetails() {
+        Task {
+            await viewModel.refreshUserDetails(with: userName)
+
+        }
     }
 }

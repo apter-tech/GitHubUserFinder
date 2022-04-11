@@ -9,11 +9,12 @@ import io.imrekaszab.githubuserfinder.util.ApplicationDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.withContext
 
 class GitHubUserRepositoryImpl(private val gitHubApi: GitHubApi): GitHubUserRepository {
     private val gitHubUserListStateFlow = MutableStateFlow<List<GitHubUser>>(emptyList())
-    private val gitHubUserDetailsSharedFlow = MutableSharedFlow<GitHubUserDetails>()
+    private val gitHubUserDetailsStateFlow = MutableStateFlow<GitHubUserDetails?>(null)
 
     override suspend fun searchUser(userName: String) = withContext(ApplicationDispatcher) {
         try {
@@ -27,7 +28,7 @@ class GitHubUserRepositoryImpl(private val gitHubApi: GitHubApi): GitHubUserRepo
     override suspend fun refreshUserDetails(userName: String) {
         try {
             val result = gitHubApi.refreshUserDetails(userName).toDomain()
-            gitHubUserDetailsSharedFlow.emit(result)
+            gitHubUserDetailsStateFlow.value = result
         } catch (exception: Exception) {
             // TODO handle error
         }
@@ -35,5 +36,6 @@ class GitHubUserRepositoryImpl(private val gitHubApi: GitHubApi): GitHubUserRepo
 
     override fun getUsers(): Flow<List<GitHubUser>> = gitHubUserListStateFlow
 
-    override fun getUserDetails(): Flow<GitHubUserDetails> = gitHubUserDetailsSharedFlow
+    override fun getUserDetails(): Flow<GitHubUserDetails> = gitHubUserDetailsStateFlow
+        .filterNotNull()
 }

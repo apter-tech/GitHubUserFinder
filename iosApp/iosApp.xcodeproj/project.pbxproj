@@ -18,6 +18,8 @@
 		A751E2C72803371B00B559D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A751E2C62803371B00B559D4 /* AppDelegate.swift */; };
 		A751E2CB2803400200B559D4 /* GitHubUserRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A751E2CA2803400200B559D4 /* GitHubUserRow.swift */; };
 		A751E2D72803459600B559D4 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A751E2D62803459600B559D4 /* SearchBar.swift */; };
+		A751E2D928034E4A00B559D4 /* GitHubUserDetailItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A751E2D828034E4A00B559D4 /* GitHubUserDetailItemView.swift */; };
+		A751E2DB280497CA00B559D4 /* GitHubUserDetailBioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A751E2DA280497CA00B559D4 /* GitHubUserDetailBioView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -47,6 +49,8 @@
 		A751E2C62803371B00B559D4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A751E2CA2803400200B559D4 /* GitHubUserRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubUserRow.swift; sourceTree = "<group>"; };
 		A751E2D62803459600B559D4 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		A751E2D828034E4A00B559D4 /* GitHubUserDetailItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubUserDetailItemView.swift; sourceTree = "<group>"; };
+		A751E2DA280497CA00B559D4 /* GitHubUserDetailBioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubUserDetailBioView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +143,8 @@
 			isa = PBXGroup;
 			children = (
 				A751E2C42803362800B559D4 /* GitHubUserDetailsScreen.swift */,
+				A751E2D828034E4A00B559D4 /* GitHubUserDetailItemView.swift */,
+				A751E2DA280497CA00B559D4 /* GitHubUserDetailBioView.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -247,8 +253,10 @@
 				A751E2CB2803400200B559D4 /* GitHubUserRow.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
+				A751E2D928034E4A00B559D4 /* GitHubUserDetailItemView.swift in Sources */,
 				A751E2C52803362800B559D4 /* GitHubUserDetailsScreen.swift in Sources */,
 				A751E2C1280335E600B559D4 /* GitHubUserDetailsViewModel.swift in Sources */,
+				A751E2DB280497CA00B559D4 /* GitHubUserDetailBioView.swift in Sources */,
 				A751E2C72803371B00B559D4 /* AppDelegate.swift in Sources */,
 				A751E2BF280335D300B559D4 /* GitHubUserListViewModel.swift in Sources */,
 				A751E2C32803361700B559D4 /* GitHubUserListScreen.swift in Sources */,

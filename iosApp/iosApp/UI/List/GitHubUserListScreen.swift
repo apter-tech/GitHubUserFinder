@@ -10,7 +10,6 @@ import SwiftUI
 
 struct GitHubUserListScreen: View {
     @StateObject private var viewModel = GitHubUserListViewModel()
-    @State var searchQuery = ""
 
     var body: some View {
         if viewModel.isLoading {
@@ -24,7 +23,7 @@ struct GitHubUserListScreen: View {
                 }
                 List {
                     ForEach(viewModel.items, id: \.id) { item in
-                        NavigationLink(destination: GitHubUserDetailsScreen(item: item)) {
+                        NavigationLink(destination: GitHubUserDetailsScreen(userName: item.login)) {
                             GitHubUserRow(item: item)
                         }
                     }
