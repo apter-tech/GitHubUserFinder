@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavController
 import io.imrekaszab.githubuserfinder.android.ui.navigation.GitHubUserScreens
+import io.imrekaszab.githubuserfinder.android.ui.widget.EmptyView
 import io.imrekaszab.githubuserfinder.android.ui.widget.GitHubProjectRow
 import io.imrekaszab.githubuserfinder.android.ui.widget.LoadingView
 import io.imrekaszab.githubuserfinder.android.ui.widget.SearchAppBar
@@ -22,10 +23,10 @@ fun GitHubUserListScreen(navController: NavController) {
 
     Scaffold(topBar = { SearchAppBar { viewModel.searchUser(it) } })
     {
-        if (isLoading.value) {
-            LoadingView()
-        } else {
-            GitHubUserListView(navController = navController, itemList = itemList.value)
+        when {
+            isLoading.value -> LoadingView()
+            itemList.value.isEmpty() -> EmptyView()
+            else -> GitHubUserListView(navController = navController, itemList = itemList.value)
         }
     }
 }

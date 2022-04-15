@@ -11,4 +11,5 @@ object Dimens {
     val cardHeight = 100.dp
     val imageSize = 50.dp
     val bigImageSize = 130.dp
+    val searchBarHeight = 56.dp
 }
