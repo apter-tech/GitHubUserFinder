@@ -1,5 +1,6 @@
 package io.imrekaszab.githubuserfinder.android.ui.view
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,7 +29,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 import io.imrekaszab.githubuserfinder.android.ui.widget.GitHubUserDetailItemView
 import io.imrekaszab.githubuserfinder.android.ui.widget.LoadingView
@@ -36,6 +37,7 @@ import io.imrekaszab.githubuserfinder.android.viewmodel.GitHubUserDetailsViewMod
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUserDetails
 import org.koin.androidx.compose.getViewModel
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun GitHubUserDetailScreen(navController: NavController, userName: String?) {
     val viewModel = getViewModel<GitHubUserDetailsViewModel>()
@@ -99,7 +101,7 @@ fun GitHubUserDetailsView(userDetails: GitHubUserDetails) {
                 color = MaterialTheme.colors.secondaryVariant.copy(alpha = 0.2f)
             ) {
                 Image(
-                    painter = rememberImagePainter(userDetails.avatarUrl),
+                    painter = rememberAsyncImagePainter(userDetails.avatarUrl),
                     modifier = Modifier.size(Dimens.bigImageSize),
                     contentDescription = userDetails.name
                 )

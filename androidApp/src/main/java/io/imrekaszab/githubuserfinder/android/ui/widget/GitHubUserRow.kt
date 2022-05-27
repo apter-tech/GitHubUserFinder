@@ -15,7 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
 
@@ -44,7 +44,7 @@ fun GitHubUserRow(item: GitHubUser, onItemCLick: (String) -> Unit) {
                 color = MaterialTheme.colors.secondaryVariant.copy(alpha = 0.2f)
             ) {
                 Image(
-                    painter = rememberImagePainter(item.avatarUrl),
+                    painter = rememberAsyncImagePainter(item.avatarUrl),
                     modifier = Modifier.size(Dimens.imageSize),
                     contentDescription = "userName"
                 )

@@ -25,6 +25,7 @@ kotlin {
                 implementation(Koin.core)
                 implementation(Ktor.ktorCore)
                 implementation(Ktor.ktorSerialization)
+                implementation(Ktor.ktorContentNegotiation)
                 implementation(Ktor.logging)
             }
         }
