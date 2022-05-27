@@ -28,6 +28,18 @@ struct GitHubUserListScreen: View {
                             GitHubUserRow(item: item)
                         }
                     }
+                    if viewModel.isFetchingFinished == false {
+                        HStack {
+                            Spacer()
+                            ProgressView()
+                            Spacer()
+                        }
+                        .onAppear {
+                            Task {
+                                await viewModel.fetchNextPage()
+                            }
+                        }
+                    }
                 }
                 .emptyState(viewModel.items.isEmpty) {
                     Text("We don't have any content, sorry 😔")

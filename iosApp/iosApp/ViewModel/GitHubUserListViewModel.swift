@@ -11,12 +11,19 @@ import SwiftUI
 
 import shared
 
+@MainActor
 class GitHubUserListViewModel: ObservableObject {
     @Published public var items: [GitHubUser] = []
     @Published public var isLoading = false
+    @Published public var isFetchingFinished = false
     let service = GitHubUserService()
 
-    @MainActor
+    init() {
+        service.isFetchingFinished().subscribe { data in
+            self.isFetchingFinished = data?.boolValue ?? false
+        }
+    }
+
     public func searchUser(userName: String) async {
         self.isLoading = true
 
@@ -35,7 +42,6 @@ class GitHubUserListViewModel: ObservableObject {
         }
     }
 
-    @MainActor
     public func refreshUserDetails(with userName: String) async {
         self.isLoading = true
 
@@ -43,6 +49,21 @@ class GitHubUserListViewModel: ObservableObject {
             try await service.refreshUserDetails(userName: userName)
         } catch {
             self.isLoading = false
+        }
+    }
+
+    public func fetchNextPage() async {
+        do {
+            try await service.fetchNextPage()
+        } catch {
+            // TODO handle error
+        }
+
+        service.getUsers().subscribe { data in
+            guard let listItems = data?.compactMap({ $0 as? GitHubUser }) else {
+                return
+            }
+            self.items = listItems
         }
     }
 }
