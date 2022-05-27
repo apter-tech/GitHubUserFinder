@@ -14,7 +14,6 @@ class GitHubUserDetailsViewModel(
     val userDetails: Flow<GitHubUserDetails> =
         gitHubUserStore.getUserDetails()
 
-    suspend fun refreshUserDetails(userName: String) {
+    suspend fun refreshUserDetails(userName: String) =
         gitHubUserAction.refreshUserDetails(userName)
-    }
 }

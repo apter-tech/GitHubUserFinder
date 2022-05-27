@@ -10,12 +10,10 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun EmptyView() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier.align(Alignment.Center),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "We don't have any content, sorry \uD83D\uDE14")
-        }
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = "We don't have any content, sorry \uD83D\uDE14")
     }
 }

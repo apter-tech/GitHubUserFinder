@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -17,13 +15,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
 
 @Composable
-fun GitHubProjectRow(item: GitHubUser, onItemCLick: (String) -> Unit) {
+fun GitHubUserRow(item: GitHubUser, onItemCLick: (String) -> Unit) {
     Card(
         modifier = Modifier
             .padding(Dimens.tiny)
@@ -49,7 +46,7 @@ fun GitHubProjectRow(item: GitHubUser, onItemCLick: (String) -> Unit) {
                 Image(
                     painter = rememberImagePainter(item.avatarUrl),
                     modifier = Modifier.size(Dimens.imageSize),
-                    contentDescription = item.login
+                    contentDescription = "userName"
                 )
             }
             Text(

@@ -16,6 +16,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -25,20 +26,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
 import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 
 @Composable
 fun SearchAppBar(onSearchCLick: (String) -> Unit) {
     var query: String by rememberSaveable { mutableStateOf("") }
-    var showClearIcon by rememberSaveable { mutableStateOf(false) }
+    val showClearIcon by derivedStateOf { query.isNotEmpty() }
     val focusManager = LocalFocusManager.current
 
-    if (query.isEmpty()) {
-        showClearIcon = false
-    } else if (query.isNotEmpty()) {
-        showClearIcon = true
-    }
     Surface(
         modifier = Modifier
             .fillMaxWidth()
