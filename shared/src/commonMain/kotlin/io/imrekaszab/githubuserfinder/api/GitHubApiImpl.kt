@@ -8,10 +8,10 @@ import io.ktor.client.request.*
 class GitHubApiImpl(
     private val httpClient: HttpClient
 ) : GitHubApi {
-    override suspend fun searchUser(userName: String): SearchResponse =
+    override suspend fun searchUser(userName: String, page: Int): SearchResponse =
         httpClient.get {
             url {
-                encodedPath = "search/users?q=$userName"
+                encodedPath = "search/users?q=$userName&page=$page&per_page=50"
             }
         }
 

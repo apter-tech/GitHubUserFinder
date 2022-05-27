@@ -5,5 +5,8 @@ interface GitHubUserAction {
     suspend fun searchUser(userName: String)
 
     @Throws(RuntimeException::class)
+    suspend fun fetchNextPage()
+
+    @Throws(RuntimeException::class)
     suspend fun refreshUserDetails(userName: String)
 }

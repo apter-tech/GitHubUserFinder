@@ -6,7 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface GitHubUserRepository {
     suspend fun searchUser(userName: String)
+    suspend fun requestNextPage()
     suspend fun refreshUserDetails(userName: String)
     fun getUsers(): Flow<List<GitHubUser>>
     fun getUserDetails(): Flow<GitHubUserDetails>
+    fun isFetchingFinished(): Flow<Boolean>
 }

@@ -21,6 +21,11 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
     }
 
     @Throws(RuntimeException::class)
+    override suspend fun fetchNextPage() = withContext(ApplicationDispatcher) {
+        gitHubUserRepository.requestNextPage()
+    }
+
+    @Throws(RuntimeException::class)
     override suspend fun refreshUserDetails(userName: String) =
         withContext(ApplicationDispatcher) {
             gitHubUserRepository.refreshUserDetails(userName)
@@ -31,4 +36,7 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
 
     override fun getUserDetails(): CommonFlow<GitHubUserDetails> =
         gitHubUserRepository.getUserDetails().asCommonFlow()
+
+    override fun isFetchingFinished(): CommonFlow<Boolean> =
+        gitHubUserRepository.isFetchingFinished().asCommonFlow()
 }
