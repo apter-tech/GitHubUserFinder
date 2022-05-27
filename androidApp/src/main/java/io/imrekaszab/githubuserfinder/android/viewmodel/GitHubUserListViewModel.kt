@@ -14,11 +14,16 @@ class GitHubUserListViewModel(
     gitHubUserStore: GitHubUserStore
 ) : ViewModel() {
     private val isLoadingStateFlow = MutableStateFlow(false)
+    private val isFetchingFinishedStateFlow = MutableStateFlow(false)
     val isLoading: Flow<Boolean> = isLoadingStateFlow
+    val isFetchingFinished: Flow<Boolean> = isFetchingFinishedStateFlow
     val users = gitHubUserStore.getUsers()
 
     init {
-        searchUser()
+        gitHubUserStore.isFetchingFinished()
+            .subscribe {
+                isFetchingFinishedStateFlow.value = it
+            }
     }
 
     fun searchUser(userName: String? = null) {
@@ -27,12 +32,24 @@ class GitHubUserListViewModel(
             try {
                 isLoadingStateFlow.value = true
                 gitHubUserAction.searchUser(userName)
-                isLoadingStateFlow.value = false
             } catch (ex: Exception) {
                 // TODO handle error
                 // TODO create error view
                 Log.d("Error", ex.toString())
+            } finally {
                 isLoadingStateFlow.value = false
+            }
+        }
+    }
+
+    fun requestNextPage() {
+        viewModelScope.launch {
+            try {
+                gitHubUserAction.fetchNextPage()
+            } catch (ex: Exception) {
+                // TODO handle error
+                // TODO create error view
+                Log.d("Error", ex.toString())
             }
         }
     }
