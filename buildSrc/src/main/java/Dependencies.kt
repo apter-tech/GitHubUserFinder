@@ -16,6 +16,7 @@ object Versions {
 
     const val koin = "3.2.0"
     const val ktor = "2.0.1"
+    const val kermit = "1.1.2"
 }
 
 object AndroidX {
@@ -59,4 +60,8 @@ object Ktor {
     const val ktorAndroid = "io.ktor:ktor-client-android:${Versions.ktor}"
     const val ktoriOS = "io.ktor:ktor-client-ios:${Versions.ktor}"
     const val logging = "io.ktor:ktor-client-logging:${Versions.ktor}"
+}
+
+object Kermit {
+    const val logging = "co.touchlab:kermit:${Versions.kermit}"
 }

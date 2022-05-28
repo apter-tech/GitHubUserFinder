@@ -27,6 +27,7 @@ kotlin {
                 implementation(Ktor.ktorSerialization)
                 implementation(Ktor.ktorContentNegotiation)
                 implementation(Ktor.logging)
+                implementation(Kermit.logging)
             }
         }
         val commonTest by getting {
