@@ -62,4 +62,3 @@ internal fun networkModule(baseUrl: String) = module {
         }
     }
 }
-
