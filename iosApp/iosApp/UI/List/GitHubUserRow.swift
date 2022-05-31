@@ -16,7 +16,8 @@ struct GitHubUserRow: View {
         HStack(alignment: .center, spacing: 8) {
             AsyncImage(url: URL(string: item.avatarUrl)!) { image in
                 image.resizable().scaledToFill()
-            } placeholder: { Color.gray }
+            } placeholder: { Color.gray
+            }
             .frame(width: 60, height: 60)
             .cornerRadius(16)
             VStack(alignment: .leading, spacing: 4) {

@@ -22,8 +22,7 @@ struct ListStateViewModifier<ListStateContent>: ViewModifier where ListStateCont
     func body(content: Content) -> some View {
         if isNotValid {
             stateContent()
-        }
-        else {
+        } else {
             content
         }
     }
@@ -31,7 +30,8 @@ struct ListStateViewModifier<ListStateContent>: ViewModifier where ListStateCont
 
 extension View {
     func listStateModifier<ListStateContent>(_ isNotValid: Bool,
-                                      emptyContent: @escaping () -> ListStateContent) -> some View where ListStateContent: View {
+                                             emptyContent: @escaping () -> ListStateContent)
+    -> some View where ListStateContent: View {
         modifier(ListStateViewModifier(isNotValid: isNotValid, stateContent: emptyContent))
     }
 }

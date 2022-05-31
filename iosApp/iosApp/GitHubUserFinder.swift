@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct iOSApp: App {
+struct GitHubUserFinder: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     var body: some Scene {
         WindowGroup {

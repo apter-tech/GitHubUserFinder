@@ -3,13 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
-		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
+		2152FB042600AC8F00CF470E /* GitHubUserFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* GitHubUserFinder.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		A73571C32812B58700C21DE6 /* ClearButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73571C22812B58700C21DE6 /* ClearButtonModifier.swift */; };
 		A751E2BF280335D300B559D4 /* GitHubUserListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A751E2BE280335D300B559D4 /* GitHubUserListViewModel.swift */; };
@@ -40,7 +40,7 @@
 /* Begin PBXFileReference section */
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
+		2152FB032600AC8F00CF470E /* GitHubUserFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubUserFinder.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -102,7 +102,7 @@
 				7555FF82242A565900829871 /* ContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				A751E2C62803371B00B559D4 /* AppDelegate.swift */,
-				2152FB032600AC8F00CF470E /* iOSApp.swift */,
+				2152FB032600AC8F00CF470E /* GitHubUserFinder.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
 			);
 			path = iosApp;
@@ -175,6 +175,7 @@
 				7555FF78242A565900829871 /* Frameworks */,
 				7555FF79242A565900829871 /* Resources */,
 				7555FFB4242A642300829871 /* Embed Frameworks */,
+				A748025428467073000D8D61 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -248,6 +249,24 @@
 			shellPath = /bin/sh;
 			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:embedAndSignAppleFrameworkForXcode\n";
 		};
+		A748025428467073000D8D61 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -257,7 +276,7 @@
 			files = (
 				A751E2D72803459600B559D4 /* SearchBar.swift in Sources */,
 				A751E2CB2803400200B559D4 /* GitHubUserRow.swift in Sources */,
-				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				2152FB042600AC8F00CF470E /* GitHubUserFinder.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				A751E2DE2809CDAA00B559D4 /* ListStateViewModifier.swift in Sources */,
 				A751E2D928034E4A00B559D4 /* GitHubUserDetailItemView.swift in Sources */,
