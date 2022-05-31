@@ -1,6 +1,5 @@
 package io.imrekaszab.githubuserfinder.android.ui.view
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,7 +30,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
-import io.imrekaszab.githubuserfinder.android.ui.widget.EmptyView
 import io.imrekaszab.githubuserfinder.android.ui.widget.ErrorView
 import io.imrekaszab.githubuserfinder.android.ui.widget.GitHubUserDetailItemView
 import io.imrekaszab.githubuserfinder.android.ui.widget.LoadingView
@@ -60,7 +58,8 @@ fun GitHubUserDetailScreen(navController: NavController, userName: String?) {
                     contentDescription = "Arrow Back",
                     modifier = Modifier.clickable {
                         navController.popBackStack()
-                    })
+                    }
+                )
                 Spacer(modifier = Modifier.width(Dimens.default))
                 Text(text = userDetails?.login ?: "", style = MaterialTheme.typography.h6)
             }

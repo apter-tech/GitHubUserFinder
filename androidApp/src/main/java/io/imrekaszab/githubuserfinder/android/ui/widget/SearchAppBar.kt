@@ -72,7 +72,8 @@ fun SearchAppBar(onSearchCLick: (String) -> Unit) {
                 onSearch = {
                     focusManager.clearFocus()
                     onSearchCLick(query)
-                }),
+                }
+            ),
             modifier = Modifier.fillMaxWidth()
         )
     }

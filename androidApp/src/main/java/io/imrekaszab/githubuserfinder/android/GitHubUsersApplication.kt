@@ -7,7 +7,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.logger.Level
 
-class GitHubUsersApplication: Application() {
+class GitHubUsersApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         val baseUrl = BuildConfig.BASE_PATH
