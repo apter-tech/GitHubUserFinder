@@ -12,7 +12,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        buildConfigField("String","BASE_PATH", "\"https://api.github.com\"")
+        buildConfigField("String", "BASE_PATH", "\"https://api.github.com\"")
     }
 
     buildFeatures {

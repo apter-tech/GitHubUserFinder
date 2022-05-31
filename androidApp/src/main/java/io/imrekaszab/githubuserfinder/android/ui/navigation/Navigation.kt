@@ -12,16 +12,20 @@ import io.imrekaszab.githubuserfinder.android.ui.view.GitHubUserListScreen
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController,
-        startDestination = GitHubUserScreens.GitHubUserListScreen.route) {
+    NavHost(
+        navController = navController,
+        startDestination = GitHubUserScreens.GitHubUserListScreen.route
+    ) {
         composable(route = GitHubUserScreens.GitHubUserListScreen.route) {
             GitHubUserListScreen(navController = navController)
         }
         composable(
             route = GitHubUserScreens.GitHubUserDetailScreen.route + "/{userName}",
-            arguments = listOf(navArgument(name = "userName") {
-                type = NavType.StringType
-            })
+            arguments = listOf(
+                navArgument(name = "userName") {
+                    type = NavType.StringType
+                }
+            )
         ) { entry ->
             GitHubUserDetailScreen(navController, entry.arguments?.getString("userName"))
         }
