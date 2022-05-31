@@ -45,15 +45,19 @@ internal fun networkModule(baseUrl: String) = module {
     single {
         HttpClient(get()) {
             defaultRequest {
-                url.takeFrom(URLBuilder().takeFrom(baseUrl).apply {
-                    encodedPath += "/${url.encodedPath}"
-                })
+                url.takeFrom(
+                    URLBuilder().takeFrom(baseUrl).apply {
+                        encodedPath += "/${url.encodedPath}"
+                    }
+                )
             }
 
             install(ContentNegotiation) {
-                json(Json {
-                    ignoreUnknownKeys = true
-                })
+                json(
+                    Json {
+                        ignoreUnknownKeys = true
+                    }
+                )
             }
 
             install(Logging) {

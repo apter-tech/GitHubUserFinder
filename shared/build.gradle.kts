@@ -2,11 +2,12 @@ plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
     id("com.android.library")
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 kotlin {
     android()
-    
+
     listOf(
         iosX64(),
         iosArm64(),

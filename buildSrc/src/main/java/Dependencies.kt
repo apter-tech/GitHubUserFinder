@@ -17,6 +17,7 @@ object Versions {
     const val koin = "3.2.0"
     const val ktor = "2.0.1"
     const val kermit = "1.1.2"
+    const val ktlint = "10.3.0"
 }
 
 object AndroidX {
