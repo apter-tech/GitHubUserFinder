@@ -31,47 +31,49 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
+import io.imrekaszab.githubuserfinder.android.ui.widget.EmptyView
+import io.imrekaszab.githubuserfinder.android.ui.widget.ErrorView
 import io.imrekaszab.githubuserfinder.android.ui.widget.GitHubUserDetailItemView
 import io.imrekaszab.githubuserfinder.android.ui.widget.LoadingView
 import io.imrekaszab.githubuserfinder.android.viewmodel.GitHubUserDetailsViewModel
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUserDetails
 import org.koin.androidx.compose.getViewModel
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun GitHubUserDetailScreen(navController: NavController, userName: String?) {
     val viewModel = getViewModel<GitHubUserDetailsViewModel>()
     val userDetails = viewModel.userDetails.collectAsState(initial = null).value
+    val errorHappened = viewModel.errorStateFlow.collectAsState(initial = null).value
 
     LaunchedEffect(Unit) {
         userName ?: return@LaunchedEffect
         viewModel.refreshUserDetails(userName)
     }
-
-    if (userDetails != null) {
-        Scaffold(topBar = {
-            TopAppBar {
-                Row(
-                    horizontalArrangement = Arrangement.Start,
-                    modifier = Modifier.padding(start = Dimens.tiny)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Arrow Back",
-                        modifier = Modifier.clickable {
-                            navController.popBackStack()
-                        })
-                    Spacer(modifier = Modifier.width(Dimens.default))
-                    Text(text = userDetails.login, style = MaterialTheme.typography.h6)
-                }
-            }
-        }) {
-            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                GitHubUserDetailsView(userDetails = userDetails)
+    Scaffold(topBar = {
+        TopAppBar {
+            Row(
+                horizontalArrangement = Arrangement.Start,
+                modifier = Modifier.padding(start = Dimens.tiny)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Arrow Back",
+                    modifier = Modifier.clickable {
+                        navController.popBackStack()
+                    })
+                Spacer(modifier = Modifier.width(Dimens.default))
+                Text(text = userDetails?.login ?: "", style = MaterialTheme.typography.h6)
             }
         }
-    } else {
-        LoadingView()
+    }) {
+        when {
+            !errorHappened.isNullOrEmpty() -> ErrorView(errorHappened)
+            userDetails != null ->
+                Column(modifier = Modifier.verticalScroll(rememberScrollState()).padding(it)) {
+                    GitHubUserDetailsView(userDetails = userDetails)
+                }
+            else -> LoadingView()
+        }
     }
 }
 
