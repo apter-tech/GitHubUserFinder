@@ -16,21 +16,12 @@ class GitHubUserListViewModel: ObservableObject {
     @Published public var items: [GitHubUser] = []
     @Published public var isLoading = false
     @Published public var isFetchingFinished = false
+    @Published public var errorHappened = false
     let service = GitHubUserService()
 
     init() {
         service.isFetchingFinished().subscribe { data in
             self.isFetchingFinished = data?.boolValue ?? false
-        }
-    }
-
-    public func searchUser(userName: String) async {
-        self.isLoading = true
-
-        do {
-            try await service.searchUser(userName: userName)
-        } catch {
-            self.isLoading = false
         }
 
         service.getUsers().subscribe { data in
@@ -38,6 +29,17 @@ class GitHubUserListViewModel: ObservableObject {
                 return
             }
             self.items = listItems
+            self.isLoading = false
+        }
+    }
+
+    public func searchUser(userName: String) async {
+        self.isLoading = true
+        self.errorHappened = false
+        do {
+            try await service.searchUser(userName: userName)
+        } catch {
+            self.errorHappened = true
             self.isLoading = false
         }
     }
@@ -56,7 +58,7 @@ class GitHubUserListViewModel: ObservableObject {
         do {
             try await service.fetchNextPage()
         } catch {
-            // TODO handle error
+            self.errorHappened = true
         }
 
         service.getUsers().subscribe { data in

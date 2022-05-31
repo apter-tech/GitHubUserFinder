@@ -41,8 +41,11 @@ struct GitHubUserListScreen: View {
                         }
                     }
                 }
-                .emptyState(viewModel.items.isEmpty) {
+                .listStateModifier(viewModel.items.isEmpty) {
                     Text("We don't have any content, sorry 😔")
+                }
+                .listStateModifier(viewModel.errorHappened) {
+                    Text("Something went wrong 🤯")
                 }
             }
             Spacer()
