@@ -24,7 +24,8 @@ struct GitHubUserDetailsScreen: View {
                     }
                     AsyncImage(url: URL(string: userDetails.avatarUrl)!) { image in
                         image.resizable().scaledToFill()
-                    } placeholder: { Color.gray }
+                    } placeholder: { Color.gray
+                    }
                     .frame(width: 100, height: 100)
                     .cornerRadius(16)
                     GitHubUserDetailBioView(bio: userDetails.bio)
@@ -50,7 +51,6 @@ struct GitHubUserDetailsScreen: View {
     func refreshUserDetails() {
         Task {
             await viewModel.refreshUserDetails(with: userName)
-
         }
     }
 }
