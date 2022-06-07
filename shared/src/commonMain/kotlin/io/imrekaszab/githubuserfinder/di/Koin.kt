@@ -4,12 +4,15 @@ import io.imrekaszab.githubuserfinder.api.GitHubApi
 import io.imrekaszab.githubuserfinder.api.GitHubApiImpl
 import io.imrekaszab.githubuserfinder.repository.GitHubUserRepository
 import io.imrekaszab.githubuserfinder.repository.GitHubUserRepositoryImpl
-import io.ktor.client.*
-import io.ktor.client.features.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
-import io.ktor.client.features.logging.*
-import io.ktor.http.*
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.http.URLBuilder
+import io.ktor.http.encodedPath
+import io.ktor.http.takeFrom
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
@@ -42,21 +45,24 @@ internal fun networkModule(baseUrl: String) = module {
     single {
         HttpClient(get()) {
             defaultRequest {
-                url.takeFrom(URLBuilder().takeFrom(baseUrl).apply {
-                    encodedPath += "/${url.encodedPath}"
-                })
+                url.takeFrom(
+                    URLBuilder().takeFrom(baseUrl).apply {
+                        encodedPath += "/${url.encodedPath}"
+                    }
+                )
             }
 
-            install(JsonFeature) {
-                val json = kotlinx.serialization.json.Json {
-                    ignoreUnknownKeys = true
-                }
-                serializer = KotlinxSerializer(json)
+            install(ContentNegotiation) {
+                json(
+                    Json {
+                        ignoreUnknownKeys = true
+                    }
+                )
             }
+
             install(Logging) {
                 level = LogLevel.INFO
             }
         }
     }
 }
-

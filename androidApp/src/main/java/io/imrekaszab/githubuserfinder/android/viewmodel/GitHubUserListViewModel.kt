@@ -1,6 +1,5 @@
 package io.imrekaszab.githubuserfinder.android.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.imrekaszab.githubuserfinder.action.GitHubUserAction
@@ -15,24 +14,32 @@ class GitHubUserListViewModel(
 ) : ViewModel() {
     private val isLoadingStateFlow = MutableStateFlow(false)
     val isLoading: Flow<Boolean> = isLoadingStateFlow
+    val isFetchingFinished: Flow<Boolean> = gitHubUserStore.isFetchingFinished()
     val users = gitHubUserStore.getUsers()
-
-    init {
-        searchUser()
-    }
+    val errorStateFlow = MutableStateFlow<String?>(null)
 
     fun searchUser(userName: String? = null) {
         userName ?: return
         viewModelScope.launch {
             try {
+                errorStateFlow.value = null
                 isLoadingStateFlow.value = true
                 gitHubUserAction.searchUser(userName)
-                isLoadingStateFlow.value = false
             } catch (ex: Exception) {
-                // TODO handle error
-                // TODO create error view
-                Log.d("Error", ex.toString())
+                errorStateFlow.value = ex.toString()
+            } finally {
                 isLoadingStateFlow.value = false
+            }
+        }
+    }
+
+    fun requestNextPage() {
+        viewModelScope.launch {
+            try {
+                errorStateFlow.value = null
+                gitHubUserAction.fetchNextPage()
+            } catch (ex: Exception) {
+                errorStateFlow.value = ex.toString()
             }
         }
     }

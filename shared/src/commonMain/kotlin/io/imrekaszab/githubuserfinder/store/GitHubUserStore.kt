@@ -7,4 +7,5 @@ import io.imrekaszab.githubuserfinder.util.CommonFlow
 interface GitHubUserStore {
     fun getUsers(): CommonFlow<List<GitHubUser>>
     fun getUserDetails(): CommonFlow<GitHubUserDetails>
+    fun isFetchingFinished(): CommonFlow<Boolean>
 }

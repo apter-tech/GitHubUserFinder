@@ -2,10 +2,12 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven("https://plugins.gradle.org/m2/")
     }
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}")
         classpath("com.android.tools.build:gradle:${Versions.gradle}")
+        classpath ("org.jlleitschuh.gradle:ktlint-gradle:${Versions.ktlint}")
         classpath(Kotlin.Serialization.plugin)
     }
 }
@@ -14,6 +16,9 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven(url = "https://kotlin.bintray.com/kotlinx/")
     }
+}
+
+subprojects {
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
 }

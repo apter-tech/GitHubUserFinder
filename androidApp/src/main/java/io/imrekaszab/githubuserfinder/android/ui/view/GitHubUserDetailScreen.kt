@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
@@ -29,13 +27,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
+import io.imrekaszab.githubuserfinder.android.ui.widget.ErrorView
 import io.imrekaszab.githubuserfinder.android.ui.widget.GitHubUserDetailItemView
+import io.imrekaszab.githubuserfinder.android.ui.widget.LoadingView
 import io.imrekaszab.githubuserfinder.android.viewmodel.GitHubUserDetailsViewModel
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUserDetails
 import org.koin.androidx.compose.getViewModel
@@ -43,13 +40,13 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun GitHubUserDetailScreen(navController: NavController, userName: String?) {
     val viewModel = getViewModel<GitHubUserDetailsViewModel>()
-    LaunchedEffect(key1 = true) {
+    val userDetails = viewModel.userDetails.collectAsState(initial = null).value
+    val errorHappened = viewModel.errorStateFlow.collectAsState(initial = null).value
+
+    LaunchedEffect(Unit) {
         userName ?: return@LaunchedEffect
         viewModel.refreshUserDetails(userName)
     }
-
-    val userDetails = viewModel.userDetails.collectAsState(initial = null).value
-    userDetails ?: return
     Scaffold(topBar = {
         TopAppBar {
             Row(
@@ -61,16 +58,20 @@ fun GitHubUserDetailScreen(navController: NavController, userName: String?) {
                     contentDescription = "Arrow Back",
                     modifier = Modifier.clickable {
                         navController.popBackStack()
-                    })
+                    }
+                )
                 Spacer(modifier = Modifier.width(Dimens.default))
-                Text(text = userDetails.login, style = MaterialTheme.typography.h6)
+                Text(text = userDetails?.login ?: "", style = MaterialTheme.typography.h6)
             }
         }
     }) {
-        Column(
-            modifier = Modifier.verticalScroll(rememberScrollState())
-        ) {
-            GitHubUserDetailsView(userDetails = userDetails)
+        when {
+            !errorHappened.isNullOrEmpty() -> ErrorView(errorHappened)
+            userDetails != null ->
+                Column(modifier = Modifier.verticalScroll(rememberScrollState()).padding(it)) {
+                    GitHubUserDetailsView(userDetails = userDetails)
+                }
+            else -> LoadingView()
         }
     }
 }
@@ -101,7 +102,7 @@ fun GitHubUserDetailsView(userDetails: GitHubUserDetails) {
                 color = MaterialTheme.colors.secondaryVariant.copy(alpha = 0.2f)
             ) {
                 Image(
-                    painter = rememberImagePainter(userDetails.avatarUrl),
+                    painter = rememberAsyncImagePainter(userDetails.avatarUrl),
                     modifier = Modifier.size(Dimens.bigImageSize),
                     contentDescription = userDetails.name
                 )
@@ -114,7 +115,10 @@ fun GitHubUserDetailsView(userDetails: GitHubUserDetails) {
             Spacer(modifier = Modifier.height(Dimens.default))
             GitHubUserDetailItemView(label = "Followers", value = userDetails.followers.toString())
             GitHubUserDetailItemView(label = "Following", value = userDetails.following.toString())
-            GitHubUserDetailItemView(label = "Public repos", value = userDetails.publicRepos.toString())
+            GitHubUserDetailItemView(
+                label = "Public repos",
+                value = userDetails.publicRepos.toString()
+            )
             GitHubUserDetailItemView(label = "Company", value = userDetails.company)
             GitHubUserDetailItemView(label = "Location", value = userDetails.location)
             GitHubUserDetailItemView(label = "Email", value = userDetails.email)

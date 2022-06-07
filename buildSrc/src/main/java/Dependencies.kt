@@ -1,20 +1,23 @@
 
 object Versions {
     const val minsdk = 23
-    const val targetsdk = 31
+    const val targetsdk = 32
     const val gradle = "7.1.2"
-    const val kotlin = "1.6.10"
-    const val coroutines = "1.6.0"
+    const val kotlin = "1.6.21"
+    const val kotlinSerialization = "1.3.3"
+    const val coroutines = "1.6.1"
     const val appCompat = "1.4.1"
 
-    const val compose = "1.1.0"
+    const val compose = "1.2.0-beta03"
     const val composeActivity = "1.4.0"
-    const val composeCompiler = "1.1.0"
-    const val composeCoil = "1.4.0"
-    const val composeNavigation = "2.4.1"
+    const val composeCompiler = "1.2.0-beta03"
+    const val composeCoil = "2.1.0"
+    const val composeNavigation = "2.4.2"
 
-    const val koin = "3.1.4"
-    const val ktor = "1.6.8"
+    const val koin = "3.2.0"
+    const val ktor = "2.0.2"
+    const val kermit = "1.1.2"
+    const val ktlint = "10.3.0"
 }
 
 object AndroidX {
@@ -30,7 +33,7 @@ object Kotlin {
 
     object Serialization {
         const val plugin = "org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}"
-        const val runtime = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1"
+        const val runtime = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinSerialization}"
     }
 }
 
@@ -53,8 +56,13 @@ object Koin {
 
 object Ktor {
     const val ktorCore = "io.ktor:ktor-client-core:${Versions.ktor}"
-    const val ktorSerialization = "io.ktor:ktor-client-serialization:${Versions.ktor}"
+    const val ktorSerialization = "io.ktor:ktor-serialization-kotlinx-json:${Versions.ktor}"
+    const val ktorContentNegotiation = "io.ktor:ktor-client-content-negotiation:${Versions.ktor}"
     const val ktorAndroid = "io.ktor:ktor-client-android:${Versions.ktor}"
     const val ktoriOS = "io.ktor:ktor-client-ios:${Versions.ktor}"
     const val logging = "io.ktor:ktor-client-logging:${Versions.ktor}"
+}
+
+object Kermit {
+    const val logging = "co.touchlab:kermit:${Versions.kermit}"
 }

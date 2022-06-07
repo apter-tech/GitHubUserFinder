@@ -2,11 +2,12 @@ plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
     id("com.android.library")
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 kotlin {
     android()
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -25,7 +26,9 @@ kotlin {
                 implementation(Koin.core)
                 implementation(Ktor.ktorCore)
                 implementation(Ktor.ktorSerialization)
+                implementation(Ktor.ktorContentNegotiation)
                 implementation(Ktor.logging)
+                implementation(Kermit.logging)
             }
         }
         val commonTest by getting {

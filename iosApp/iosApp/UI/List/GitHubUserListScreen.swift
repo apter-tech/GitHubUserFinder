@@ -12,23 +12,43 @@ struct GitHubUserListScreen: View {
     @StateObject private var viewModel = GitHubUserListViewModel()
 
     var body: some View {
-        if viewModel.isLoading {
-            ProgressView()
-        } else {
-            VStack {
-                SearchBar { query in
-                    Task {
-                        await viewModel.searchUser(userName: query)
-                    }
+        VStack(alignment: .center) {
+            SearchBar { query in
+                Task {
+                    await viewModel.searchUser(userName: query)
                 }
+            }
+            Spacer()
+            if viewModel.isLoading {
+                ProgressView()
+            } else {
                 List {
                     ForEach(viewModel.items, id: \.id) { item in
                         NavigationLink(destination: GitHubUserDetailsScreen(userName: item.login)) {
                             GitHubUserRow(item: item)
                         }
                     }
+                    if viewModel.isFetchingFinished == false {
+                        HStack {
+                            Spacer()
+                            ProgressView()
+                            Spacer()
+                        }
+                        .onAppear {
+                            Task {
+                                await viewModel.fetchNextPage()
+                            }
+                        }
+                    }
+                }
+                .listStateModifier(viewModel.items.isEmpty) {
+                    Text("We don't have any content, sorry 😔")
+                }
+                .listStateModifier(viewModel.errorHappened) {
+                    Text("Something went wrong 🤯")
                 }
             }
+            Spacer()
         }
     }
 }

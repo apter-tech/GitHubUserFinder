@@ -15,21 +15,15 @@ struct SearchBar: View {
     var body: some View {
         HStack {
             TextField("Tap to search ...", text: $searchQuery)
+                .modifier(ClearButtonModifier(text: $searchQuery))
                 .padding(10)
                 .background(Color(.systemGray6))
                 .cornerRadius(8)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .padding(.horizontal, 10)
-
-            Button(action: {
-                action(searchQuery)
-
-            }) {
-                Text("Search")
-            }
-            .padding(.trailing, 10)
-            .disabled(searchQuery.isEmpty)
+                .onSubmit { action(searchQuery) }
+                .submitLabel(.search)
         }
     }
 }
