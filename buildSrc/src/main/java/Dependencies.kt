@@ -1,21 +1,21 @@
 
 object Versions {
     const val minsdk = 23
-    const val targetsdk = 31
+    const val targetsdk = 32
     const val gradle = "7.1.2"
     const val kotlin = "1.6.21"
     const val kotlinSerialization = "1.3.3"
     const val coroutines = "1.6.1"
     const val appCompat = "1.4.1"
 
-    const val compose = "1.2.0-beta01"
+    const val compose = "1.2.0-beta03"
     const val composeActivity = "1.4.0"
-    const val composeCompiler = "1.2.0-beta01"
-    const val composeCoil = "2.0.0"
+    const val composeCompiler = "1.2.0-beta03"
+    const val composeCoil = "2.1.0"
     const val composeNavigation = "2.4.2"
 
     const val koin = "3.2.0"
-    const val ktor = "2.0.1"
+    const val ktor = "2.0.2"
     const val kermit = "1.1.2"
     const val ktlint = "10.3.0"
 }
