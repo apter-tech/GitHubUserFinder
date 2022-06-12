@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 
@@ -29,7 +30,9 @@ fun InfiniteLoadingListView(
         }
     }
     if (listState.shouldLoadMore(firstVisibleIndex) && !isFetchingFinished) {
-        loadMore()
+        SideEffect {
+            loadMore()
+        }
     }
 }
 
