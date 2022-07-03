@@ -68,9 +68,11 @@ fun GitHubUserDetailScreen(navController: NavController, userName: String?) {
         when {
             !errorHappened.isNullOrEmpty() -> ErrorView(errorHappened)
             userDetails != null ->
-                Column(modifier = Modifier
-                    .verticalScroll(rememberScrollState())
-                    .padding(it)) {
+                Column(
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                        .padding(it)
+                ) {
                     GitHubUserDetailsView(userDetails = userDetails)
                 }
             else -> LoadingView()

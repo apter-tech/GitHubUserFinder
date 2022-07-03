@@ -66,3 +66,8 @@ object Ktor {
 object Kermit {
     const val logging = "co.touchlab:kermit:${Versions.kermit}"
 }
+
+object Test {
+    const val ktor = "io.ktor:ktor-client-mock:${Versions.ktor}"
+    const val koin = "io.insert-koin:koin-test:${Versions.koin}"
+}

@@ -33,7 +33,11 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test"))
+                implementation(kotlin("test-junit"))
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
+                implementation(Test.ktor)
+                implementation(Test.koin)
             }
         }
         val androidMain by getting {
@@ -59,7 +63,8 @@ kotlin {
         val iosArm64Test by getting
         val iosSimulatorArm64Test by getting
         val iosTest by creating {
-            dependsOn(commonTest)
+            // TODO: uncomment this dependency if there is a KMM mocking/di framework for tests
+            // dependsOn(commonTest)
             iosX64Test.dependsOn(this)
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)

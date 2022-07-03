@@ -25,7 +25,6 @@ fun initKoin(baseUrl: String, appDeclaration: KoinAppDeclaration = {}) =
             networkModule(baseUrl),
             repositoryModule,
             dataModule,
-            httpClientEngineModule,
             apiModule
         )
     }
@@ -43,7 +42,7 @@ var repositoryModule = module {
 
 internal fun networkModule(baseUrl: String) = module {
     single {
-        HttpClient(get()) {
+        HttpClient {
             defaultRequest {
                 url.takeFrom(
                     URLBuilder().takeFrom(baseUrl).apply {
