@@ -1,6 +1,6 @@
 plugins {
     kotlin("multiplatform")
-    kotlin("plugin.serialization")
+    id("org.jetbrains.kotlin.plugin.serialization") version Versions.kotlin
     id("com.android.library")
     id("org.jlleitschuh.gradle.ktlint")
 }
@@ -22,7 +22,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(Kotlin.Coroutines.core)
-                implementation(Kotlin.Serialization.plugin)
                 implementation(Koin.core)
                 implementation(Ktor.ktorCore)
                 implementation(Ktor.ktorSerialization)
