@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import io.imrekaszab.githubuserfinder.android.ui.navigation.GitHubUserScreens
 import io.imrekaszab.githubuserfinder.android.ui.widget.EmptyView
@@ -20,20 +21,20 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun GitHubUserListScreen(navController: NavController) {
     val viewModel = getViewModel<GitHubUserListViewModel>()
-    val isLoading = viewModel.isLoading.collectAsState(initial = false)
-    val errorHappened = viewModel.errorStateFlow.collectAsState(initial = null)
-    val itemList = viewModel.users.collectAsState(initial = emptyList())
-    val isFetchingFinished = viewModel.isFetchingFinished.collectAsState(initial = false)
+    val isLoading by viewModel.isLoading.collectAsState(initial = false)
+    val errorHappened by viewModel.errorStateFlow.collectAsState(initial = null)
+    val itemList by viewModel.users.collectAsState(initial = emptyList())
+    val isFetchingFinished by viewModel.isFetchingFinished.collectAsState(initial = false)
 
     Scaffold(topBar = { SearchAppBar { viewModel.searchUser(it) } }) {
         when {
-            !errorHappened.value.isNullOrEmpty() -> ErrorView(errorHappened.value)
-            isLoading.value -> LoadingView()
-            itemList.value.isEmpty() -> EmptyView()
+            !errorHappened.isNullOrEmpty() -> ErrorView(errorHappened)
+            isLoading -> LoadingView()
+            itemList.isEmpty() -> EmptyView()
             else -> GitHubUserListView(
                 navController = navController,
-                itemList = itemList.value,
-                isFetchingFinished = isFetchingFinished.value,
+                itemList = itemList,
+                isFetchingFinished = isFetchingFinished,
                 loadMore = { viewModel.requestNextPage() }
             )
         }

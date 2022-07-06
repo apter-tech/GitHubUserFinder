@@ -1,6 +1,5 @@
 package io.imrekaszab.githubuserfinder.android.ui.widget
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.AsyncImage
 import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
 
@@ -43,8 +42,8 @@ fun GitHubUserRow(item: GitHubUser, onItemCLick: (String) -> Unit) {
                 shape = MaterialTheme.shapes.large,
                 color = MaterialTheme.colors.secondaryVariant.copy(alpha = 0.2f)
             ) {
-                Image(
-                    painter = rememberAsyncImagePainter(item.avatarUrl),
+                AsyncImage(
+                    model = item.avatarUrl,
                     modifier = Modifier.size(Dimens.imageSize),
                     contentDescription = "userName"
                 )

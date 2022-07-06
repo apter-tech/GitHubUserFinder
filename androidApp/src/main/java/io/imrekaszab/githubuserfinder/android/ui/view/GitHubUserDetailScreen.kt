@@ -1,6 +1,5 @@
 package io.imrekaszab.githubuserfinder.android.ui.view
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,10 +24,11 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.AsyncImage
 import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 import io.imrekaszab.githubuserfinder.android.ui.widget.ErrorView
 import io.imrekaszab.githubuserfinder.android.ui.widget.GitHubUserDetailItemView
@@ -40,8 +40,8 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun GitHubUserDetailScreen(navController: NavController, userName: String?) {
     val viewModel = getViewModel<GitHubUserDetailsViewModel>()
-    val userDetails = viewModel.userDetails.collectAsState(initial = null).value
-    val errorHappened = viewModel.errorStateFlow.collectAsState(initial = null).value
+    val userDetails by viewModel.userDetails.collectAsState(initial = null)
+    val errorHappened by viewModel.errorStateFlow.collectAsState(initial = null)
 
     LaunchedEffect(Unit) {
         userName ?: return@LaunchedEffect
@@ -68,7 +68,11 @@ fun GitHubUserDetailScreen(navController: NavController, userName: String?) {
         when {
             !errorHappened.isNullOrEmpty() -> ErrorView(errorHappened)
             userDetails != null ->
-                Column(modifier = Modifier.verticalScroll(rememberScrollState()).padding(it)) {
+                Column(
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                        .padding(it)
+                ) {
                     GitHubUserDetailsView(userDetails = userDetails)
                 }
             else -> LoadingView()
@@ -77,7 +81,8 @@ fun GitHubUserDetailScreen(navController: NavController, userName: String?) {
 }
 
 @Composable
-fun GitHubUserDetailsView(userDetails: GitHubUserDetails) {
+fun GitHubUserDetailsView(userDetails: GitHubUserDetails?) {
+    userDetails ?: return
     Card(
         modifier = Modifier
             .padding(Dimens.default)
@@ -101,8 +106,8 @@ fun GitHubUserDetailsView(userDetails: GitHubUserDetails) {
                 shape = MaterialTheme.shapes.large,
                 color = MaterialTheme.colors.secondaryVariant.copy(alpha = 0.2f)
             ) {
-                Image(
-                    painter = rememberAsyncImagePainter(userDetails.avatarUrl),
+                AsyncImage(
+                    model = userDetails.avatarUrl,
                     modifier = Modifier.size(Dimens.bigImageSize),
                     contentDescription = userDetails.name
                 )
