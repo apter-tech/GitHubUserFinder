@@ -22,6 +22,7 @@ Android | iOS
 - Linter & formatter (ktlint, swiftlint)
 - Dark mode
 - Error handling
+- Common tests
 - [GitHub API](https://docs.github.com/en/rest/search#search-users) 
 - [CommonFlow](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/main/shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/util/CommonFlow.kt)
 > In this project the flow is running on the main thread and then invoking “main-safe” suspend functions provided by Ktor.
@@ -77,6 +78,7 @@ class CommonFlow<T>(private val origin: Flow<T>) : Flow<T> by origin {
 - 🎨 [Coil](https://coil-kt.github.io/coil/) - Image loader `Android`
 [![GitHub Repo stars](https://img.shields.io/github/stars/coil-kt/coil)](https://github.com/coil-kt/coil)
 [![Maven Central](https://img.shields.io/maven-central/v/io.coil-kt/coil-compose.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.coil-kt%22%20AND%20a:%22coil-compose%22)
+- 🚦 Testing - Common unit tests in `shared` module with [MockHttpClient](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/main/shared/src/commonTest/kotlin/io/imrekaszab/githubuserfinder/MockHttpClient.kt)
 - 🔍 Linter & formatter
    - [Ktlint](https://github.com/JLLeitschuh/ktlint-gradle) - `shared + Android` 
 ![GitHub Repo stars](https://img.shields.io/github/stars/JLLeitschuh/ktlint-gradle)
@@ -97,7 +99,7 @@ class CommonFlow<T>(private val origin: Flow<T>) : Flow<T> by origin {
 
 ### What's next?
 
-- Testing (UI and integration tests)
+- UI tests
 - Combine and AsyncStream extensions
 - Fancy animations
 - Shared ViewModels??? We’ll see 😜
