@@ -10,7 +10,9 @@ import io.imrekaszab.githubuserfinder.store.GitHubUserStore
 import io.imrekaszab.githubuserfinder.util.ApplicationDispatcher
 import io.imrekaszab.githubuserfinder.util.CommonFlow
 import io.imrekaszab.githubuserfinder.util.asCommonFlow
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -79,8 +81,7 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
             .filterNotNull()
             .asCommonFlow()
 
-    override fun isFetchingFinished(): CommonFlow<Boolean> =
+    override fun isFetchingFinished(): Flow<Boolean> =
         gitHubPagingInfoStateFlow
             .map { it.currentCount == it.totalItemCount }
-            .asCommonFlow()
 }

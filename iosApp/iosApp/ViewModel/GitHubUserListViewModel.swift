@@ -8,8 +8,10 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 import shared
+import KMPNativeCoroutinesCombine
 
 @MainActor
 class GitHubUserListViewModel: ObservableObject {
@@ -18,11 +20,14 @@ class GitHubUserListViewModel: ObservableObject {
     @Published public var isFetchingFinished = false
     @Published public var errorHappened = false
     let service = GitHubUserService()
+    var cancellables = Set<AnyCancellable>()
 
     init() {
-        service.isFetchingFinished().subscribe { data in
-            self.isFetchingFinished = data?.boolValue ?? false
-        }
+        createPublisher(for: service.isFetchingFinishedNative())
+            .sink { _ in } receiveValue: { [unowned self] value in
+                self.isFetchingFinished = value.boolValue
+            }
+            .store(in: &cancellables)
 
         service.getUsers().subscribe { data in
             guard let listItems = data?.compactMap({ $0 as? GitHubUser }) else {

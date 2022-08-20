@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version Versions.kotlin
     id("com.android.library")
     id("org.jlleitschuh.gradle.ktlint")
+    id("com.rickclephas.kmp.nativecoroutines") version Versions.kmpNativeCoroutines
 }
 
 kotlin {
@@ -21,7 +22,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(Kotlin.Coroutines.core)
+               // implementation(Kotlin.Coroutines.core)
                 implementation(Koin.core)
                 implementation(Ktor.ktorCore)
                 implementation(Ktor.ktorSerialization)
