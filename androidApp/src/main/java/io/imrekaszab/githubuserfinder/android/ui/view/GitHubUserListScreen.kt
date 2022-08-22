@@ -13,16 +13,15 @@ import io.imrekaszab.githubuserfinder.android.ui.widget.GitHubUserRow
 import io.imrekaszab.githubuserfinder.android.ui.widget.InfiniteLoadingListView
 import io.imrekaszab.githubuserfinder.android.ui.widget.LoadingView
 import io.imrekaszab.githubuserfinder.android.ui.widget.SearchAppBar
-import io.imrekaszab.githubuserfinder.android.viewmodel.GitHubUserListViewModel
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
-import org.koin.androidx.compose.getViewModel
+import io.imrekaszab.githubuserfinder.viewmodel.GitHubUserListViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun GitHubUserListScreen(navController: NavController) {
-    val viewModel = getViewModel<GitHubUserListViewModel>()
+    val viewModel = GitHubUserListViewModel()
     val isLoading by viewModel.isLoading.collectAsState(initial = false)
-    val errorHappened by viewModel.errorStateFlow.collectAsState(initial = null)
+    val errorHappened by viewModel.error.collectAsState(initial = null)
     val itemList by viewModel.users.collectAsState(initial = emptyList())
     val isFetchingFinished by viewModel.isFetchingFinished.collectAsState(initial = false)
 

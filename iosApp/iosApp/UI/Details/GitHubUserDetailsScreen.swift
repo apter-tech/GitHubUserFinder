@@ -10,12 +10,12 @@ import SwiftUI
 import shared
 
 struct GitHubUserDetailsScreen: View {
-    @ObservedObject private var viewModel = GitHubUserDetailsViewModel()
+    @StateObject private var observableViewModel = ObservableGitHubUserDetailsViewModel()
     var userName: String
-
+    
     var body: some View {
         ScrollView {
-            if let userDetails = viewModel.userDetails {
+            if let userDetails = observableViewModel.userDetails {
                 VStack {
                     if userDetails.name != userName {
                         Text(userDetails.name)
@@ -44,13 +44,11 @@ struct GitHubUserDetailsScreen: View {
         }
         .navigationBarTitle(Text(userName))
         .onAppear {
-            refreshUserDetails()
+            observableViewModel.activate()
+            observableViewModel.viewModel.refreshUserDetails(userName: userName)
         }
-    }
-
-    func refreshUserDetails() {
-        Task {
-            await viewModel.refreshUserDetails(with: userName)
+        .onDisappear {
+            observableViewModel.deactivate()
         }
     }
 }

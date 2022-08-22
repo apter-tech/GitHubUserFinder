@@ -22,7 +22,6 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-               // implementation(Kotlin.Coroutines.core)
                 implementation(Koin.core)
                 implementation(Ktor.ktorCore)
                 implementation(Ktor.ktorSerialization)
@@ -43,7 +42,8 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(Ktor.ktorAndroid)
-                implementation(Kotlin.Coroutines.android)
+                implementation(AndroidX.lifecycleViewModel)
+                implementation(AndroidX.lifecycleRuntime)
             }
         }
         val androidTest by getting
@@ -63,8 +63,7 @@ kotlin {
         val iosArm64Test by getting
         val iosSimulatorArm64Test by getting
         val iosTest by creating {
-            // TODO: uncomment this dependency if there is a KMM mocking/di framework for tests
-            // dependsOn(commonTest)
+            dependsOn(commonTest)
             iosX64Test.dependsOn(this)
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)

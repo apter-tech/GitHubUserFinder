@@ -1,26 +1,27 @@
-package io.imrekaszab.githubuserfinder.android.viewmodel
+package io.imrekaszab.githubuserfinder.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import io.imrekaszab.githubuserfinder.action.GitHubUserAction
 import io.imrekaszab.githubuserfinder.store.GitHubUserStore
+import io.imrekaszab.githubuserfinder.util.CommonViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class GitHubUserListViewModel(
-    private val gitHubUserAction: GitHubUserAction,
-    gitHubUserStore: GitHubUserStore
-) : ViewModel() {
+class GitHubUserListViewModel : CommonViewModel(), KoinComponent {
+    private val gitHubUserAction: GitHubUserAction by inject()
+    private val gitHubUserStore: GitHubUserStore by inject()
+
     private val isLoadingStateFlow = MutableStateFlow(false)
+
     val isLoading: Flow<Boolean> = isLoadingStateFlow
-    val isFetchingFinished: Flow<Boolean> = gitHubUserStore.isFetchingFinished()
+    val isFetchingFinished = gitHubUserStore.isFetchingFinished()
     val users = gitHubUserStore.getUsers()
-    val errorStateFlow = MutableStateFlow<String?>(null)
 
     fun searchUser(userName: String? = null) {
         userName ?: return
-        viewModelScope.launch {
+        mainScope.launch {
             try {
                 errorStateFlow.value = null
                 isLoadingStateFlow.value = true
@@ -34,7 +35,7 @@ class GitHubUserListViewModel(
     }
 
     fun requestNextPage() {
-        viewModelScope.launch {
+        mainScope.launch {
             try {
                 errorStateFlow.value = null
                 gitHubUserAction.fetchNextPage()

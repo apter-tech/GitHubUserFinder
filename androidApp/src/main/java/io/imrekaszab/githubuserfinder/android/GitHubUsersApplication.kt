@@ -1,7 +1,6 @@
 package io.imrekaszab.githubuserfinder.android
 
 import android.app.Application
-import io.imrekaszab.githubuserfinder.android.di.appModule
 import io.imrekaszab.githubuserfinder.di.initKoin
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -14,7 +13,6 @@ class GitHubUsersApplication : Application() {
         initKoin(baseUrl) {
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@GitHubUsersApplication)
-            modules(appModule)
         }
     }
 }

@@ -6,6 +6,7 @@ object Versions {
     const val kotlin = "1.7.10"
     const val coroutines = "1.6.4"
     const val appCompat = "1.5.0"
+    const val lifecycleViewModel = "2.5.1"
     const val kmpNativeCoroutines = "0.12.6-new-mm"
 
     const val compose = "1.3.0-alpha03"
@@ -22,14 +23,8 @@ object Versions {
 
 object AndroidX {
     const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
-}
-
-object Kotlin {
-    object Coroutines {
-        //const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
-        const val android =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
-    }
+    const val lifecycleViewModel = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleViewModel}"
+    const val lifecycleRuntime = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleViewModel}"
 }
 
 object Compose {

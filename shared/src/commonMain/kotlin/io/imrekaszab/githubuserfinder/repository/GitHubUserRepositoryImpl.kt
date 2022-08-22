@@ -11,12 +11,14 @@ class GitHubUserRepositoryImpl(private val gitHubApi: GitHubApi) : GitHubUserRep
 
     override suspend fun fetchPage(
         userName: String,
-        page: Int
+        page: Int,
+        offset: Int
     ): Pair<GitHubPagingInfo, List<GitHubUser>> {
-        val result = gitHubApi.searchUser(userName, page)
+        val result = gitHubApi.searchUser(userName, page, offset)
         val userList = result.items.toDomainModels().toMutableList()
         val pagingInfo = GitHubPagingInfo(
             totalItemCount = result.total_count,
+            page = page,
             userName = userName
         )
 
