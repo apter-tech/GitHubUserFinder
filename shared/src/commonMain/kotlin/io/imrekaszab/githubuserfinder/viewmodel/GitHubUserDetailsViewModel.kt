@@ -1,7 +1,7 @@
 package io.imrekaszab.githubuserfinder.viewmodel
 
 import io.imrekaszab.githubuserfinder.action.GitHubUserAction
-import io.imrekaszab.githubuserfinder.model.domain.GitHubUserDetails
+import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
 import io.imrekaszab.githubuserfinder.store.GitHubUserStore
 import io.imrekaszab.githubuserfinder.util.CommonViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +14,7 @@ import org.koin.core.component.inject
 class GitHubUserDetailsViewModel : CommonViewModel(), KoinComponent {
     private val gitHubUserAction: GitHubUserAction by inject()
     private val gitHubUserStore: GitHubUserStore by inject()
-    val userDetails: Flow<GitHubUserDetails> = gitHubUserStore.getUserDetails()
+    val userDetails: Flow<GitHubUser> = gitHubUserStore.getUserDetails()
         .flowOn(Dispatchers.Main)
 
     fun refreshUserDetails(userName: String) {

@@ -1,30 +1,23 @@
 package io.imrekaszab.githubuserfinder.repository
 
-import io.imrekaszab.githubuserfinder.api.GitHubApi
-import io.imrekaszab.githubuserfinder.mapper.toDomain
-import io.imrekaszab.githubuserfinder.mapper.toDomainModels
-import io.imrekaszab.githubuserfinder.model.domain.GitHubPagingInfo
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
-import io.imrekaszab.githubuserfinder.model.domain.GitHubUserDetails
+import kotlinx.coroutines.flow.Flow
 
-class GitHubUserRepositoryImpl(private val gitHubApi: GitHubApi) : GitHubUserRepository {
+class GitHubUserRepositoryImpl : GitHubUserRepository {
 
-    override suspend fun fetchPage(
-        userName: String,
-        page: Int,
-        offset: Int
-    ): Pair<GitHubPagingInfo, List<GitHubUser>> {
-        val result = gitHubApi.searchUser(userName, page, offset)
-        val userList = result.items.toDomainModels().toMutableList()
-        val pagingInfo = GitHubPagingInfo(
-            totalItemCount = result.total_count,
-            page = page,
-            userName = userName
-        )
-
-        return pagingInfo to userList
+    override suspend fun saveUser(user: GitHubUser) {
+        TODO("Not yet implemented")
     }
 
-    override suspend fun getUserDetails(userName: String): GitHubUserDetails =
-        gitHubApi.refreshUserDetails(userName).toDomain()
+    override suspend fun deleteUser(userId: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteAll() {
+        TODO("Not yet implemented")
+    }
+
+    override fun getUserList(): Flow<List<GitHubUser>> {
+        TODO("Not yet implemented")
+    }
 }

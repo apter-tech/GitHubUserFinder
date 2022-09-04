@@ -33,7 +33,7 @@ import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 import io.imrekaszab.githubuserfinder.android.ui.widget.ErrorView
 import io.imrekaszab.githubuserfinder.android.ui.widget.GitHubUserDetailItemView
 import io.imrekaszab.githubuserfinder.android.ui.widget.LoadingView
-import io.imrekaszab.githubuserfinder.model.domain.GitHubUserDetails
+import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
 import io.imrekaszab.githubuserfinder.viewmodel.GitHubUserDetailsViewModel
 
 @Composable
@@ -80,7 +80,7 @@ fun GitHubUserDetailScreen(navController: NavController, userName: String?) {
 }
 
 @Composable
-fun GitHubUserDetailsView(userDetails: GitHubUserDetails?) {
+fun GitHubUserDetailsView(userDetails: GitHubUser?) {
     userDetails ?: return
     Card(
         modifier = Modifier
