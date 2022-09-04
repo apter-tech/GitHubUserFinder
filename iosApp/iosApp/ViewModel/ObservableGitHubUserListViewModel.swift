@@ -22,6 +22,14 @@ class ObservableGitHubUserListViewModel: ObservableObject {
     @Published public var error: String = ""
     var cancellables = Set<AnyCancellable>()
     
+    init() {
+        createPublisher(for: viewModel.isFetchingFinishedNative)
+            .receive(on: DispatchQueue.main)
+            .sink { _ in } receiveValue: { [weak self] value in
+                self?.isFetchingFinished = value.boolValue
+            }
+            .store(in: &cancellables)
+    }
 
     func activate() {
         Task {
@@ -35,13 +43,6 @@ class ObservableGitHubUserListViewModel: ObservableObject {
                 for try await value in asyncStream(for: viewModel.errorNative) {
                     self.error = value
                 }
-                
-                createPublisher(for: viewModel.isFetchingFinishedNative)
-                    .receive(on: DispatchQueue.main)
-                    .sink { _ in } receiveValue: { [weak self] value in
-                        self?.isFetchingFinished = value.boolValue
-                    }
-                    .store(in: &cancellables)
             } catch {
                 print("Failed with error: \(error)")
             }

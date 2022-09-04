@@ -2,6 +2,7 @@ package io.imrekaszab.githubuserfinder.service
 
 import co.touchlab.kermit.Logger
 import io.imrekaszab.githubuserfinder.action.GitHubUserAction
+import io.imrekaszab.githubuserfinder.di.injectLogger
 import io.imrekaszab.githubuserfinder.model.domain.GitHubPagingInfo
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUserDetails
@@ -18,12 +19,13 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
+    private val logger: Logger by injectLogger("GitHubUserService")
     private val gitHubUserRepository: GitHubUserRepository by inject()
 
     private val gitHubUserDetailsStateFlow = MutableStateFlow<GitHubUserDetails?>(null)
     private val gitHubUserListStateFlow = MutableStateFlow<List<GitHubUser>>(listOf())
     private val gitHubPagingInfoStateFlow = MutableStateFlow(GitHubPagingInfo())
-    private var fetchingInProgress = MutableStateFlow(false)
+    private var fetchingInProgress = false
 
     override suspend fun searchUser(userName: String) = withContext(Dispatchers.Default) {
         try {
@@ -41,9 +43,9 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
 
     override suspend fun fetchNextPage() = withContext(Dispatchers.Default) {
         try {
-            if (!fetchingInProgress.first() && !isFetchingFinished().first()) {
+            if (!fetchingInProgress && !isFetchingFinished().first()) {
                 val pagingInfo = gitHubPagingInfoStateFlow.first()
-                fetchingInProgress.emit(true)
+                fetchingInProgress = true
                 val result = gitHubUserRepository.fetchPage(
                     pagingInfo.userName,
                     pagingInfo.page + 1,
@@ -55,11 +57,11 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
                 gitHubPagingInfoStateFlow.emit(
                     result.first.copy(currentCount = currentResults.size)
                 )
-                fetchingInProgress.emit(false)
+                fetchingInProgress = false
             }
         } catch (exception: Exception) {
             gitHubUserListStateFlow.emit(mutableListOf())
-            Logger.e("Error happened: $exception")
+            logger.e("Error happened: $exception")
             throw exception
         }
     }
@@ -70,7 +72,7 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
                 val result = gitHubUserRepository.getUserDetails(userName)
                 gitHubUserDetailsStateFlow.emit(result)
             } catch (exception: Exception) {
-                Logger.e("Error happened: $exception")
+                logger.e("Error happened: $exception")
                 throw exception
             }
         }
