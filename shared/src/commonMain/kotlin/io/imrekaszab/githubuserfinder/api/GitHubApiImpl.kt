@@ -9,8 +9,8 @@ import io.ktor.client.request.get
 class GitHubApiImpl(
     private val httpClient: HttpClient
 ) : GitHubApi {
-    override suspend fun searchUser(userName: String, page: Int): SearchResponse =
-        httpClient.get("search/users?q=$userName&page=$page&per_page=50").body()
+    override suspend fun searchUser(userName: String, page: Int, offset: Int): SearchResponse =
+        httpClient.get("search/users?q=$userName&page=$page&per_page=$offset").body()
 
     override suspend fun refreshUserDetails(userName: String): GitHubUserDetailsApiModel =
         httpClient.get("users/$userName").body()

@@ -33,15 +33,14 @@ import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 import io.imrekaszab.githubuserfinder.android.ui.widget.ErrorView
 import io.imrekaszab.githubuserfinder.android.ui.widget.GitHubUserDetailItemView
 import io.imrekaszab.githubuserfinder.android.ui.widget.LoadingView
-import io.imrekaszab.githubuserfinder.android.viewmodel.GitHubUserDetailsViewModel
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUserDetails
-import org.koin.androidx.compose.getViewModel
+import io.imrekaszab.githubuserfinder.viewmodel.GitHubUserDetailsViewModel
 
 @Composable
 fun GitHubUserDetailScreen(navController: NavController, userName: String?) {
-    val viewModel = getViewModel<GitHubUserDetailsViewModel>()
+    val viewModel = GitHubUserDetailsViewModel()
     val userDetails by viewModel.userDetails.collectAsState(initial = null)
-    val errorHappened by viewModel.errorStateFlow.collectAsState(initial = null)
+    val errorHappened by viewModel.error.collectAsState(initial = null)
 
     LaunchedEffect(Unit) {
         userName ?: return@LaunchedEffect

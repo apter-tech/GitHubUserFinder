@@ -9,46 +9,48 @@
 import SwiftUI
 
 struct GitHubUserListScreen: View {
-    @StateObject private var viewModel = GitHubUserListViewModel()
+    @StateObject private var observableViewModel = ObservableGitHubUserListViewModel()
 
     var body: some View {
         VStack(alignment: .center) {
             SearchBar { query in
-                Task {
-                    await viewModel.searchUser(userName: query)
-                }
+                    observableViewModel.viewModel.searchUser(userName: query)
             }
             Spacer()
-            if viewModel.isLoading {
+            if observableViewModel.isLoading {
                 ProgressView()
             } else {
                 List {
-                    ForEach(viewModel.items, id: \.id) { item in
+                    ForEach(observableViewModel.items, id: \.id) { item in
                         NavigationLink(destination: GitHubUserDetailsScreen(userName: item.login)) {
                             GitHubUserRow(item: item)
                         }
                     }
-                    if viewModel.isFetchingFinished == false {
+                    if !observableViewModel.isFetchingFinished {
                         HStack {
                             Spacer()
                             ProgressView()
                             Spacer()
                         }
                         .onAppear {
-                            Task {
-                                await viewModel.fetchNextPage()
-                            }
+                            observableViewModel.viewModel.requestNextPage()
                         }
                     }
                 }
-                .listStateModifier(viewModel.items.isEmpty) {
+                .listStateModifier(observableViewModel.items.isEmpty) {
                     Text("We don't have any content, sorry 😔")
                 }
-                .listStateModifier(viewModel.errorHappened) {
-                    Text("Something went wrong 🤯")
+                .listStateModifier(!observableViewModel.error.isEmpty) {
+                    Text("Something went wrong 🤯 \n\n" + observableViewModel.error)
                 }
             }
             Spacer()
+        }
+        .onAppear {
+            observableViewModel.activate()
+        }
+        .onDisappear {
+            observableViewModel.deactivate()
         }
     }
 }

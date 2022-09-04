@@ -1,0 +1,55 @@
+name: GitHubUserFinderKMM-iOS
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    paths-ignore:
+      - "**.md"
+      - "*.png"
+      - docs
+      - androidApp
+
+defaults:
+  run:
+    working-directory: ./iosApp
+
+jobs:
+  SwiftLint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: GitHub Action for SwiftLint (Only files changed in the PR)
+        uses: norio-nomura/action-swiftlint@3.2.1
+
+  build:
+    runs-on: macos-12
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: corretto
+          java-version: 11
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ../gradlew
+
+      - name: Select Xcode version
+        run: |
+          sudo xcode-select -s /Applications/Xcode_13.4.1.app
+
+      - name: Unit tests
+        run: |
+          cd ..
+          ./gradlew :shared:iosX64Test
+
+      - name: Build
+        run: |
+          xcodebuild build-for-testing \
+            -scheme iosApp \
+            -project iosApp.xcodeproj \
+            -destination "platform=iOS Simulator,name=iPhone 11"

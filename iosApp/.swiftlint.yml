@@ -90,14 +90,11 @@ empty_parameters:
 explicit_init:
   severity: error
 file_length:
-  - 300 #warning
-  - 400 #error
-  - ignore_comment_only_lines: true
+  warning: 300
+  error: 400
 force_cast:
   severity: error
 force_try:
-  severity: error
-force_unwrapping:
   severity: error
 function_body_length:
   - 60 #warning
@@ -174,8 +171,6 @@ vertical_whitespace:
 void_return:
   severity: error
 weak_delegate:
-  severity: error
-lower_acl_than_parent:
   severity: error
 first_where:
   severity: error
