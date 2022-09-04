@@ -7,6 +7,7 @@ object Versions {
     const val coroutines = "1.6.4"
     const val appCompat = "1.5.0"
     const val lifecycleViewModel = "2.5.1"
+    const val sqldelight = "1.5.3"
     const val kmpNativeCoroutines = "0.12.6"
 
     const val compose = "1.3.0-beta01"
@@ -52,6 +53,14 @@ object Ktor {
     const val ktorAndroid = "io.ktor:ktor-client-android:${Versions.ktor}"
     const val ktoriOS = "io.ktor:ktor-client-ios:${Versions.ktor}"
     const val logging = "io.ktor:ktor-client-logging:${Versions.ktor}"
+}
+
+
+object SQLDelight {
+    const val androidDriver = "com.squareup.sqldelight:android-driver:${Versions.sqldelight}"
+    const val native = "com.squareup.sqldelight:native-driver:${Versions.sqldelight}"
+    const val coroutines = "com.squareup.sqldelight:coroutines-extensions:${Versions.sqldelight}"
+    const val nativeDriver = "com.squareup.sqldelight:sqlite-driver:${Versions.sqldelight}"
 }
 
 object Log {

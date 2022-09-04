@@ -15,7 +15,11 @@ struct ClearButtonModifier: ViewModifier {
         ZStack(alignment: .trailing) {
             content
             if !text.isEmpty {
-                Button(action: { self.text = "" }) {
+                Button(
+                    action: {
+                        self.text = ""
+                    }
+                ) {
                     Image(systemName: "delete.left")
                         .foregroundColor(Color(UIColor.opaqueSeparator))
                 }

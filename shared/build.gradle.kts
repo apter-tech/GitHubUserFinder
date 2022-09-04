@@ -1,9 +1,10 @@
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.kotlin.plugin.serialization") version Versions.kotlin
+    id("com.rickclephas.kmp.nativecoroutines") version Versions.kmpNativeCoroutines
     id("com.android.library")
     id("org.jlleitschuh.gradle.ktlint")
-    id("com.rickclephas.kmp.nativecoroutines") version Versions.kmpNativeCoroutines
+    id("com.squareup.sqldelight")
 }
 
 kotlin {
@@ -30,6 +31,7 @@ kotlin {
                 implementation(Ktor.ktorSerialization)
                 implementation(Ktor.ktorContentNegotiation)
                 implementation(Ktor.logging)
+                implementation(SQLDelight.coroutines)
                 implementation(Log.kermit)
                 implementation(Log.slf4j)
             }
@@ -48,11 +50,17 @@ kotlin {
                 implementation(Ktor.ktorAndroid)
                 implementation(AndroidX.lifecycleViewModel)
                 implementation(AndroidX.lifecycleRuntime)
+                implementation(SQLDelight.androidDriver)
             }
         }
-        val androidTest by getting
+        val androidTest by getting {
+            dependencies {
+                implementation(SQLDelight.nativeDriver)
+            }
+        }
         val iosMain by getting {
             dependencies {
+                implementation(SQLDelight.native)
                 implementation(Ktor.ktoriOS)
             }
         }
@@ -72,5 +80,11 @@ android {
     defaultConfig {
         minSdk = Versions.minsdk
         targetSdk = Versions.targetsdk
+    }
+}
+
+sqldelight {
+    database("GitHubUserFinderDB") {
+        packageName = "io.imrekaszab.githubuserfinder.db"
     }
 }

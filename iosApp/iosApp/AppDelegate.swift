@@ -10,10 +10,15 @@ import UIKit
 import shared
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    lazy var log = koin.loggerWithTag(tag: "AppDelegate")
+
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
         let baseUrl = (Bundle.main.object(forInfoDictionaryKey: "BASE_URL") as? String) ?? ""
-        KoinKt.doInitKoin(baseUrl: baseUrl)
+        startKoin(baseUrl: baseUrl)
+        log.v(message: { "App Started on iOS" })
         return true
     }
 
@@ -26,7 +31,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
 
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
+    func application(
+        _ application: UIApplication,
+        didDiscardSceneSessions sceneSessions: Set<UISceneSession>
+    ) {
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.

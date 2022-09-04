@@ -14,7 +14,7 @@ import KMPNativeCoroutinesAsync
 class ObservableGitHubUserDetailsViewModel: ObservableObject {
     var viewModel = GitHubUserDetailsViewModel()
 
-    @Published public var userDetails: GitHubUserDetails?
+    @Published public var userDetails: GitHubUser?
 
     func activate() {
         Task {

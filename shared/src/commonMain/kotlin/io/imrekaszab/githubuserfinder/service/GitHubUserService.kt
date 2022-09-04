@@ -23,6 +23,7 @@ import org.koin.core.component.inject
 class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
     private val logger: Logger by injectLogger("GitHubUserService")
     private val gitHubApi: GitHubApi by inject()
+    private val gitHubUserRepository: GitHubUserRepository by inject()
 
     private val gitHubUserDetailsStateFlow = MutableStateFlow<GitHubUser?>(null)
     private val gitHubUserListStateFlow = MutableStateFlow<List<GitHubUser>>(listOf())
