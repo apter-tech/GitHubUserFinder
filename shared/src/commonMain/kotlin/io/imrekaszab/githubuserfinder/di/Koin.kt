@@ -25,7 +25,6 @@ import org.koin.core.component.inject
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.core.parameter.parametersOf
-import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 
 fun initKoin(baseUrl: String, appModule: Module): KoinApplication {

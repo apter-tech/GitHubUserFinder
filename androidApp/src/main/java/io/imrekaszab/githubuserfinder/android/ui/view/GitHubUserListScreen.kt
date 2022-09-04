@@ -50,7 +50,7 @@ fun GitHubUserListView(
     InfiniteLoadingListView(
         items = itemList,
         isFetchingFinished = isFetchingFinished,
-        loadMore = { loadMore() },
+        loadMore = { loadMore() }
     ) { _, item ->
         GitHubUserRow(item = item as GitHubUser) { userName ->
             navController.navigate(

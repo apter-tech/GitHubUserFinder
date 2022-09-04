@@ -21,6 +21,7 @@ object Versions {
     const val kermit = "1.1.3"
     const val slf4j = "2.0.0"
     const val ktlint = "11.0.0"
+    const val junitKtx = "1.1.3"
 }
 
 object AndroidX {
@@ -71,4 +72,5 @@ object Log {
 object Test {
     const val ktor = "io.ktor:ktor-client-mock:${Versions.ktor}"
     const val koin = "io.insert-koin:koin-test:${Versions.koin}"
+    const val junitKtx = "androidx.test.ext:junit-ktx:${Versions.junitKtx}"
 }

@@ -10,7 +10,8 @@ class GitHubUsersApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         val baseUrl = BuildConfig.BASE_PATH
-        initKoin(baseUrl,
+        initKoin(
+            baseUrl,
             module {
                 single<Context> { this@GitHubUsersApplication }
                 single {

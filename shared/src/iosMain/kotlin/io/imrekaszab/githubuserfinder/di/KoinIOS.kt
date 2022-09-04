@@ -12,7 +12,8 @@ import org.koin.dsl.module
 fun initKoinIos(
     baseUrl: String,
     doOnStartup: () -> Unit
-): KoinApplication = initKoin(baseUrl,
+): KoinApplication = initKoin(
+    baseUrl,
     module {
         single { doOnStartup }
     }

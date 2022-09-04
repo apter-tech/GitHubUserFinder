@@ -67,3 +67,5 @@ fun GitHubUser.toData() = GitHubUserDataModel(
     following = following.toLong(),
     publicRepos = publicRepos.toLong(),
 )
+
+fun List<GitHubUserDataModel>.toDomains() = map { it.toDomain() }

@@ -13,6 +13,7 @@ import io.imrekaszab.githubuserfinder.store.GitHubUserStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -46,7 +47,7 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
             gitHubPagingInfoStateFlow.emit(newPagingInfo)
         } catch (exception: Exception) {
             gitHubUserListStateFlow.emit(mutableListOf())
-            Logger.e("Error happened: $exception")
+            logger.e("Error happened: $exception")
             throw exception
         }
     }
@@ -89,13 +90,34 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
             }
         }
 
+    override suspend fun saveUser() = withContext(Dispatchers.Default) {
+        val user = gitHubUserDetailsStateFlow.first() ?: return@withContext
+        gitHubUserRepository.saveUser(user)
+    }
+
+    override suspend fun deleteUser() = withContext(Dispatchers.Default) {
+        val user = gitHubUserDetailsStateFlow.first() ?: return@withContext
+        gitHubUserRepository.deleteUser(user.id)
+    }
+
+    override suspend fun deleteAllUser() = withContext(Dispatchers.Default) {
+        gitHubUserRepository.deleteAll()
+    }
+
     override fun getUsers(): Flow<List<GitHubUser>> = gitHubUserListStateFlow
 
     override fun getUserDetails(): Flow<GitHubUser> =
         gitHubUserDetailsStateFlow
+            .combine(gitHubUserRepository.getSavedUserList()) { currentUserDetail, savedUserList ->
+                val savedUser = savedUserList.firstOrNull { it.id == currentUserDetail?.id }
+                return@combine savedUser ?: currentUserDetail
+            }
             .filterNotNull()
 
     override fun isFetchingFinished(): Flow<Boolean> =
         gitHubPagingInfoStateFlow
             .map { it.currentCount == it.totalItemCount }
+
+    override fun getSavedUsers(): Flow<List<GitHubUser>> =
+        gitHubUserRepository.getSavedUserList()
 }

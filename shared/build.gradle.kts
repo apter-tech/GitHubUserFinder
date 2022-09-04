@@ -55,6 +55,7 @@ kotlin {
         }
         val androidTest by getting {
             dependencies {
+                implementation(Test.junitKtx)
                 implementation(SQLDelight.nativeDriver)
             }
         }
