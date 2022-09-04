@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -31,7 +32,7 @@ import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 @Composable
 fun SearchAppBar(onSearchCLick: (String) -> Unit) {
     var query: String by rememberSaveable { mutableStateOf("") }
-    val showClearIcon by derivedStateOf { query.isNotEmpty() }
+    val showClearIcon by remember { derivedStateOf { query.isNotEmpty() } }
     val focusManager = LocalFocusManager.current
 
     Surface(

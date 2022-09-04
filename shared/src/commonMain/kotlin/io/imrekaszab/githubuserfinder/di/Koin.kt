@@ -8,7 +8,6 @@ import io.imrekaszab.githubuserfinder.api.GitHubApiImpl
 import io.imrekaszab.githubuserfinder.repository.GitHubUserRepository
 import io.imrekaszab.githubuserfinder.repository.GitHubUserRepositoryImpl
 import io.ktor.client.HttpClient
-import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
