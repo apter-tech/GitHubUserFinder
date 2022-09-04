@@ -10,7 +10,7 @@ import SwiftUI
 
 struct GitHubUserListScreen: View {
     @StateObject private var observableViewModel = ObservableGitHubUserListViewModel()
-    
+
     var body: some View {
         VStack(alignment: .center) {
             SearchBar { query in

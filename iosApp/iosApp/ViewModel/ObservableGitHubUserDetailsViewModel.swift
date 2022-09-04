@@ -12,10 +12,10 @@ import KMPNativeCoroutinesAsync
 
 @MainActor
 class ObservableGitHubUserDetailsViewModel: ObservableObject {
-    var viewModel: GitHubUserDetailsViewModel = GitHubUserDetailsViewModel()
-    
+    var viewModel = GitHubUserDetailsViewModel()
+
     @Published public var userDetails: GitHubUserDetails?
-    
+
     func activate() {
         Task {
             do {
@@ -27,7 +27,7 @@ class ObservableGitHubUserDetailsViewModel: ObservableObject {
             }
         }
     }
-    
+
     func deactivate() {
         viewModel.clear()
     }

@@ -12,7 +12,7 @@ import shared
 struct GitHubUserDetailsScreen: View {
     @StateObject private var observableViewModel = ObservableGitHubUserDetailsViewModel()
     var userName: String
-    
+
     var body: some View {
         ScrollView {
             if let userDetails = observableViewModel.userDetails {

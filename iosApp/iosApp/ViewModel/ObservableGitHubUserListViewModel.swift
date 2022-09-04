@@ -14,14 +14,14 @@ import KMPNativeCoroutinesAsync
 
 @MainActor
 class ObservableGitHubUserListViewModel: ObservableObject {
-    var viewModel: GitHubUserListViewModel = GitHubUserListViewModel()
-    
+    var viewModel = GitHubUserListViewModel()
+
     @Published public var items: [GitHubUser] = []
     @Published public var isLoading = false
     @Published public var isFetchingFinished = false
     @Published public var error: String = ""
     var cancellables = Set<AnyCancellable>()
-    
+
     init() {
         createPublisher(for: viewModel.isFetchingFinishedNative)
             .receive(on: DispatchQueue.main)
@@ -48,7 +48,7 @@ class ObservableGitHubUserListViewModel: ObservableObject {
             }
         }
     }
-    
+
     func deactivate() {
         viewModel.clear()
     }
