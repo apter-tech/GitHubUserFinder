@@ -7,9 +7,9 @@ object Versions {
     const val coroutines = "1.6.4"
     const val appCompat = "1.5.0"
     const val lifecycleViewModel = "2.5.1"
-    const val kmpNativeCoroutines = "0.12.6-new-mm"
+    const val kmpNativeCoroutines = "0.12.6"
 
-    const val compose = "1.3.0-alpha03"
+    const val compose = "1.3.0-beta01"
     const val composeActivity = "1.5.1"
     const val composeCompiler = "1.3.0"
     const val composeCoil = "2.2.0"
@@ -18,7 +18,8 @@ object Versions {
     const val koin = "3.2.0"
     const val ktor = "2.1.0"
     const val kermit = "1.1.3"
-    const val ktlint = "10.3.0"
+    const val slf4j = "2.0.0"
+    const val ktlint = "11.0.0"
 }
 
 object AndroidX {
@@ -53,8 +54,9 @@ object Ktor {
     const val logging = "io.ktor:ktor-client-logging:${Versions.ktor}"
 }
 
-object Kermit {
-    const val logging = "co.touchlab:kermit:${Versions.kermit}"
+object Log {
+    const val kermit = "co.touchlab:kermit:${Versions.kermit}"
+    const val slf4j = "org.slf4j:slf4j-simple:${Versions.slf4j}"
 }
 
 object Test {

@@ -30,7 +30,8 @@ kotlin {
                 implementation(Ktor.ktorSerialization)
                 implementation(Ktor.ktorContentNegotiation)
                 implementation(Ktor.logging)
-                implementation(Kermit.logging)
+                implementation(Log.kermit)
+                implementation(Log.slf4j)
             }
         }
         val commonTest by getting {
