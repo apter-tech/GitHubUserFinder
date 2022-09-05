@@ -107,7 +107,7 @@ class GitHubUserServiceTest : KoinTest {
         val result = store.getUserDetails().first()
 
         // Then
-        assertEquals(result.login, userName)
+        assertEquals(result?.login, userName)
     }
 
     @Test
@@ -121,7 +121,7 @@ class GitHubUserServiceTest : KoinTest {
         val result = store.getUserDetails().first()
 
         // Then
-        assertEquals(result.login, userName)
+        assertEquals(result?.login, userName)
     }
 
     @Test

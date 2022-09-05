@@ -48,7 +48,8 @@ fun GitHubUserDataModel.toDomain() =
         twitterUsername = twitterUsername,
         followers = followers.toInt(),
         following = following.toInt(),
-        publicRepos = publicRepos.toInt()
+        publicRepos = publicRepos.toInt(),
+        favourite = true
     )
 
 fun GitHubUser.toData() = GitHubUserDataModel(
@@ -65,7 +66,7 @@ fun GitHubUser.toData() = GitHubUserDataModel(
     twitterUsername = twitterUsername,
     followers = followers.toLong(),
     following = following.toLong(),
-    publicRepos = publicRepos.toLong(),
+    publicRepos = publicRepos.toLong()
 )
 
 fun List<GitHubUserDataModel>.toDomains() = map { it.toDomain() }

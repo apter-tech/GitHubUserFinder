@@ -6,6 +6,7 @@ import io.imrekaszab.githubuserfinder.store.GitHubUserStore
 import io.imrekaszab.githubuserfinder.util.CommonViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -15,6 +16,7 @@ class GitHubUserDetailsViewModel : CommonViewModel(), KoinComponent {
     private val gitHubUserAction: GitHubUserAction by inject()
     private val gitHubUserStore: GitHubUserStore by inject()
     val userDetails: Flow<GitHubUser> = gitHubUserStore.getUserDetails()
+        .filterNotNull()
         .flowOn(Dispatchers.Main)
 
     fun refreshUserDetails(userName: String) {
@@ -22,6 +24,28 @@ class GitHubUserDetailsViewModel : CommonViewModel(), KoinComponent {
             try {
                 errorStateFlow.value = null
                 gitHubUserAction.refreshUserDetails(userName)
+            } catch (ex: Exception) {
+                errorStateFlow.value = ex.toString()
+            }
+        }
+    }
+
+    fun saveUser() {
+        mainScope.launch {
+            try {
+                errorStateFlow.value = null
+                gitHubUserAction.saveUser()
+            } catch (ex: Exception) {
+                errorStateFlow.value = ex.toString()
+            }
+        }
+    }
+
+    fun deleteUser() {
+        mainScope.launch {
+            try {
+                errorStateFlow.value = null
+                gitHubUserAction.deleteUser()
             } catch (ex: Exception) {
                 errorStateFlow.value = ex.toString()
             }

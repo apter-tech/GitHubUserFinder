@@ -43,9 +43,9 @@ class DatabaseHelper(
             )
         }
 
-    fun selectById(id: Long): Flow<List<GitHubUserDataModel>> =
+    fun selectByUserName(userName: String): Flow<List<GitHubUserDataModel>> =
         database.gitHubUserDataModelQueries
-            .selectById(id)
+            .selectByUserName(userName)
             .asFlow()
             .mapToList()
             .flowOn(backgroundDispatcher)

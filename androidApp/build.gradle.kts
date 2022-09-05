@@ -45,6 +45,7 @@ dependencies {
     implementation(Compose.coilCompose)
     implementation(Compose.navigation)
     implementation(Compose.preview)
+    debugImplementation(Compose.tooling)
 
     // DI
     implementation(Koin.core)

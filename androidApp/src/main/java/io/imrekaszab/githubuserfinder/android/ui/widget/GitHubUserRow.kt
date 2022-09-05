@@ -1,15 +1,20 @@
 package io.imrekaszab.githubuserfinder.android.ui.widget
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,7 +24,11 @@ import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
 
 @Composable
-fun GitHubUserRow(item: GitHubUser, onItemCLick: (String) -> Unit) {
+fun GitHubUserRow(
+    item: GitHubUser,
+    showFavouriteIconOnItem: Boolean,
+    onItemCLick: (String) -> Unit
+) {
     Card(
         modifier = Modifier
             .padding(Dimens.tiny)
@@ -32,6 +41,7 @@ fun GitHubUserRow(item: GitHubUser, onItemCLick: (String) -> Unit) {
         elevation = Dimens.tiny
     ) {
         Row(
+            horizontalArrangement = Arrangement.Start,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(Dimens.default),
@@ -54,6 +64,13 @@ fun GitHubUserRow(item: GitHubUser, onItemCLick: (String) -> Unit) {
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(Dimens.tiny)
             )
+            Spacer(modifier = Modifier.weight(1.0f))
+            if (showFavouriteIconOnItem && item.favourite) {
+                Icon(
+                    imageVector = Icons.Default.Favorite,
+                    contentDescription = "Favourite user"
+                )
+            }
         }
     }
 }

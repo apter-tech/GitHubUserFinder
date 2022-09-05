@@ -10,7 +10,7 @@ object Versions {
     const val sqldelight = "1.5.3"
     const val kmpNativeCoroutines = "0.12.6"
 
-    const val compose = "1.3.0-beta01"
+    const val compose = "1.3.0-alpha03"
     const val composeActivity = "1.5.1"
     const val composeCompiler = "1.3.0"
     const val composeCoil = "2.2.0"
@@ -39,6 +39,7 @@ object Compose {
     const val coilCompose = "io.coil-kt:coil-compose:${Versions.composeCoil}"
     const val navigation = "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
     const val preview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
+    const val tooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
 }
 
 object Koin {

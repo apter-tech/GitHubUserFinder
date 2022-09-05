@@ -26,9 +26,9 @@ class GitHubUserRepositoryImpl : GitHubUserRepository, KoinComponent {
         databaseHelper.deleteAll()
     }
 
-    override fun getUserById(userId: Int): Flow<GitHubUser> =
-        databaseHelper.selectById(userId.toLong())
-            .map { it.first().toDomain() }
+    override fun getUserByUserName(userName: String): Flow<GitHubUser?> =
+        databaseHelper.selectByUserName(userName)
+            .map { it.firstOrNull()?.toDomain() }
 
     override fun getSavedUserList(): Flow<List<GitHubUser>> =
         databaseHelper.selectAllItems()

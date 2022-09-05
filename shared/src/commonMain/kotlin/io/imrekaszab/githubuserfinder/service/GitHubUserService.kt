@@ -14,7 +14,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -82,7 +81,10 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
     override suspend fun refreshUserDetails(userName: String) =
         withContext(Dispatchers.Default) {
             try {
-                val result = gitHubApi.refreshUserDetails(userName).toDomain()
+                var result = gitHubUserRepository.getUserByUserName(userName).first()
+                if (result == null) {
+                    result = gitHubApi.refreshUserDetails(userName).toDomain()
+                }
                 gitHubUserDetailsStateFlow.emit(result)
             } catch (exception: Exception) {
                 logger.e("Error happened: $exception")
@@ -91,13 +93,15 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
         }
 
     override suspend fun saveUser() = withContext(Dispatchers.Default) {
-        val user = gitHubUserDetailsStateFlow.first() ?: return@withContext
+        val user = getUserDetails().first() ?: return@withContext
         gitHubUserRepository.saveUser(user)
+        gitHubUserDetailsStateFlow.emit(user.copy(favourite = true))
     }
 
     override suspend fun deleteUser() = withContext(Dispatchers.Default) {
-        val user = gitHubUserDetailsStateFlow.first() ?: return@withContext
+        val user = getUserDetails().first() ?: return@withContext
         gitHubUserRepository.deleteUser(user.id)
+        gitHubUserDetailsStateFlow.emit(user.copy(favourite = false))
     }
 
     override suspend fun deleteAllUser() = withContext(Dispatchers.Default) {
@@ -105,14 +109,15 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
     }
 
     override fun getUsers(): Flow<List<GitHubUser>> = gitHubUserListStateFlow
+        .combine(getSavedUsers()) { currentList, savedList ->
+            currentList.map { item -> item.copy(favourite = savedList.any { it.id == item.id }) }
+        }
 
-    override fun getUserDetails(): Flow<GitHubUser> =
+    override fun getUserDetails(): Flow<GitHubUser?> =
         gitHubUserDetailsStateFlow
             .combine(gitHubUserRepository.getSavedUserList()) { currentUserDetail, savedUserList ->
-                val savedUser = savedUserList.firstOrNull { it.id == currentUserDetail?.id }
-                return@combine savedUser ?: currentUserDetail
+                savedUserList.firstOrNull { it.id == currentUserDetail?.id } ?: currentUserDetail
             }
-            .filterNotNull()
 
     override fun isFetchingFinished(): Flow<Boolean> =
         gitHubPagingInfoStateFlow

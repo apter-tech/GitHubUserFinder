@@ -25,7 +25,14 @@ fun GitHubUserListScreen(navController: NavController) {
     val itemList by viewModel.users.collectAsState(initial = emptyList())
     val isFetchingFinished by viewModel.isFetchingFinished.collectAsState(initial = false)
 
-    Scaffold(topBar = { SearchAppBar { viewModel.searchUser(it) } }) {
+    Scaffold(topBar = {
+        SearchAppBar(
+            onSearchCLick = { viewModel.searchUser(it) },
+            onStarClick = {
+                navController.navigate(GitHubUserScreens.FavouriteGitHubUsersScreen.route)
+            }
+        )
+    }) {
         when {
             !errorHappened.isNullOrEmpty() -> ErrorView(errorHappened)
             isLoading -> LoadingView()
@@ -33,6 +40,7 @@ fun GitHubUserListScreen(navController: NavController) {
             else -> GitHubUserListView(
                 navController = navController,
                 itemList = itemList,
+                showFavouriteIconOnItem = true,
                 isFetchingFinished = isFetchingFinished,
                 loadMore = { viewModel.requestNextPage() }
             )
@@ -44,15 +52,16 @@ fun GitHubUserListScreen(navController: NavController) {
 fun GitHubUserListView(
     navController: NavController,
     itemList: List<GitHubUser>,
-    isFetchingFinished: Boolean,
-    loadMore: () -> Unit
+    showFavouriteIconOnItem: Boolean = false,
+    isFetchingFinished: Boolean = true,
+    loadMore: () -> Unit = {}
 ) {
     InfiniteLoadingListView(
         items = itemList,
         isFetchingFinished = isFetchingFinished,
         loadMore = { loadMore() }
     ) { _, item ->
-        GitHubUserRow(item = item as GitHubUser) { userName ->
+        GitHubUserRow(item = item as GitHubUser, showFavouriteIconOnItem) { userName ->
             navController.navigate(
                 GitHubUserScreens.GitHubUserDetailScreen.route + "/$userName"
             )

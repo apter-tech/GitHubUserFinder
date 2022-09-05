@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
@@ -31,6 +30,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 import io.imrekaszab.githubuserfinder.android.ui.widget.ErrorView
+import io.imrekaszab.githubuserfinder.android.ui.widget.FavoriteButton
 import io.imrekaszab.githubuserfinder.android.ui.widget.GitHubUserDetailItemView
 import io.imrekaszab.githubuserfinder.android.ui.widget.LoadingView
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
@@ -50,7 +50,10 @@ fun GitHubUserDetailScreen(navController: NavController, userName: String?) {
         TopAppBar {
             Row(
                 horizontalArrangement = Arrangement.Start,
-                modifier = Modifier.padding(start = Dimens.tiny)
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(start = Dimens.tiny)
+                    .fillMaxWidth()
             ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
@@ -59,8 +62,23 @@ fun GitHubUserDetailScreen(navController: NavController, userName: String?) {
                         navController.popBackStack()
                     }
                 )
-                Spacer(modifier = Modifier.width(Dimens.default))
-                Text(text = userDetails?.login ?: "", style = MaterialTheme.typography.h6)
+                Text(
+                    modifier = Modifier
+                        .padding(start = Dimens.default),
+                    text = userDetails?.login ?: "",
+                    style = MaterialTheme.typography.h6
+                )
+                Spacer(modifier = Modifier.weight(1.0f))
+                FavoriteButton(
+                    isFavourite = userDetails?.favourite ?: false,
+                    Modifier.padding(end = Dimens.tiny)
+                ) {
+                    if (it) {
+                        viewModel.saveUser()
+                    } else {
+                        viewModel.deleteUser()
+                    }
+                }
             }
         }
     }) {

@@ -7,6 +7,6 @@ interface GitHubUserRepository {
     suspend fun saveUser(user: GitHubUser)
     suspend fun deleteUser(userId: Int)
     suspend fun deleteAll()
-    fun getUserById(userId: Int): Flow<GitHubUser>
+    fun getUserByUserName(userName: String): Flow<GitHubUser?>
     fun getSavedUserList(): Flow<List<GitHubUser>>
 }

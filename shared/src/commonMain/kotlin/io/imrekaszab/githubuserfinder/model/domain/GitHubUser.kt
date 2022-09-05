@@ -14,5 +14,6 @@ data class GitHubUser(
     val twitterUsername: String? = null,
     val followers: Int = 0,
     val following: Int = 0,
-    val publicRepos: Int = 0
+    val publicRepos: Int = 0,
+    val favourite: Boolean = false
 )

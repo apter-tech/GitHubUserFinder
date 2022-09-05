@@ -18,8 +18,8 @@ publicRepos INTEGER NOT NULL
 selectAll:
 SELECT * FROM GitHubUserDataModel;
 
-selectById:
-SELECT * FROM GitHubUserDataModel WHERE id = ?;
+selectByUserName:
+SELECT * FROM GitHubUserDataModel WHERE login = ?;
 
 insertUser:
 INSERT OR IGNORE INTO GitHubUserDataModel(id, login, avatarUrl, score, name, company, blog, location, email, bio, twitterUsername,followers, following, publicRepos)
