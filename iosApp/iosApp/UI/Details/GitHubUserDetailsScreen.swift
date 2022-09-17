@@ -10,7 +10,7 @@ import SwiftUI
 import shared
 
 struct GitHubUserDetailsScreen: View {
-    @StateObject private var observableViewModel = ObservableGitHubUserDetailsViewModel()
+    @StateObject private var observableViewModel = GitHubUserDetailsViewModelImpl()
     var userName: String
 
     var body: some View {
@@ -43,6 +43,23 @@ struct GitHubUserDetailsScreen: View {
             }
         }
         .navigationBarTitle(Text(userName))
+        .toolbar {
+                HStack {
+                    Button(action: {
+                        if observableViewModel.userDetails?.favourite ?? false {
+                            observableViewModel.viewModel.deleteUser()
+                        } else {
+                            observableViewModel.viewModel.saveUser()
+                        }
+                    }) {
+                        if observableViewModel.userDetails?.favourite ?? false {
+                            Image(systemName: "star.circle.fill")
+                        } else {
+                            Image(systemName: "star.circle")
+                        }
+                    }
+                }
+        }
         .onAppear {
             observableViewModel.activate()
             observableViewModel.viewModel.refreshUserDetails(userName: userName)

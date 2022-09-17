@@ -9,12 +9,12 @@
 import SwiftUI
 
 struct GitHubUserListScreen: View {
-    @StateObject private var observableViewModel = ObservableGitHubUserListViewModel()
+    @StateObject private var observableViewModel = GitHubUserListViewModelImpl()
 
     var body: some View {
         VStack(alignment: .center) {
             SearchBar { query in
-                    observableViewModel.viewModel.searchUser(userName: query)
+                observableViewModel.viewModel.searchUser(userName: query)
             }
             Spacer()
             if observableViewModel.isLoading {
@@ -46,11 +46,14 @@ struct GitHubUserListScreen: View {
             }
             Spacer()
         }
-        .onAppear {
-            observableViewModel.activate()
+        .toolbar {
+            HStack {
+                NavigationLink(destination: FavouriteUsersScreen()) {
+                    Image(systemName: "star.circle")
+                }
+            }
         }
-        .onDisappear {
-            observableViewModel.deactivate()
-        }
+        .navigationTitle("GutHubUserFinder")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

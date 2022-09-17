@@ -26,6 +26,10 @@ struct GitHubUserRow: View {
                     .lineLimit(1)
                     .font(.system(size: 16, weight: .heavy, design: .default))
             }
+            Spacer()
+            if item.favourite {
+                Image(systemName: "star.fill")
+            }
         }
         .padding(4)
     }

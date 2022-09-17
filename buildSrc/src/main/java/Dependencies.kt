@@ -57,7 +57,6 @@ object Ktor {
     const val logging = "io.ktor:ktor-client-logging:${Versions.ktor}"
 }
 
-
 object SQLDelight {
     const val androidDriver = "com.squareup.sqldelight:android-driver:${Versions.sqldelight}"
     const val native = "com.squareup.sqldelight:native-driver:${Versions.sqldelight}"

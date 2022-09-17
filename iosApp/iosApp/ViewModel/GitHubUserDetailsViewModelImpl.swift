@@ -1,5 +1,5 @@
 //
-//  ObservableGitHubUserDetailsViewModel.swift
+//  GitHubUserDetailsViewModelImpl.swift
 //  iosApp
 //
 //  Created by Imre Kaszab on 2022. 04. 10..
@@ -11,7 +11,7 @@ import shared
 import KMPNativeCoroutinesAsync
 
 @MainActor
-class ObservableGitHubUserDetailsViewModel: ObservableObject {
+class GitHubUserDetailsViewModelImpl: ObservableObject {
     var viewModel = GitHubUserDetailsViewModel()
 
     @Published public var userDetails: GitHubUser?

@@ -1,5 +1,5 @@
 //
-//  ObservableGitHubUserListViewModel.swift
+//  GitHubUserListViewModelImpl.swift
 //  iosApp
 //
 //  Created by Imre Kaszab on 2022. 04. 10..
@@ -13,7 +13,7 @@ import KMPNativeCoroutinesCombine
 import KMPNativeCoroutinesAsync
 
 @MainActor
-class ObservableGitHubUserListViewModel: ObservableObject {
+class GitHubUserListViewModelImpl: ObservableObject {
     var viewModel = GitHubUserListViewModel()
 
     @Published public var items: [GitHubUser] = []
@@ -29,27 +29,26 @@ class ObservableGitHubUserListViewModel: ObservableObject {
                 self?.isFetchingFinished = value.boolValue
             }
             .store(in: &cancellables)
-    }
 
-    func activate() {
-        Task {
-            do {
-                for try await value in asyncStream(for: viewModel.usersNative) {
-                    self.items = value
-                }
-                for try await value in asyncStream(for: viewModel.isLoadingNative) {
-                    self.isLoading = value.boolValue
-                }
-                for try await value in asyncStream(for: viewModel.errorNative) {
-                    self.error = value
-                }
-            } catch {
-                print("Failed with error: \(error)")
+        createPublisher(for: viewModel.usersNative)
+            .receive(on: DispatchQueue.main)
+            .sink { _ in } receiveValue: { [weak self] value in
+                self?.items = value
             }
-        }
-    }
+            .store(in: &cancellables)
 
-    func deactivate() {
-        viewModel.clear()
+        createPublisher(for: viewModel.isLoadingNative)
+            .receive(on: DispatchQueue.main)
+            .sink { _ in } receiveValue: { [weak self] value in
+                self?.isLoading = value.boolValue
+            }
+            .store(in: &cancellables)
+
+        createPublisher(for: viewModel.errorNative)
+            .receive(on: DispatchQueue.main)
+            .sink { _ in } receiveValue: { [weak self] value in
+                self?.error = value
+            }
+            .store(in: &cancellables)
     }
 }
