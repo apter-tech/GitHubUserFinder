@@ -7,41 +7,44 @@
 //
 
 import SwiftUI
+import shared
 
 struct GitHubUserListScreen: View {
-    @StateObject private var observableViewModel = GitHubUserListViewModelImpl()
+    @StateObject private var reducer =
+    ReducerViewModel<UserListScreenState,
+                     GitHubUserListViewModel>(viewModel: GitHubUserListViewModel())
 
     var body: some View {
         VStack(alignment: .center) {
             SearchBar { query in
-                observableViewModel.viewModel.searchUser(userName: query)
+                reducer.viewModel.searchUser(userName: query)
             }
             Spacer()
-            if observableViewModel.isLoading {
+            if reducer.viewModel.stateNativeValue.isLoading {
                 ProgressView()
             } else {
                 List {
-                    ForEach(observableViewModel.items, id: \.id) { item in
+                    ForEach(reducer.viewModel.stateNativeValue.data, id: \.id) { item in
                         NavigationLink(destination: GitHubUserDetailsScreen(userName: item.login)) {
                             GitHubUserRow(item: item)
                         }
                     }
-                    if !observableViewModel.isFetchingFinished {
+                    if !reducer.viewModel.stateNativeValue.isFetchingFinished {
                         HStack {
                             Spacer()
                             ProgressView()
                             Spacer()
                         }
                         .onAppear {
-                            observableViewModel.viewModel.requestNextPage()
+                            reducer.viewModel.requestNextPage()
                         }
                     }
                 }
-                .listStateModifier(observableViewModel.items.isEmpty) {
+                .listStateModifier(reducer.viewModel.stateNativeValue.data.isEmpty) {
                     Text("We don't have any content, sorry 😔")
                 }
-                .listStateModifier(!observableViewModel.error.isEmpty) {
-                    Text("Something went wrong 🤯 \n\n" + observableViewModel.error)
+                .listStateModifier(!reducer.viewModel.stateNativeValue.error.isEmpty) {
+                    Text("Something went wrong 🤯 \n\n" + reducer.viewModel.stateNativeValue.error)
                 }
             }
             Spacer()

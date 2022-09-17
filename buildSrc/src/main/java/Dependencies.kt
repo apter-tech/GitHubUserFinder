@@ -22,6 +22,7 @@ object Versions {
     const val slf4j = "2.0.0"
     const val ktlint = "11.0.0"
     const val junitKtx = "1.1.3"
+    const val turbine = "0.10.0"
 }
 
 object AndroidX {
@@ -73,4 +74,6 @@ object Test {
     const val ktor = "io.ktor:ktor-client-mock:${Versions.ktor}"
     const val koin = "io.insert-koin:koin-test:${Versions.koin}"
     const val junitKtx = "androidx.test.ext:junit-ktx:${Versions.junitKtx}"
+    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
+    const val turbine = "app.cash.turbine:turbine:${Versions.turbine}"
 }

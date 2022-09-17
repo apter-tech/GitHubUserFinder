@@ -41,6 +41,8 @@ kotlin {
                 implementation(kotlin("test-junit"))
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
+                implementation(Test.coroutines)
+                implementation(Test.turbine)
                 implementation(Test.ktor)
                 implementation(Test.koin)
             }
