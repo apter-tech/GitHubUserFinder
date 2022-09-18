@@ -32,7 +32,8 @@ struct GitHubUserDetailsScreen: View {
                     VStack {
                         GitHubUserDetailItemView(label: "Followers", value: String(userDetails.followers))
                         GitHubUserDetailItemView(label: "Following", value: String(userDetails.following))
-                        GitHubUserDetailItemView(label: "Public repos", value: String(userDetails.publicRepos))
+                        GitHubUserDetailItemView(label: "Public repos",
+                                                 value: String(userDetails.publicRepos))
                         GitHubUserDetailItemView(label: "Company", value: userDetails.company)
                         GitHubUserDetailItemView(label: "Location", value: userDetails.location)
                         GitHubUserDetailItemView(label: "Email", value: userDetails.email)

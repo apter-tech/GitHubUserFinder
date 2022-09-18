@@ -26,7 +26,6 @@ data class UserListScreenState(
         )
     }
 
-    override fun toString(): String {
-        return "isLoading: $isLoading, data.size: ${data.size}, isFetchingFinished: $isFetchingFinished"
-    }
+    override fun toString() =
+        "isLoading: $isLoading, data.size: ${data.size}, isFetchingFinished: $isFetchingFinished"
 }

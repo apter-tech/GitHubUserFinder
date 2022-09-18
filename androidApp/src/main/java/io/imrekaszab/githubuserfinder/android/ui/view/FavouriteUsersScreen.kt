@@ -17,7 +17,6 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -29,14 +28,13 @@ import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 import io.imrekaszab.githubuserfinder.android.ui.widget.EmptyView
 import io.imrekaszab.githubuserfinder.android.ui.widget.ErrorView
 import io.imrekaszab.githubuserfinder.android.ui.widget.RemoveAllUserDialog
-import io.imrekaszab.githubuserfinder.viewmodel.FavouriteUsersViewModel
+import io.imrekaszab.githubuserfinder.viewmodel.favourite.FavouriteUsersViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun FavouriteGitHubUsersScreen(navController: NavController) {
-    val viewModel = FavouriteUsersViewModel()
-    val errorHappened by viewModel.error.collectAsState(initial = null)
-    val itemList by viewModel.users.collectAsState(initial = emptyList())
+    val viewModel = remember { FavouriteUsersViewModel() }
+    val state = viewModel.state.collectAsState()
     val showRemoveDialog = remember { mutableStateOf(false) }
 
     Scaffold(topBar = {
@@ -61,7 +59,7 @@ fun FavouriteGitHubUsersScreen(navController: NavController) {
                     modifier = Modifier.padding(start = Dimens.default)
                 )
                 Spacer(modifier = Modifier.weight(1.0f))
-                if (itemList.isNotEmpty()) {
+                if (state.value.data.isNotEmpty()) {
                     Icon(
                         imageVector = Icons.Default.Clear,
                         contentDescription = "Remove all user",
@@ -83,11 +81,11 @@ fun FavouriteGitHubUsersScreen(navController: NavController) {
                     showRemoveDialog.value = false
                 }
             )
-            !errorHappened.isNullOrEmpty() -> ErrorView(errorHappened)
-            itemList.isEmpty() -> EmptyView()
+            state.value.error.isNotEmpty() -> ErrorView(state.value.error)
+            state.value.data.isEmpty() -> EmptyView()
             else -> GitHubUserListView(
                 navController = navController,
-                itemList = itemList
+                itemList = state.value.data
             )
         }
     }

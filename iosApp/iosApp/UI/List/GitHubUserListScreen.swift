@@ -15,21 +15,22 @@ struct GitHubUserListScreen: View {
                      GitHubUserListViewModel>(viewModel: GitHubUserListViewModel())
 
     var body: some View {
+        let state = reducer.viewModel.stateNativeValue
         VStack(alignment: .center) {
             SearchBar { query in
                 reducer.viewModel.searchUser(userName: query)
             }
             Spacer()
-            if reducer.viewModel.stateNativeValue.isLoading {
+            if state.isLoading {
                 ProgressView()
             } else {
                 List {
-                    ForEach(reducer.viewModel.stateNativeValue.data, id: \.id) { item in
+                    ForEach(state.data, id: \.id) { item in
                         NavigationLink(destination: GitHubUserDetailsScreen(userName: item.login)) {
                             GitHubUserRow(item: item)
                         }
                     }
-                    if !reducer.viewModel.stateNativeValue.isFetchingFinished {
+                    if !state.isFetchingFinished {
                         HStack {
                             Spacer()
                             ProgressView()
@@ -40,11 +41,11 @@ struct GitHubUserListScreen: View {
                         }
                     }
                 }
-                .listStateModifier(reducer.viewModel.stateNativeValue.data.isEmpty) {
+                .listStateModifier(state.data.isEmpty) {
                     Text("We don't have any content, sorry 😔")
                 }
-                .listStateModifier(!reducer.viewModel.stateNativeValue.error.isEmpty) {
-                    Text("Something went wrong 🤯 \n\n" + reducer.viewModel.stateNativeValue.error)
+                .listStateModifier(!state.error.isEmpty) {
+                    Text("Something went wrong 🤯 \n\n" + state.error)
                 }
             }
             Spacer()

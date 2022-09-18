@@ -7,32 +7,37 @@
 //
 
 import SwiftUI
+import shared
 
 struct FavouriteUsersScreen: View {
-    @StateObject private var observableViewModel = FavouriteUsersViewModelImpl()
+    @StateObject private var reducer =
+    ReducerViewModel<FavouriteUsersScreenState,
+                     FavouriteUsersViewModel>(viewModel: FavouriteUsersViewModel())
     @State private var showConfirmDialog = false
 
     var body: some View {
+        let state = reducer.viewModel.stateNativeValue
+
         VStack(alignment: .center) {
             Spacer()
             List {
-                ForEach(observableViewModel.itemList, id: \.id) { item in
+                ForEach(state.data, id: \.id) { item in
                     NavigationLink(destination: GitHubUserDetailsScreen(userName: item.login)) {
                         GitHubUserRow(item: item)
                     }
                 }
             }
-            .listStateModifier(observableViewModel.itemList.isEmpty) {
+            .listStateModifier(state.data.isEmpty) {
                 Text("We don't have any content, sorry 😔")
             }
-            .listStateModifier(!observableViewModel.error.isEmpty) {
-                Text("Something went wrong 🤯 \n\n" + observableViewModel.error)
+            .listStateModifier(!state.error.isEmpty) {
+                Text("Something went wrong 🤯 \n\n" + state.error)
             }
             Spacer()
         }
         .navigationTitle("Favourite users")
         .toolbar {
-            if !observableViewModel.itemList.isEmpty {
+            if !state.data.isEmpty {
                 HStack {
                     Button(action: { showConfirmDialog.toggle() }) {
                         Image(systemName: "pip.remove")
@@ -43,7 +48,7 @@ struct FavouriteUsersScreen: View {
         .confirmationDialog("Remove all user", isPresented: $showConfirmDialog, actions: {
             HStack {
                 Button("Remove all users") {
-                    observableViewModel.viewModel.deleteAllUser()
+                    reducer.viewModel.deleteAllUser()
                 }
             }
         })

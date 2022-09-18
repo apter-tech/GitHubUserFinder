@@ -23,7 +23,6 @@
 		A751E2DB280497CA00B559D4 /* GitHubUserDetailBioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A751E2DA280497CA00B559D4 /* GitHubUserDetailBioView.swift */; };
 		A751E2DE2809CDAA00B559D4 /* ListStateViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A751E2DD2809CDAA00B559D4 /* ListStateViewModifier.swift */; };
 		A780648F28D5F7910011ED92 /* FavouriteUsersScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780648E28D5F7910011ED92 /* FavouriteUsersScreen.swift */; };
-		A780649128D5F7B50011ED92 /* FavouriteUsersViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780649028D5F7B50011ED92 /* FavouriteUsersViewModelImpl.swift */; };
 		A7830BDF28B0F175006294A8 /* KMPNativeCoroutinesAsync in Frameworks */ = {isa = PBXBuildFile; productRef = A7830BDE28B0F175006294A8 /* KMPNativeCoroutinesAsync */; };
 		A7830BE128B0F175006294A8 /* KMPNativeCoroutinesCombine in Frameworks */ = {isa = PBXBuildFile; productRef = A7830BE028B0F175006294A8 /* KMPNativeCoroutinesCombine */; };
 		A7830BE328B0F175006294A8 /* KMPNativeCoroutinesCore in Frameworks */ = {isa = PBXBuildFile; productRef = A7830BE228B0F175006294A8 /* KMPNativeCoroutinesCore */; };
@@ -62,7 +61,6 @@
 		A751E2DA280497CA00B559D4 /* GitHubUserDetailBioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubUserDetailBioView.swift; sourceTree = "<group>"; };
 		A751E2DD2809CDAA00B559D4 /* ListStateViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListStateViewModifier.swift; sourceTree = "<group>"; };
 		A780648E28D5F7910011ED92 /* FavouriteUsersScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteUsersScreen.swift; sourceTree = "<group>"; };
-		A780649028D5F7B50011ED92 /* FavouriteUsersViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteUsersViewModelImpl.swift; sourceTree = "<group>"; };
 		A78A8ECE28C4FFFF006C1E57 /* Koin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Koin.swift; path = ../../../KaMPKit/ios/KaMPKitiOS/Koin.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,7 +142,6 @@
 			children = (
 				A751E2BE280335D300B559D4 /* ReducerViewModel.swift */,
 				A751E2C0280335E600B559D4 /* GitHubUserDetailsViewModelImpl.swift */,
-				A780649028D5F7B50011ED92 /* FavouriteUsersViewModelImpl.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -315,7 +312,6 @@
 				A751E2C52803362800B559D4 /* GitHubUserDetailsScreen.swift in Sources */,
 				A751E2C1280335E600B559D4 /* GitHubUserDetailsViewModelImpl.swift in Sources */,
 				A751E2DB280497CA00B559D4 /* GitHubUserDetailBioView.swift in Sources */,
-				A780649128D5F7B50011ED92 /* FavouriteUsersViewModelImpl.swift in Sources */,
 				A780648F28D5F7910011ED92 /* FavouriteUsersScreen.swift in Sources */,
 				A73571C32812B58700C21DE6 /* ClearButtonModifier.swift in Sources */,
 				A751E2C72803371B00B559D4 /* AppDelegate.swift in Sources */,
