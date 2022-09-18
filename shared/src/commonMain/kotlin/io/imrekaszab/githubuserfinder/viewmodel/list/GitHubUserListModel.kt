@@ -9,12 +9,14 @@ sealed class UserListScreenUiEvent : UiEvent {
     data class FetchingFinished(val finished: Boolean) : UserListScreenUiEvent()
     data class Search(val query: String) : UserListScreenUiEvent()
     object RequestNextPage : UserListScreenUiEvent()
+    data class NavigateToDetails(val userName: String) : UserListScreenUiEvent()
 }
 
 data class UserListScreenState(
     val isLoading: Boolean,
     val data: List<GitHubUser>,
     val isFetchingFinished: Boolean,
+    val navigateToDetails: Boolean,
     val error: String
 ) : UiState {
     companion object {
@@ -22,6 +24,7 @@ data class UserListScreenState(
             isLoading = false,
             data = emptyList(),
             isFetchingFinished = true,
+            navigateToDetails = false,
             error = ""
         )
     }

@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -28,6 +29,7 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
     private val gitHubUserDetailsStateFlow = MutableStateFlow<GitHubUser?>(null)
     private val gitHubUserListStateFlow = MutableStateFlow<List<GitHubUser>>(listOf())
     private val gitHubPagingInfoStateFlow = MutableStateFlow(GitHubPagingInfo())
+    private val gitHubUserDetails: Flow<GitHubUser?> = gitHubUserDetailsStateFlow
     private var fetchingInProgress = false
 
     override suspend fun searchUser(userName: String) = withContext(Dispatchers.Default) {
@@ -113,11 +115,12 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
             currentList.map { item -> item.copy(favourite = savedList.any { it.id == item.id }) }
         }
 
-    override fun getUserDetails(): Flow<GitHubUser?> =
-        gitHubUserDetailsStateFlow
+    override fun getUserDetails(): Flow<GitHubUser> =
+        gitHubUserDetails
             .combine(gitHubUserRepository.getSavedUserList()) { currentUserDetail, savedUserList ->
-                savedUserList.firstOrNull { it.id == currentUserDetail?.id } ?: currentUserDetail
+                savedUserList.firstOrNull { it.id == currentUserDetail?.id }
             }
+            .filterNotNull()
 
     override fun isFetchingFinished(): Flow<Boolean> =
         gitHubPagingInfoStateFlow

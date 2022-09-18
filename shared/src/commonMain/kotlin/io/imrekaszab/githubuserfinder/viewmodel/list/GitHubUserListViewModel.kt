@@ -53,6 +53,14 @@ class GitHubUserListViewModel :
                 is UserListScreenUiEvent.FetchingFinished -> {
                     setState(oldState.copy(isFetchingFinished = event.finished))
                 }
+                is UserListScreenUiEvent.NavigateToDetails -> {
+                    try {
+                        gitHubUserAction.refreshUserDetails(event.userName)
+                        setState(oldState.copy(navigateToDetails = true))
+                    } catch (ex: Exception) {
+                        setState(oldState.copy(error = ex.toString(), isLoading = false))
+                    }
+                }
             }
         }
     }
@@ -63,5 +71,9 @@ class GitHubUserListViewModel :
 
     fun requestNextPage() {
         sendEvent(UserListScreenUiEvent.RequestNextPage)
+    }
+
+    fun navigateToDetails(userName: String) {
+        sendEvent(UserListScreenUiEvent.NavigateToDetails(userName))
     }
 }

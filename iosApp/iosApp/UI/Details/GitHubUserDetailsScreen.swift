@@ -10,12 +10,15 @@ import SwiftUI
 import shared
 
 struct GitHubUserDetailsScreen: View {
-    @StateObject private var observableViewModel = GitHubUserDetailsViewModelImpl()
+    @StateObject private var reducer =
+    ReducerViewModel<UserDetailsScreenState,
+                     GitHubUserDetailsViewModel>(viewModel: GitHubUserDetailsViewModel())
     var userName: String
 
     var body: some View {
+        let state = reducer.viewModel.stateNativeValue
         ScrollView {
-            if let userDetails = observableViewModel.userDetails {
+            if let userDetails = state.userDetails {
                 VStack {
                     if userDetails.name != userName {
                         Text(userDetails.name)
@@ -47,13 +50,13 @@ struct GitHubUserDetailsScreen: View {
         .toolbar {
                 HStack {
                     Button(action: {
-                        if observableViewModel.userDetails?.favourite ?? false {
-                            observableViewModel.viewModel.deleteUser()
+                        if state.userDetails?.favourite ?? false {
+                            reducer.viewModel.deleteUser()
                         } else {
-                            observableViewModel.viewModel.saveUser()
+                            reducer.viewModel.saveUser()
                         }
                     }) {
-                        if observableViewModel.userDetails?.favourite ?? false {
+                        if state.userDetails?.favourite ?? false {
                             Image(systemName: "star.circle.fill")
                         } else {
                             Image(systemName: "star.circle")
@@ -62,11 +65,10 @@ struct GitHubUserDetailsScreen: View {
                 }
         }
         .onAppear {
-            observableViewModel.activate()
-            observableViewModel.viewModel.refreshUserDetails(userName: userName)
+            reducer.viewModel.refreshUserDetails(userName: userName)
         }
         .onDisappear {
-            observableViewModel.deactivate()
+            reducer.deactivate()
         }
     }
 }

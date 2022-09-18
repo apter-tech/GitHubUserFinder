@@ -13,7 +13,6 @@
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		A73571C32812B58700C21DE6 /* ClearButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73571C22812B58700C21DE6 /* ClearButtonModifier.swift */; };
 		A751E2BF280335D300B559D4 /* ReducerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A751E2BE280335D300B559D4 /* ReducerViewModel.swift */; };
-		A751E2C1280335E600B559D4 /* GitHubUserDetailsViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A751E2C0280335E600B559D4 /* GitHubUserDetailsViewModelImpl.swift */; };
 		A751E2C32803361700B559D4 /* GitHubUserListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A751E2C22803361700B559D4 /* GitHubUserListScreen.swift */; };
 		A751E2C52803362800B559D4 /* GitHubUserDetailsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A751E2C42803362800B559D4 /* GitHubUserDetailsScreen.swift */; };
 		A751E2C72803371B00B559D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A751E2C62803371B00B559D4 /* AppDelegate.swift */; };
@@ -51,7 +50,6 @@
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A73571C22812B58700C21DE6 /* ClearButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearButtonModifier.swift; sourceTree = "<group>"; };
 		A751E2BE280335D300B559D4 /* ReducerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReducerViewModel.swift; sourceTree = "<group>"; };
-		A751E2C0280335E600B559D4 /* GitHubUserDetailsViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubUserDetailsViewModelImpl.swift; sourceTree = "<group>"; };
 		A751E2C22803361700B559D4 /* GitHubUserListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubUserListScreen.swift; sourceTree = "<group>"; };
 		A751E2C42803362800B559D4 /* GitHubUserDetailsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubUserDetailsScreen.swift; sourceTree = "<group>"; };
 		A751E2C62803371B00B559D4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -141,7 +139,6 @@
 			isa = PBXGroup;
 			children = (
 				A751E2BE280335D300B559D4 /* ReducerViewModel.swift */,
-				A751E2C0280335E600B559D4 /* GitHubUserDetailsViewModelImpl.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -310,7 +307,6 @@
 				A751E2DE2809CDAA00B559D4 /* ListStateViewModifier.swift in Sources */,
 				A751E2D928034E4A00B559D4 /* GitHubUserDetailItemView.swift in Sources */,
 				A751E2C52803362800B559D4 /* GitHubUserDetailsScreen.swift in Sources */,
-				A751E2C1280335E600B559D4 /* GitHubUserDetailsViewModelImpl.swift in Sources */,
 				A751E2DB280497CA00B559D4 /* GitHubUserDetailBioView.swift in Sources */,
 				A780648F28D5F7910011ED92 /* FavouriteUsersScreen.swift in Sources */,
 				A73571C32812B58700C21DE6 /* ClearButtonModifier.swift in Sources */,
