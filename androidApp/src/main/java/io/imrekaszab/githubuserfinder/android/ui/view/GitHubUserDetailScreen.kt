@@ -23,7 +23,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
@@ -34,18 +34,17 @@ import io.imrekaszab.githubuserfinder.android.ui.widget.FavoriteButton
 import io.imrekaszab.githubuserfinder.android.ui.widget.GitHubUserDetailItemView
 import io.imrekaszab.githubuserfinder.android.ui.widget.LoadingView
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
-import io.imrekaszab.githubuserfinder.viewmodel.GitHubUserDetailsViewModel
+import io.imrekaszab.githubuserfinder.viewmodel.details.GitHubUserDetailsViewModel
 
 @Composable
 fun GitHubUserDetailScreen(navController: NavController, userName: String?) {
-    val viewModel = GitHubUserDetailsViewModel()
-    val userDetails by viewModel.userDetails.collectAsState(initial = null)
-    val errorHappened by viewModel.error.collectAsState(initial = null)
-
-    LaunchedEffect(Unit) {
+    val viewModel = remember { GitHubUserDetailsViewModel() }
+    LaunchedEffect("RefreshUser") {
         userName ?: return@LaunchedEffect
         viewModel.refreshUserDetails(userName)
     }
+    val state = viewModel.state.collectAsState()
+
     Scaffold(topBar = {
         TopAppBar {
             Row(
@@ -65,12 +64,12 @@ fun GitHubUserDetailScreen(navController: NavController, userName: String?) {
                 Text(
                     modifier = Modifier
                         .padding(start = Dimens.default),
-                    text = userDetails?.login ?: "",
+                    text = state.value.userDetails?.login ?: "",
                     style = MaterialTheme.typography.h6
                 )
                 Spacer(modifier = Modifier.weight(1.0f))
                 FavoriteButton(
-                    isFavourite = userDetails?.favourite ?: false,
+                    isFavourite = state.value.userDetails?.favourite ?: false,
                     Modifier.padding(end = Dimens.tiny)
                 ) {
                     if (it) {
@@ -83,14 +82,14 @@ fun GitHubUserDetailScreen(navController: NavController, userName: String?) {
         }
     }) {
         when {
-            !errorHappened.isNullOrEmpty() -> ErrorView(errorHappened)
-            userDetails != null ->
+            state.value.error.isNotEmpty() -> ErrorView(state.value.error)
+            state.value.userDetails != null ->
                 Column(
                     modifier = Modifier
                         .verticalScroll(rememberScrollState())
                         .padding(it)
                 ) {
-                    GitHubUserDetailsView(userDetails = userDetails)
+                    GitHubUserDetailsView(userDetails = state.value.userDetails)
                 }
             else -> LoadingView()
         }

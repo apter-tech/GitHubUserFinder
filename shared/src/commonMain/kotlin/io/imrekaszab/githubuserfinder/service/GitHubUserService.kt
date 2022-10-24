@@ -28,6 +28,7 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
     private val gitHubUserDetailsStateFlow = MutableStateFlow<GitHubUser?>(null)
     private val gitHubUserListStateFlow = MutableStateFlow<List<GitHubUser>>(listOf())
     private val gitHubPagingInfoStateFlow = MutableStateFlow(GitHubPagingInfo())
+    private val gitHubUserDetails: Flow<GitHubUser?> = gitHubUserDetailsStateFlow
     private var fetchingInProgress = false
 
     override suspend fun searchUser(userName: String) = withContext(Dispatchers.Default) {
@@ -114,9 +115,9 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
         }
 
     override fun getUserDetails(): Flow<GitHubUser?> =
-        gitHubUserDetailsStateFlow
+        gitHubUserDetails
             .combine(gitHubUserRepository.getSavedUserList()) { currentUserDetail, savedUserList ->
-                savedUserList.firstOrNull { it.id == currentUserDetail?.id } ?: currentUserDetail
+                savedUserList.firstOrNull { it.id == currentUserDetail?.id }
             }
 
     override fun isFetchingFinished(): Flow<Boolean> =

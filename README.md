@@ -20,9 +20,10 @@ Android | iOS
 ### About the project
 
 - Shared ViewModels :rocket:
+- MVVM + Reducer implementation = MVI
 - List and detail screens
+- Favourite user feature with SQLDelight
 - Simple paging functionality
-- MVVM
 - Linter & formatter (ktlint, swiftlint)
 - Dark mode
 - Error handling
@@ -39,6 +40,8 @@ Android | iOS
 - 🌎 [Ktor](https://github.com/ktorio/ktor) - Network
   [![GitHub Repo stars](https://img.shields.io/github/stars/ktorio/ktor)](https://github.com/ktorio/ktor)
   [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.ktor/ktor/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.ktor)
+- 🔒 [SQLDelight](https://github.com/cashapp/sqldelight) - LocalDB
+  [![GitHub Repo stars](https://img.shields.io/github/stars/cashapp/sqldelight)](https://github.com/cashapp/sqldelight)
 - 💉 [Koin](https://github.com/InsertKoinIO/koin) - DI framework
   [![GitHub Repo stars](https://img.shields.io/github/stars/InsertKoinIO/koin)](https://github.com/InsertKoinIO/koin)
   [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.insert-koin/koin-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.insert-koin/koin-core)
@@ -64,8 +67,8 @@ Android | iOS
 
 ### IDEs
 
-- Android Studio Chipmunk | 2021.2.1 Patch 2 | with [KMM plugin](https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform-mobile)
-- Xcode 13.4.1
+- Android Studio Dolphin | 2021.3.1 | with [KMM plugin](https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform-mobile)
+- Xcode 14.0.1
 
 ## Dependency versions
 

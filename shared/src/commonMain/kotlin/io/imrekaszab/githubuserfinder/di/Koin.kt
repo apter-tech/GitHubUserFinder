@@ -68,7 +68,10 @@ var repositoryModule = module {
 
 internal val factoryModule = module {
     val baseLogger =
-        Logger(config = StaticConfig(logWriterList = listOf(platformLogWriter())), "GitHubUserFinderKMM")
+        Logger(
+            config = StaticConfig(logWriterList = listOf(platformLogWriter())),
+            "GitHubUserFinderKMM"
+        )
     factory { (tag: String?) -> if (tag != null) baseLogger.withTag(tag) else baseLogger }
 }
 

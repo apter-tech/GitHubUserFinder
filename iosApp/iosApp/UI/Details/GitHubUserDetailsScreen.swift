@@ -10,12 +10,15 @@ import SwiftUI
 import shared
 
 struct GitHubUserDetailsScreen: View {
-    @StateObject private var observableViewModel = GitHubUserDetailsViewModelImpl()
+    @StateObject private var reducer =
+    ReducerViewModel<UserDetailsScreenState,
+                     GitHubUserDetailsViewModel>(viewModel: GitHubUserDetailsViewModel())
     var userName: String
 
     var body: some View {
+        let state = reducer.viewModel.stateNativeValue
         ScrollView {
-            if let userDetails = observableViewModel.userDetails {
+            if let userDetails = state.userDetails {
                 VStack {
                     if userDetails.name != userName {
                         Text(userDetails.name)
@@ -32,7 +35,8 @@ struct GitHubUserDetailsScreen: View {
                     VStack {
                         GitHubUserDetailItemView(label: "Followers", value: String(userDetails.followers))
                         GitHubUserDetailItemView(label: "Following", value: String(userDetails.following))
-                        GitHubUserDetailItemView(label: "Public repos", value: String(userDetails.publicRepos))
+                        GitHubUserDetailItemView(label: "Public repos",
+                                                 value: String(userDetails.publicRepos))
                         GitHubUserDetailItemView(label: "Company", value: userDetails.company)
                         GitHubUserDetailItemView(label: "Location", value: userDetails.location)
                         GitHubUserDetailItemView(label: "Email", value: userDetails.email)
@@ -44,28 +48,27 @@ struct GitHubUserDetailsScreen: View {
         }
         .navigationBarTitle(Text(userName))
         .toolbar {
-                HStack {
-                    Button(action: {
-                        if observableViewModel.userDetails?.favourite ?? false {
-                            observableViewModel.viewModel.deleteUser()
-                        } else {
-                            observableViewModel.viewModel.saveUser()
-                        }
-                    }) {
-                        if observableViewModel.userDetails?.favourite ?? false {
-                            Image(systemName: "star.circle.fill")
-                        } else {
-                            Image(systemName: "star.circle")
-                        }
+            HStack {
+                Button {
+                    if state.userDetails?.favourite == true {
+                        reducer.viewModel.deleteUser()
+                    } else {
+                        reducer.viewModel.saveUser()
+                    }
+                } label: {
+                    if state.userDetails?.favourite == true {
+                        Image(systemName: "star.circle.fill")
+                    } else {
+                        Image(systemName: "star.circle")
                     }
                 }
+            }
         }
         .onAppear {
-            observableViewModel.activate()
-            observableViewModel.viewModel.refreshUserDetails(userName: userName)
+            reducer.viewModel.refreshUserDetails(userName: userName)
         }
         .onDisappear {
-            observableViewModel.deactivate()
+            reducer.deactivate()
         }
     }
 }

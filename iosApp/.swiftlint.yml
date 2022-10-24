@@ -14,7 +14,6 @@ opt_in_rules:
   - fallthrough
   - fatal_error_message
   - first_where
-  - multiline_arguments
   - multiline_parameters
   - overridden_super_call
   - override_in_extension
@@ -124,8 +123,6 @@ line_length:
 mark:
   severity: error
 opening_brace:
-  severity: error
-operator_usage_whitespace:
   severity: error
 operator_whitespace:
   severity: error

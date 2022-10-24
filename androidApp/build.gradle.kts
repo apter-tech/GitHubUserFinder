@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace = "io.imrekaszab.githubuserfinder.android"
     compileSdk = Versions.targetsdk
     defaultConfig {
         applicationId = "io.imrekaszab.githubuserfinder.android"

@@ -19,7 +19,6 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.core.parameter.parametersOf
 import org.koin.core.scope.Scope
-import org.koin.dsl.module
 
 private val Url.hostWithPortIfRequired: String
     get() = if (port == protocol.defaultPort) {
@@ -32,18 +31,11 @@ private val Url.urlWithoutPath: String
 private val Url.fullUrl: String
     get() = "${protocol.name}://$hostWithPortIfRequired$fullPath"
 
-internal val mockModule = module {
-    single {
-        mockHttpClient
-    }
-    single {
-        testDbConnection()
-    }
-}
 internal inline fun <reified T> Scope.getWith(vararg params: Any?): T {
     return get(parameters = { parametersOf(*params) })
 }
-private val mockHttpClient =
+
+internal val mockHttpClient =
     HttpClient(MockEngine) {
         defaultRequest {
             url.takeFrom(

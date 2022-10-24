@@ -42,11 +42,6 @@ jobs:
         run: |
           sudo xcode-select -s /Applications/Xcode_13.4.1.app
 
-      - name: Unit tests
-        run: |
-          cd ..
-          ./gradlew :shared:iosX64Test
-
       - name: Build
         run: |
           xcodebuild build-for-testing \
