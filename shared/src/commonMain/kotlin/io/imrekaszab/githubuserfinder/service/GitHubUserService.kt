@@ -14,7 +14,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -115,12 +114,11 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
             currentList.map { item -> item.copy(favourite = savedList.any { it.id == item.id }) }
         }
 
-    override fun getUserDetails(): Flow<GitHubUser> =
+    override fun getUserDetails(): Flow<GitHubUser?> =
         gitHubUserDetails
             .combine(gitHubUserRepository.getSavedUserList()) { currentUserDetail, savedUserList ->
                 savedUserList.firstOrNull { it.id == currentUserDetail?.id }
             }
-            .filterNotNull()
 
     override fun isFetchingFinished(): Flow<Boolean> =
         gitHubPagingInfoStateFlow

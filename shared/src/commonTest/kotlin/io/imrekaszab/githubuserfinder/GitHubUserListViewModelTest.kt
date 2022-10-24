@@ -11,6 +11,7 @@ import io.imrekaszab.githubuserfinder.viewmodel.list.GitHubUserListViewModel
 import io.imrekaszab.githubuserfinder.viewmodel.list.UserListScreenUiEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -57,8 +58,9 @@ class GitHubUserListViewModelTest {
 
         // Then
         viewModel.state.test {
-            awaitItem()
-            assertEquals(awaitItem().data, emptyList)
+            if (awaitItem().data.isEmpty()) {
+                assertEquals(emptyList, awaitItem().data)
+            }
         }
     }
 
@@ -72,9 +74,7 @@ class GitHubUserListViewModelTest {
         viewModel.sendEvent(UserListScreenUiEvent.Search(userName))
 
         // Then
-        viewModel.state.test {
-            awaitItem()
-            awaitItem()
+        viewModel.state.filter { it.data.isNotEmpty() }.test {
             assertEquals(awaitItem().data.isNotEmpty(), listIsNotEmpty)
         }
     }
