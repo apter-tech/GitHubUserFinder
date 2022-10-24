@@ -2,27 +2,28 @@
 object Versions {
     const val minsdk = 23
     const val targetsdk = 33
-    const val gradle = "7.2.2"
-    const val kotlin = "1.7.10"
+    const val gradle = "7.3.1"
+    const val kotlin = "1.7.20"
     const val coroutines = "1.6.4"
-    const val appCompat = "1.5.0"
+    const val appCompat = "1.5.1"
     const val lifecycleViewModel = "2.5.1"
-    const val sqldelight = "1.5.3"
-    const val kmpNativeCoroutines = "0.12.6"
+    const val sqldelight = "1.5.4"
+    const val kmpNativeCoroutines = "0.13.1"
+    const val benManesVersions = "0.43.0"
 
-    const val compose = "1.3.0-alpha03"
-    const val composeActivity = "1.5.1"
-    const val composeCompiler = "1.3.0"
-    const val composeCoil = "2.2.0"
-    const val composeNavigation = "2.5.1"
+    const val compose = "1.3.0-rc01"
+    const val composeActivity = "1.6.0"
+    const val composeCompiler = "1.3.2"
+    const val composeCoil = "2.2.2"
+    const val composeNavigation = "2.5.2"
 
-    const val koin = "3.2.0"
-    const val ktor = "2.1.0"
+    const val koin = "3.2.2"
+    const val ktor = "2.1.2"
     const val kermit = "1.1.3"
-    const val slf4j = "2.0.0"
+    const val slf4j = "2.0.3"
     const val ktlint = "11.0.0"
     const val junitKtx = "1.1.3"
-    const val turbine = "0.10.0"
+    const val turbine = "0.12.0"
 }
 
 object AndroidX {

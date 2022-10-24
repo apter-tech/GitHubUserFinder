@@ -11,8 +11,8 @@ import shared
 
 struct GitHubUserListScreen: View {
     @StateObject private var reducer =
-    ReducerViewModel<UserListScreenState,
-                     GitHubUserListViewModel>(viewModel: GitHubUserListViewModel())
+        ReducerViewModel<UserListScreenState,
+                         GitHubUserListViewModel>(viewModel: GitHubUserListViewModel())
 
     var body: some View {
         let state = reducer.viewModel.stateNativeValue

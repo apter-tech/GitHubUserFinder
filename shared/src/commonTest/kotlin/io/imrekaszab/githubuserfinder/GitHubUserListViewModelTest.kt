@@ -57,10 +57,8 @@ class GitHubUserListViewModelTest {
         viewModel.sendEvent(UserListScreenUiEvent.Search(""))
 
         // Then
-        viewModel.state.test {
-            if (awaitItem().data.isEmpty()) {
-                assertEquals(emptyList, awaitItem().data)
-            }
+        viewModel.state.filter { it.data.isEmpty() }.test {
+            assertEquals(emptyList, awaitItem().data)
         }
     }
 

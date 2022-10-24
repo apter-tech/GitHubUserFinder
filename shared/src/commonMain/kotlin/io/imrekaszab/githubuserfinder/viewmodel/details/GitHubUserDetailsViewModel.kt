@@ -4,8 +4,6 @@ import io.imrekaszab.githubuserfinder.action.GitHubUserAction
 import io.imrekaszab.githubuserfinder.store.GitHubUserStore
 import io.imrekaszab.githubuserfinder.util.mvi.Reducer
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -18,9 +16,9 @@ class GitHubUserDetailsViewModel :
 
     init {
         mainScope.launch {
-           gitHubUserStore.getUserDetails().collectLatest {
-               sendEvent(UserDetailsScreenUiEvent.ShowData(it))
-           }
+            gitHubUserStore.getUserDetails().collectLatest {
+                sendEvent(UserDetailsScreenUiEvent.ShowData(it))
+            }
         }
     }
 

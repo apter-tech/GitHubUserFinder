@@ -39,7 +39,9 @@ struct FavouriteUsersScreen: View {
         .toolbar {
             if !state.data.isEmpty {
                 HStack {
-                    Button(action: { showConfirmDialog.toggle() }) {
+                    Button {
+                        showConfirmDialog.toggle()
+                    } label: {
                         Image(systemName: "pip.remove")
                     }
                 }

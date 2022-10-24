@@ -48,21 +48,21 @@ struct GitHubUserDetailsScreen: View {
         }
         .navigationBarTitle(Text(userName))
         .toolbar {
-                HStack {
-                    Button(action: {
-                        if state.userDetails?.favourite ?? false {
-                            reducer.viewModel.deleteUser()
-                        } else {
-                            reducer.viewModel.saveUser()
-                        }
-                    }) {
-                        if state.userDetails?.favourite ?? false {
-                            Image(systemName: "star.circle.fill")
-                        } else {
-                            Image(systemName: "star.circle")
-                        }
+            HStack {
+                Button {
+                    if state.userDetails?.favourite == true {
+                        reducer.viewModel.deleteUser()
+                    } else {
+                        reducer.viewModel.saveUser()
+                    }
+                } label: {
+                    if state.userDetails?.favourite == true {
+                        Image(systemName: "star.circle.fill")
+                    } else {
+                        Image(systemName: "star.circle")
                     }
                 }
+            }
         }
         .onAppear {
             reducer.viewModel.refreshUserDetails(userName: userName)
