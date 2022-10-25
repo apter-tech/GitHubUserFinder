@@ -10,7 +10,6 @@ import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
 import io.imrekaszab.githubuserfinder.viewmodel.list.GitHubUserListViewModel
 import io.imrekaszab.githubuserfinder.viewmodel.list.UserListScreenUiEvent
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
@@ -22,7 +21,6 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class GitHubUserListViewModelTest {
     private val viewModel by lazy { GitHubUserListViewModel() }
 

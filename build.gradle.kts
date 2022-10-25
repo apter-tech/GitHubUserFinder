@@ -18,7 +18,8 @@ buildscript {
 allprojects {
     apply(plugin = "io.gitlab.arturbosch.detekt")
     detekt {
-        buildUponDefaultConfig = true // preconfigure defaults
+        // preconfigure defaults
+        buildUponDefaultConfig = true
         // point to your custom config defining rules to run, overwriting default behavior
         config = files("$rootDir/config/detekt.yml")
     }
@@ -47,8 +48,8 @@ allprojects {
     tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
         jvmTarget = "1.8"
         reports {
-            html.required.set(true) // observe findings in your browser with structure and code snippets
-            xml.required.set(true) // checkstyle like format mainly for integrations like Jenkins
+            html.required.set(true)
+            xml.required.set(true)
         }
     }
 
@@ -109,4 +110,8 @@ tasks.withType<DependencyUpdatesTask> {
 
         isNonStable(candidate.version) && !isNonStable(currentVersion)
     }
+}
+
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
 }

@@ -9,16 +9,13 @@ plugins {
 kotlin {
     android()
     ios()
-    // Note: iosSimulatorArm64 target requires that all dependencies have M1 support
     iosSimulatorArm64()
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
-            baseName = "shared"
+    sourceSets {
+        all {
+            languageSettings.apply {
+                optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
+                optIn("com.russhwolf.settings.ExperimentalSettingsApi")
+            }
         }
     }
 
