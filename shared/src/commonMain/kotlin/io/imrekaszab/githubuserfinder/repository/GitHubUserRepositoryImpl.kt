@@ -5,7 +5,9 @@ import io.imrekaszab.githubuserfinder.mapper.toData
 import io.imrekaszab.githubuserfinder.mapper.toDomain
 import io.imrekaszab.githubuserfinder.mapper.toDomains
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -29,8 +31,10 @@ class GitHubUserRepositoryImpl : GitHubUserRepository, KoinComponent {
     override fun getUserByUserName(userName: String): Flow<GitHubUser?> =
         databaseHelper.selectByUserName(userName)
             .map { it.firstOrNull()?.toDomain() }
+            .flowOn(Dispatchers.Default)
 
     override fun getSavedUserList(): Flow<List<GitHubUser>> =
         databaseHelper.selectAllItems()
             .map { it.toDomains() }
+            .flowOn(Dispatchers.Default)
 }

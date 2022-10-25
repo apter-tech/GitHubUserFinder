@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
@@ -82,10 +83,11 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
     override suspend fun refreshUserDetails(userName: String) =
         withContext(Dispatchers.Default) {
             try {
-                var result = gitHubUserRepository.getUserByUserName(userName).first()
+                var result = gitHubUserRepository.getUserByUserName(userName).firstOrNull()
                 if (result == null) {
                     result = gitHubApi.refreshUserDetails(userName).toDomain()
                 }
+                logger.i("Result: $result")
                 gitHubUserDetailsStateFlow.emit(result)
             } catch (exception: Exception) {
                 logger.e("Error happened: $exception")
@@ -117,7 +119,10 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
     override fun getUserDetails(): Flow<GitHubUser?> =
         gitHubUserDetails
             .combine(gitHubUserRepository.getSavedUserList()) { currentUserDetail, savedUserList ->
-                savedUserList.firstOrNull { it.id == currentUserDetail?.id }
+                logger.i("User details params " +
+                        "current: $currentUserDetail " +
+                        "savedUserList: $savedUserList")
+                savedUserList.firstOrNull { it.id == currentUserDetail?.id } ?: currentUserDetail
             }
 
     override fun isFetchingFinished(): Flow<Boolean> =

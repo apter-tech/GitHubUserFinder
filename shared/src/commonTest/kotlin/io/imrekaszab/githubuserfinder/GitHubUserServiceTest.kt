@@ -110,9 +110,7 @@ class GitHubUserServiceTest : KoinTest {
 
         // Then
         store.getUserDetails().test {
-            if (awaitItem() != null) {
-                assertEquals(userName, awaitItem()?.login)
-            }
+            assertEquals(userName, awaitItem()?.login)
         }
     }
 
@@ -127,9 +125,7 @@ class GitHubUserServiceTest : KoinTest {
 
         // Then
         store.getUserDetails().test {
-            if (awaitItem() != null) {
-                assertEquals(userName, awaitItem()?.login)
-            }
+            assertEquals(userName, awaitItem()?.login)
         }
     }
 
@@ -174,9 +170,7 @@ class GitHubUserServiceTest : KoinTest {
 
         // Then
         store.getSavedUsers().test {
-            if (awaitItem().isNotEmpty()) {
-                assertEquals(isNonEmpty, awaitItem().isNotEmpty())
-            }
+            assertEquals(isNonEmpty, awaitItem().isNotEmpty())
         }
     }
 }

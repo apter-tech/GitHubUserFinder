@@ -25,7 +25,7 @@ jobs:
           java-version: 11
 
       - name: Verify and generate coverage report
-        run: ./gradlew koverMergedVerify koverMergedReport --stacktrace
+        run: ./gradlew koverMergedReport --stacktrace
 
       - name: Add coverage report to PR
         id: kover
