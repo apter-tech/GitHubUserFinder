@@ -10,6 +10,7 @@ object Versions {
     const val sqldelight = "1.5.4"
     const val kmpNativeCoroutines = "0.13.1"
     const val benManesVersions = "0.43.0"
+    const val detekt = "1.19.0"
 
     const val compose = "1.3.0-rc01"
     const val composeActivity = "1.6.0"
@@ -21,7 +22,6 @@ object Versions {
     const val ktor = "2.1.2"
     const val kermit = "1.1.3"
     const val slf4j = "2.0.3"
-    const val ktlint = "11.0.0"
     const val junitKtx = "1.1.3"
     const val turbine = "0.12.0"
 }

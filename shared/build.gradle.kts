@@ -3,7 +3,6 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version Versions.kotlin
     id("com.rickclephas.kmp.nativecoroutines") version Versions.kmpNativeCoroutines
     id("com.android.library")
-    id("org.jlleitschuh.gradle.ktlint")
     id("com.squareup.sqldelight")
 }
 
@@ -78,6 +77,7 @@ kotlin {
 }
 
 android {
+    namespace = "io.imrekaszab.githubuserfinder"
     compileSdk = Versions.targetsdk
     defaultConfig {
         minSdk = Versions.minsdk
