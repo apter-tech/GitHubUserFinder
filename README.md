@@ -84,8 +84,8 @@ kover {
                     kotlinx.kover.api.VerificationTarget.ALL
 
                 bound {
-                    minValue = 10
-                    maxValue = 55
+                    minValue = 80
+                    maxValue = 100
                     counter =
                         kotlinx.kover.api.CounterType.LINE
                     valueType =
@@ -97,36 +97,38 @@ kover {
 ```
 
 > After that we can use the [Kotlinx Kover Report](https://github.com/marketplace/actions/kotlinx-kover-report) to add the coverage report to the PR as a comment
-  
-|File|Coverage [59.06%]|
-|:-|:-:|
-|[shared/src/androidMain/kotlin/io/imrekaszab/githubuserfinder/di/KoinAndroid.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FandroidMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fdi%2FKoinAndroid.kt)|33.33%|
-|[shared/src/androidTest/kotlin/io/imrekaszab/githubuserfinder/TestUtilAndroid.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FandroidTest%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2FTestUtilAndroid.kt)|55.56%|
-|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/database/CoroutinesExtensions.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fdatabase%2FCoroutinesExtensions.kt)|100.00%|
-|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/database/DatabaseHelper.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fdatabase%2FDatabaseHelper.kt)|45.45%|
-|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/di/Koin.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fdi%2FKoin.kt)|37.50%|
-|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/mapper/Mappers.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fmapper%2FMappers.kt)|40.38%|
-|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/model/domain/GitHubUser.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fmodel%2Fdomain%2FGitHubUser.kt)|100.00%|
-|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/repository/GitHubUserRepositoryImpl.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Frepository%2FGitHubUserRepositoryImpl.kt)|77.78%|
-|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/service/GitHubUserService.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fservice%2FGitHubUserService.kt)|60.00%|
-|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/util/mvi/Reducer.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Futil%2Fmvi%2FReducer.kt)|92.31%|
-|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/util/mvi/TimeCapsule.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Futil%2Fmvi%2FTimeCapsule.kt)|66.67%|
-|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/viewmodel/details/GitHubUserDetailsModel.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fviewmodel%2Fdetails%2FGitHubUserDetailsModel.kt)|0.00%|
-|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/viewmodel/details/GitHubUserDetailsViewModel.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fviewmodel%2Fdetails%2FGitHubUserDetailsViewModel.kt)|0.00%|
-|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/viewmodel/favourite/FavouriteUsersModel.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fviewmodel%2Ffavourite%2FFavouriteUsersModel.kt)|0.00%|
-|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/viewmodel/favourite/FavouriteUsersViewModel.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fviewmodel%2Ffavourite%2FFavouriteUsersViewModel.kt)|0.00%|
-|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/viewmodel/list/GitHubUserListModel.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fviewmodel%2Flist%2FGitHubUserListModel.kt)|78.95%|
-|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/viewmodel/list/GitHubUserListViewModel.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fviewmodel%2Flist%2FGitHubUserListViewModel.kt)|56.10%|
-|[shared/src/commonTest/kotlin/io/imrekaszab/githubuserfinder/GitHubUserListViewModelTest.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FcommonTest%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2FGitHubUserListViewModelTest.kt)|100.00%|
-|[shared/src/commonTest/kotlin/io/imrekaszab/githubuserfinder/GitHubUserServiceTest.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FcommonTest%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2FGitHubUserServiceTest.kt)|96.25%|
-|[shared/src/commonTest/kotlin/io/imrekaszab/githubuserfinder/MockHttpClient.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FcommonTest%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2FMockHttpClient.kt)|85.37%|
-|[shared/src/commonTest/kotlin/io/imrekaszab/githubuserfinder/MockModule.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/683778283d7dabd41b19344bd81997a0b3522f04/shared%2Fsrc%2FcommonTest%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2FMockModule.kt)|85.71%|
 
-|Total Project Coverage|52.77%|
+|File|Coverage [84.31%]|
+|:-|:-:|
+|[shared/src/androidMain/kotlin/io/imrekaszab/githubuserfinder/di/KoinAndroid.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FandroidMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fdi%2FKoinAndroid.kt)|33.33%|
+|[shared/src/androidTest/kotlin/io/imrekaszab/githubuserfinder/TestUtilAndroid.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FandroidTest%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2FTestUtilAndroid.kt)|55.56%|
+|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/database/CoroutinesExtensions.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fdatabase%2FCoroutinesExtensions.kt)|100.00%|
+|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/database/DatabaseHelper.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fdatabase%2FDatabaseHelper.kt)|100.00%|
+|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/di/Koin.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fdi%2FKoin.kt)|39.58%|
+|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/mapper/Mappers.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fmapper%2FMappers.kt)|100.00%|
+|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/model/domain/GitHubUser.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fmodel%2Fdomain%2FGitHubUser.kt)|100.00%|
+|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/repository/GitHubUserRepositoryImpl.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Frepository%2FGitHubUserRepositoryImpl.kt)|100.00%|
+|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/service/GitHubUserService.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fservice%2FGitHubUserService.kt)|66.67%|
+|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/util/mvi/Reducer.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Futil%2Fmvi%2FReducer.kt)|92.31%|
+|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/util/mvi/TimeCapsule.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Futil%2Fmvi%2FTimeCapsule.kt)|66.67%|
+|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/viewmodel/details/GitHubUserDetailsModel.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fviewmodel%2Fdetails%2FGitHubUserDetailsModel.kt)|91.67%|
+|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/viewmodel/details/GitHubUserDetailsViewModel.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fviewmodel%2Fdetails%2FGitHubUserDetailsViewModel.kt)|93.55%|
+|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/viewmodel/favourite/FavouriteUsersModel.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fviewmodel%2Ffavourite%2FFavouriteUsersModel.kt)|90.00%|
+|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/viewmodel/favourite/FavouriteUsersViewModel.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fviewmodel%2Ffavourite%2FFavouriteUsersViewModel.kt)|100.00%|
+|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/viewmodel/list/GitHubUserListModel.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fviewmodel%2Flist%2FGitHubUserListModel.kt)|78.95%|
+|[shared/src/commonMain/kotlin/io/imrekaszab/githubuserfinder/viewmodel/list/GitHubUserListViewModel.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonMain%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2Fviewmodel%2Flist%2FGitHubUserListViewModel.kt)|58.54%|
+|[shared/src/commonTest/kotlin/io/imrekaszab/githubuserfinder/FavouriteUsersViewModelTest.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonTest%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2FFavouriteUsersViewModelTest.kt)|100.00%|
+|[shared/src/commonTest/kotlin/io/imrekaszab/githubuserfinder/GitHubUserDetailsViewModelTest.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonTest%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2FGitHubUserDetailsViewModelTest.kt)|100.00%|
+|[shared/src/commonTest/kotlin/io/imrekaszab/githubuserfinder/GitHubUserListViewModelTest.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonTest%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2FGitHubUserListViewModelTest.kt)|100.00%|
+|[shared/src/commonTest/kotlin/io/imrekaszab/githubuserfinder/GitHubUserServiceTest.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonTest%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2FGitHubUserServiceTest.kt)|100.00%|
+|[shared/src/commonTest/kotlin/io/imrekaszab/githubuserfinder/MockHttpClient.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonTest%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2FMockHttpClient.kt)|85.37%|
+|[shared/src/commonTest/kotlin/io/imrekaszab/githubuserfinder/MockModule.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/c9e58c50c892b41f8f5f4707b9e483109e897967/shared%2Fsrc%2FcommonTest%2Fkotlin%2Fio%2Fimrekaszab%2Fgithubuserfinder%2FMockModule.kt)|100.00%|
+
+|Total Project Coverage|80.65%|
 |:-|:-:|
 
 _Originally posted by @kaszabimre in https://github.com/kaszabimre/GitHubUserFinderKMM/issues/17#issuecomment-1290603850_
-      
+           
 
 ### IDEs
 
