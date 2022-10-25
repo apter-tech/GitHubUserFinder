@@ -12,4 +12,7 @@ object Dimens {
     val imageSize = 50.dp
     val bigImageSize = 130.dp
     val searchBarHeight = 56.dp
+    const val favouriteButtonScale = 1.3f
+    const val labelTitleWeight = 0.4f
+    const val valueTitleWeight = 0.6f
 }

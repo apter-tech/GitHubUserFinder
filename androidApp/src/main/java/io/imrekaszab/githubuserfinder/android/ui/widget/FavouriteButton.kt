@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 
 @Composable
 fun FavoriteButton(
@@ -26,8 +27,8 @@ fun FavoriteButton(
         Icon(
             tint = Color.White,
             modifier = Modifier.graphicsLayer {
-                scaleX = 1.3f
-                scaleY = 1.3f
+                scaleX = Dimens.favouriteButtonScale
+                scaleY = Dimens.favouriteButtonScale
             },
             imageVector = if (isFavourite) {
                 Icons.Filled.Favorite
