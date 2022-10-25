@@ -13,21 +13,12 @@ abstract class Reducer<S : UiState, E : UiEvent>(initialVal: S) : ViewModel() {
     val state: StateFlow<S>
         get() = _state
 
-    val timeCapsule: TimeCapsule<S> = TimeTravelCapsule { storedState ->
-        _state.tryEmit(storedState)
-    }
-
-    init {
-        timeCapsule.addState(initialVal)
-    }
-
     fun sendEvent(event: E) {
         reduce(_state.value, event)
     }
 
     suspend fun setState(newState: S) {
         _state.emit(newState)
-        timeCapsule.addState(newState)
     }
 
     abstract fun reduce(oldState: S, event: E)
