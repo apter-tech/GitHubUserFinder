@@ -11,6 +11,7 @@ object Versions {
     const val kmpNativeCoroutines = "0.13.1"
     const val benManesVersions = "0.43.0"
     const val detekt = "1.19.0"
+    const val kover = "0.6.1"
 
     const val compose = "1.3.0-rc01"
     const val composeActivity = "1.6.0"

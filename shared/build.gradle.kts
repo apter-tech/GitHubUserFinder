@@ -83,6 +83,22 @@ android {
         minSdk = Versions.minsdk
         targetSdk = Versions.targetsdk
     }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+        unitTests.all {
+            it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
+                isDisabled.set(it.name == "testDebugUnitTest")
+            }
+        }
+    }
+
+    kover {
+        instrumentation {
+            excludeTasks.add("testDebugUnitTest")
+        }
+    }
 }
 
 sqldelight {

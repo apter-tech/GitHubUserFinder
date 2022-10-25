@@ -24,8 +24,8 @@ jobs:
           distribution: corretto
           java-version: 11
 
+      - name: Verify and generate coverage report
+        run: ./gradlew koverMergedVerify koverMergedReport --stacktrace
+
       - name: Build
-        run: ./gradlew check
-
-
-
+        run: ./gradlew check --stacktrace

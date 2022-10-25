@@ -11,6 +11,7 @@ buildscript {
         classpath("com.android.tools.build:gradle:${Versions.gradle}")
         classpath("com.squareup.sqldelight:gradle-plugin:${Versions.sqldelight}")
         classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}")
+        classpath("org.jetbrains.kotlinx:kover:${Versions.kover}")
     }
 }
 
@@ -20,6 +21,27 @@ allprojects {
         buildUponDefaultConfig = true // preconfigure defaults
         // point to your custom config defining rules to run, overwriting default behavior
         config = files("$rootDir/config/detekt.yml")
+    }
+
+    apply(plugin = "kover")
+    kover {
+        verify {
+            rule {
+                isEnabled = true
+                name = "Minimum coverage verification error"
+                target =
+                    kotlinx.kover.api.VerificationTarget.ALL
+
+                bound {
+                    minValue = 10
+                    maxValue = 55
+                    counter =
+                        kotlinx.kover.api.CounterType.LINE
+                    valueType =
+                        kotlinx.kover.api.VerificationValueType.COVERED_PERCENTAGE
+                }
+            }
+        }
     }
 
     tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
@@ -63,6 +85,16 @@ subprojects {
 plugins {
     id("com.github.ben-manes.versions") version Versions.benManesVersions
     id("io.gitlab.arturbosch.detekt") version Versions.detekt
+    id("org.jetbrains.kotlinx.kover") version Versions.kover
+}
+
+koverMerged {
+    enable()
+    filters {
+        projects {
+            excludes += listOf("androidApp")
+        }
+    }
 }
 
 tasks.withType<DependencyUpdatesTask> {
