@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import io.imrekaszab.githubuserfinder.android.ui.view.FavouriteGitHubUsersScreen
 import io.imrekaszab.githubuserfinder.android.ui.view.GitHubUserDetailScreen
 import io.imrekaszab.githubuserfinder.android.ui.view.GitHubUserListScreen
 
@@ -28,6 +29,9 @@ fun Navigation() {
             )
         ) { entry ->
             GitHubUserDetailScreen(navController, entry.arguments?.getString("userName"))
+        }
+        composable(route = GitHubUserScreens.FavouriteGitHubUsersScreen.route) {
+            FavouriteGitHubUsersScreen(navController = navController)
         }
     }
 }

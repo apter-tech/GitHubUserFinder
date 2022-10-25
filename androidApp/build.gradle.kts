@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace = "io.imrekaszab.githubuserfinder.android"
     compileSdk = Versions.targetsdk
     defaultConfig {
         applicationId = "io.imrekaszab.githubuserfinder.android"
@@ -45,6 +46,7 @@ dependencies {
     implementation(Compose.coilCompose)
     implementation(Compose.navigation)
     implementation(Compose.preview)
+    debugImplementation(Compose.tooling)
 
     // DI
     implementation(Koin.core)

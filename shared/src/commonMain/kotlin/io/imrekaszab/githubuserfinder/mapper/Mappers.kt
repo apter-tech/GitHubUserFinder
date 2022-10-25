@@ -1,9 +1,9 @@
 package io.imrekaszab.githubuserfinder.mapper
 
+import io.imrekaszab.githubuserfinder.db.GitHubUserDataModel
 import io.imrekaszab.githubuserfinder.model.api.GitHubUserApiModel
 import io.imrekaszab.githubuserfinder.model.api.GitHubUserDetailsApiModel
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
-import io.imrekaszab.githubuserfinder.model.domain.GitHubUserDetails
 
 fun List<GitHubUserApiModel>.toDomainModels() =
     map { it.toDomain() }
@@ -13,14 +13,11 @@ fun GitHubUserApiModel.toDomain() =
         id = id,
         login = login,
         avatarUrl = avatar_url,
-        followersUrl = followers_url,
-        followingUrl = following_url,
-        reposUrl = repos_url,
         score = score
     )
 
 fun GitHubUserDetailsApiModel.toDomain() =
-    GitHubUserDetails(
+    GitHubUser(
         id = id,
         login = login,
         avatarUrl = avatar_url,
@@ -35,3 +32,41 @@ fun GitHubUserDetailsApiModel.toDomain() =
         following = following,
         publicRepos = public_repos
     )
+
+fun GitHubUserDataModel.toDomain() =
+    GitHubUser(
+        id = id.toInt(),
+        login = login,
+        avatarUrl = avatarUrl,
+        score = score,
+        name = name,
+        company = company,
+        blog = blog,
+        location = location,
+        email = email,
+        bio = bio,
+        twitterUsername = twitterUsername,
+        followers = followers.toInt(),
+        following = following.toInt(),
+        publicRepos = publicRepos.toInt(),
+        favourite = true
+    )
+
+fun GitHubUser.toData() = GitHubUserDataModel(
+    id = id.toLong(),
+    login = login,
+    avatarUrl = avatarUrl,
+    score = score,
+    name = name,
+    company = company,
+    blog = blog,
+    location = location,
+    email = email,
+    bio = bio,
+    twitterUsername = twitterUsername,
+    followers = followers.toLong(),
+    following = following.toLong(),
+    publicRepos = publicRepos.toLong()
+)
+
+fun List<GitHubUserDataModel>.toDomains() = map { it.toDomain() }

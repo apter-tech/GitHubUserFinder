@@ -1,30 +1,40 @@
 package io.imrekaszab.githubuserfinder.repository
 
-import io.imrekaszab.githubuserfinder.api.GitHubApi
+import io.imrekaszab.githubuserfinder.database.DatabaseHelper
+import io.imrekaszab.githubuserfinder.mapper.toData
 import io.imrekaszab.githubuserfinder.mapper.toDomain
-import io.imrekaszab.githubuserfinder.mapper.toDomainModels
-import io.imrekaszab.githubuserfinder.model.domain.GitHubPagingInfo
+import io.imrekaszab.githubuserfinder.mapper.toDomains
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
-import io.imrekaszab.githubuserfinder.model.domain.GitHubUserDetails
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class GitHubUserRepositoryImpl(private val gitHubApi: GitHubApi) : GitHubUserRepository {
+class GitHubUserRepositoryImpl : GitHubUserRepository, KoinComponent {
 
-    override suspend fun fetchPage(
-        userName: String,
-        page: Int,
-        offset: Int
-    ): Pair<GitHubPagingInfo, List<GitHubUser>> {
-        val result = gitHubApi.searchUser(userName, page, offset)
-        val userList = result.items.toDomainModels().toMutableList()
-        val pagingInfo = GitHubPagingInfo(
-            totalItemCount = result.total_count,
-            page = page,
-            userName = userName
-        )
+    private val databaseHelper: DatabaseHelper by inject()
 
-        return pagingInfo to userList
+    override suspend fun saveUser(user: GitHubUser) {
+        databaseHelper.insertUser(user.toData())
     }
 
-    override suspend fun getUserDetails(userName: String): GitHubUserDetails =
-        gitHubApi.refreshUserDetails(userName).toDomain()
+    override suspend fun deleteUser(userId: Int) {
+        databaseHelper.deleteById(userId.toLong())
+    }
+
+    override suspend fun deleteAll() {
+        databaseHelper.deleteAll()
+    }
+
+    override fun getUserByUserName(userName: String): Flow<GitHubUser?> =
+        databaseHelper.selectByUserName(userName)
+            .map { it.firstOrNull()?.toDomain() }
+            .flowOn(Dispatchers.Default)
+
+    override fun getSavedUserList(): Flow<List<GitHubUser>> =
+        databaseHelper.selectAllItems()
+            .map { it.toDomains() }
+            .flowOn(Dispatchers.Default)
 }

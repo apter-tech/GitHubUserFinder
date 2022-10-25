@@ -2,24 +2,29 @@
 object Versions {
     const val minsdk = 23
     const val targetsdk = 33
-    const val gradle = "7.2.2"
-    const val kotlin = "1.7.10"
+    const val gradle = "7.3.1"
+    const val kotlin = "1.7.20"
     const val coroutines = "1.6.4"
-    const val appCompat = "1.5.0"
+    const val appCompat = "1.5.1"
     const val lifecycleViewModel = "2.5.1"
-    const val kmpNativeCoroutines = "0.12.6"
+    const val sqldelight = "1.5.4"
+    const val kmpNativeCoroutines = "0.13.1"
+    const val benManesVersions = "0.43.0"
+    const val detekt = "1.19.0"
+    const val kover = "0.6.1"
 
-    const val compose = "1.3.0-beta01"
-    const val composeActivity = "1.5.1"
-    const val composeCompiler = "1.3.0"
-    const val composeCoil = "2.2.0"
-    const val composeNavigation = "2.5.1"
+    const val compose = "1.3.0-rc01"
+    const val composeActivity = "1.6.0"
+    const val composeCompiler = "1.3.2"
+    const val composeCoil = "2.2.2"
+    const val composeNavigation = "2.5.2"
 
-    const val koin = "3.2.0"
-    const val ktor = "2.1.0"
+    const val koin = "3.2.2"
+    const val ktor = "2.1.2"
     const val kermit = "1.1.3"
-    const val slf4j = "2.0.0"
-    const val ktlint = "11.0.0"
+    const val slf4j = "2.0.3"
+    const val junitKtx = "1.1.3"
+    const val turbine = "0.12.0"
 }
 
 object AndroidX {
@@ -37,6 +42,7 @@ object Compose {
     const val coilCompose = "io.coil-kt:coil-compose:${Versions.composeCoil}"
     const val navigation = "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
     const val preview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
+    const val tooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
 }
 
 object Koin {
@@ -54,6 +60,13 @@ object Ktor {
     const val logging = "io.ktor:ktor-client-logging:${Versions.ktor}"
 }
 
+object SQLDelight {
+    const val androidDriver = "com.squareup.sqldelight:android-driver:${Versions.sqldelight}"
+    const val native = "com.squareup.sqldelight:native-driver:${Versions.sqldelight}"
+    const val coroutines = "com.squareup.sqldelight:coroutines-extensions:${Versions.sqldelight}"
+    const val nativeDriver = "com.squareup.sqldelight:sqlite-driver:${Versions.sqldelight}"
+}
+
 object Log {
     const val kermit = "co.touchlab:kermit:${Versions.kermit}"
     const val slf4j = "org.slf4j:slf4j-simple:${Versions.slf4j}"
@@ -62,4 +75,7 @@ object Log {
 object Test {
     const val ktor = "io.ktor:ktor-client-mock:${Versions.ktor}"
     const val koin = "io.insert-koin:koin-test:${Versions.koin}"
+    const val junitKtx = "androidx.test.ext:junit-ktx:${Versions.junitKtx}"
+    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
+    const val turbine = "app.cash.turbine:turbine:${Versions.turbine}"
 }

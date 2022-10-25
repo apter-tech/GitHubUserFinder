@@ -1,0 +1,32 @@
+CREATE TABLE GitHubUserDataModel (
+id INTEGER NOT NULL PRIMARY KEY,
+login TEXT NOT NULL,
+avatarUrl TEXT NOT NULL,
+score REAL NOT NULL,
+name TEXT NOT NULL,
+company TEXT,
+blog TEXT,
+location TEXT,
+email TEXT,
+bio TEXT,
+twitterUsername TEXT,
+followers INTEGER NOT NULL,
+following INTEGER NOT NULL,
+publicRepos INTEGER NOT NULL
+);
+
+selectAll:
+SELECT * FROM GitHubUserDataModel;
+
+selectByUserName:
+SELECT * FROM GitHubUserDataModel WHERE login = ?;
+
+insertUser:
+INSERT OR IGNORE INTO GitHubUserDataModel(id, login, avatarUrl, score, name, company, blog, location, email, bio, twitterUsername,followers, following, publicRepos)
+VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+deleteById:
+DELETE FROM GitHubUserDataModel WHERE id = ?;
+
+deleteAll:
+DELETE FROM GitHubUserDataModel;

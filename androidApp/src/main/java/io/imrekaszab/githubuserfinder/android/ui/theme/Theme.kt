@@ -15,7 +15,7 @@ private val LightThemeColors = lightColors(
     secondaryVariant = BlueGray900,
     onSecondary = Color.White,
     error = Color.Red,
-    onBackground = Color.Black,
+    onBackground = Color.Black
 )
 
 private val DarkThemeColors = darkColors(

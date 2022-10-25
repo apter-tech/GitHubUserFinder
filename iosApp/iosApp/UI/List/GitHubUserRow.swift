@@ -14,17 +14,21 @@ struct GitHubUserRow: View {
 
     var body: some View {
         HStack(alignment: .center, spacing: 8) {
-            AsyncImage(url: URL(string: item.avatarUrl)!) { image in
-                image.resizable().scaledToFill()
-            } placeholder: { Color.gray
+            AsyncImage(url: URL(string: item.avatarUrl)!) { $0.resizable().scaledToFill() }
+        placeholder: {
+            Color.gray
             }
-            .frame(width: 60, height: 60)
-            .cornerRadius(16)
+        .frame(width: 60, height: 60)
+        .cornerRadius(16)
             VStack(alignment: .leading, spacing: 4) {
                 Text(item.login)
                     .fixedSize(horizontal: false, vertical: true)
                     .lineLimit(1)
                     .font(.system(size: 16, weight: .heavy, design: .default))
+            }
+            Spacer()
+            if item.favourite {
+                Image(systemName: "star.fill")
             }
         }
         .padding(4)

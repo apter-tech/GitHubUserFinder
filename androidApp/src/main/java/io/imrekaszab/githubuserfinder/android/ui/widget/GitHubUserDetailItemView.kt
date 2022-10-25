@@ -23,12 +23,12 @@ fun GitHubUserDetailItemView(label: String, value: String?) {
             Text(
                 label,
                 style = MaterialTheme.typography.subtitle1,
-                modifier = Modifier.weight(0.4f)
+                modifier = Modifier.weight(Dimens.labelTitleWeight)
             )
             Text(
                 value,
                 style = MaterialTheme.typography.body1,
-                modifier = Modifier.weight(0.6f),
+                modifier = Modifier.weight(Dimens.valueTitleWeight),
                 textAlign = TextAlign.End
             )
         }

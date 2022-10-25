@@ -24,8 +24,17 @@ jobs:
           distribution: corretto
           java-version: 11
 
+      - name: Verify and generate coverage report
+        run: ./gradlew koverMergedReport --stacktrace
+
+      - name: Add coverage report to PR
+        id: kover
+        uses: mi-kas/kover-report@v1.1
+        with:
+          path: ${{ github.workspace }}/build/reports/kover/merged/xml/report.xml
+          token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+          title: Code Coverage
+          update-comment: true
+
       - name: Build
-        run: ./gradlew build
-
-
-
+        run: ./gradlew check --stacktrace

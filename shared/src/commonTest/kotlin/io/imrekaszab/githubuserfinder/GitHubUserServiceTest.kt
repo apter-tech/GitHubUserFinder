@@ -1,8 +1,12 @@
 package io.imrekaszab.githubuserfinder
 
+import app.cash.turbine.test
 import io.imrekaszab.githubuserfinder.action.GitHubUserAction
 import io.imrekaszab.githubuserfinder.di.apiModule
+import io.imrekaszab.githubuserfinder.di.coreModule
 import io.imrekaszab.githubuserfinder.di.dataModule
+import io.imrekaszab.githubuserfinder.di.factoryModule
+import io.imrekaszab.githubuserfinder.di.platformModule
 import io.imrekaszab.githubuserfinder.di.repositoryModule
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
 import io.imrekaszab.githubuserfinder.store.GitHubUserStore
@@ -28,8 +32,11 @@ class GitHubUserServiceTest : KoinTest {
             modules(
                 apiModule,
                 repositoryModule,
+                coreModule,
+                platformModule,
+                factoryModule,
                 dataModule,
-                mockNetworkModule
+                mockModule
             )
         }
     }
@@ -49,7 +56,7 @@ class GitHubUserServiceTest : KoinTest {
         val result = store.getUsers().first()
 
         // Then
-        assertEquals(result, emptyList)
+        assertEquals(emptyList, result)
     }
 
     @Test
@@ -62,7 +69,7 @@ class GitHubUserServiceTest : KoinTest {
             val result = store.isFetchingFinished().first()
 
             // Then
-            assertEquals(result, isFetchingFinished)
+            assertEquals(isFetchingFinished, result)
         }
 
     @Test
@@ -76,7 +83,7 @@ class GitHubUserServiceTest : KoinTest {
         val result = store.getUsers().first()
 
         // Then
-        assertEquals(result.isNotEmpty(), listIsNotEmpty)
+        assertEquals(listIsNotEmpty, result.isNotEmpty())
     }
 
     @Test
@@ -90,7 +97,7 @@ class GitHubUserServiceTest : KoinTest {
         val result = store.isFetchingFinished().first()
 
         // Then
-        assertEquals(result, isFetchingFinished)
+        assertEquals(isFetchingFinished, result)
     }
 
     @Test
@@ -100,9 +107,70 @@ class GitHubUserServiceTest : KoinTest {
 
         // When
         action.refreshUserDetails(userName)
-        val result = store.getUserDetails().first()
 
         // Then
-        assertEquals(result.login, userName)
+        store.getUserDetails().test {
+            assertEquals(userName, awaitItem()?.login)
+        }
+    }
+
+    @Test
+    fun `store gives back user after refresh and save`() = runBlocking {
+        // Given
+        val userName = MockData.userName
+
+        // When
+        action.refreshUserDetails(userName)
+        action.saveUser()
+
+        // Then
+        store.getUserDetails().test {
+            assertEquals(userName, awaitItem()?.login)
+        }
+    }
+
+    @Test
+    fun `store gives back emptyList after deleteAll`() = runBlocking {
+        // Given
+        val isEmpty = true
+
+        // When
+        action.deleteAllUser()
+        val result = store.getSavedUsers().first()
+
+        // Then
+        assertEquals(isEmpty, result.isEmpty())
+    }
+
+    @Test
+    fun `store gives back emptyList after save and delete`() = runBlocking {
+        // Given
+        val isEmpty = true
+        val userName = "test"
+
+        // When
+        action.refreshUserDetails(userName)
+        action.saveUser()
+        action.deleteUser()
+        val result = store.getSavedUsers().first()
+
+        // Then
+        assertEquals(isEmpty, result.isEmpty())
+    }
+
+    @Test
+    fun `store gives back non-emptyList after save and refresh`() = runBlocking {
+        // Given
+        val isNonEmpty = true
+        val userName = "test"
+
+        // When
+        action.refreshUserDetails(userName)
+        action.saveUser()
+
+        // Then
+        store.getSavedUsers().test {
+            assertEquals(isNonEmpty, awaitItem().isNotEmpty())
+        }
     }
 }
