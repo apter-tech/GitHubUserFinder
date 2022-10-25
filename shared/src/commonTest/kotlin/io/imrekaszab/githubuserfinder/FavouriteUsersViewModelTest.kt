@@ -6,10 +6,8 @@ import io.imrekaszab.githubuserfinder.di.coreModule
 import io.imrekaszab.githubuserfinder.di.dataModule
 import io.imrekaszab.githubuserfinder.di.platformModule
 import io.imrekaszab.githubuserfinder.di.repositoryModule
-import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
-import io.imrekaszab.githubuserfinder.viewmodel.list.GitHubUserListViewModel
+import io.imrekaszab.githubuserfinder.viewmodel.favourite.FavouriteUsersViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -20,8 +18,8 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class GitHubUserListViewModelTest {
-    private val viewModel by lazy { GitHubUserListViewModel() }
+class FavouriteUsersViewModelTest {
+    private val viewModel by lazy { FavouriteUsersViewModel() }
 
     @BeforeTest
     fun setUp() {
@@ -46,31 +44,16 @@ class GitHubUserListViewModelTest {
     }
 
     @Test
-    fun `state gives back an empty list after a search with empty string`() = runBlocking {
+    fun `state gives back an empty list after deleteAllUser`() = runBlocking {
         // Given
-        val emptyList = emptyList<GitHubUser>()
+        val listIsEmpty = true
 
         // When
-        viewModel.searchUser("")
+        viewModel.deleteAllUser()
 
         // Then
-        viewModel.state.filter { it.data.isEmpty() }.test {
-            assertEquals(emptyList, awaitItem().data)
-        }
-    }
-
-    @Test
-    fun `state gives back a non empty list after search`() = runBlocking {
-        // Given
-        val listIsNotEmpty = true
-        val userName = MockData.userName
-
-        // When
-        viewModel.searchUser(userName)
-
-        // Then
-        viewModel.state.filter { it.data.isNotEmpty() }.test {
-            assertEquals(awaitItem().data.isNotEmpty(), listIsNotEmpty)
+        viewModel.state.test {
+            assertEquals(listIsEmpty, awaitItem().data.isEmpty())
         }
     }
 }

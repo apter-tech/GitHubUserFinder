@@ -36,34 +36,26 @@ class GitHubUserDetailsViewModel :
 
     override fun reduce(oldState: UserDetailsScreenState, event: UserDetailsScreenUiEvent) {
         mainScope.launch {
-            when (event) {
-                UserDetailsScreenUiEvent.DeleteUser -> {
-                    try {
+            try {
+                when (event) {
+                    UserDetailsScreenUiEvent.DeleteUser -> {
                         setState(oldState.copy(error = ""))
                         gitHubUserAction.deleteUser()
-                    } catch (ex: Exception) {
-                        setState(oldState.copy(error = ex.message ?: ""))
                     }
-                }
-                is UserDetailsScreenUiEvent.RefreshUser -> {
-                    try {
+                    is UserDetailsScreenUiEvent.RefreshUser -> {
                         setState(oldState.copy(error = ""))
                         gitHubUserAction.refreshUserDetails(event.userName)
-                    } catch (ex: Exception) {
-                        setState(oldState.copy(error = ex.message ?: ""))
                     }
-                }
-                UserDetailsScreenUiEvent.SaveUser -> {
-                    try {
+                    UserDetailsScreenUiEvent.SaveUser -> {
                         setState(oldState.copy(error = ""))
                         gitHubUserAction.saveUser()
-                    } catch (ex: Exception) {
-                        setState(oldState.copy(error = ex.message ?: ""))
+                    }
+                    is UserDetailsScreenUiEvent.ShowData -> {
+                        setState(oldState.copy(userDetails = event.userDetails))
                     }
                 }
-                is UserDetailsScreenUiEvent.ShowData -> {
-                    setState(oldState.copy(userDetails = event.userDetails))
-                }
+            } catch (ex: Exception) {
+                setState(oldState.copy(error = ex.message ?: ""))
             }
         }
     }

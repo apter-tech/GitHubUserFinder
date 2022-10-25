@@ -6,8 +6,7 @@ import io.imrekaszab.githubuserfinder.di.coreModule
 import io.imrekaszab.githubuserfinder.di.dataModule
 import io.imrekaszab.githubuserfinder.di.platformModule
 import io.imrekaszab.githubuserfinder.di.repositoryModule
-import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
-import io.imrekaszab.githubuserfinder.viewmodel.list.GitHubUserListViewModel
+import io.imrekaszab.githubuserfinder.viewmodel.details.GitHubUserDetailsViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.runBlocking
@@ -20,8 +19,8 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class GitHubUserListViewModelTest {
-    private val viewModel by lazy { GitHubUserListViewModel() }
+class GitHubUserDetailsViewModelTest {
+    private val viewModel by lazy { GitHubUserDetailsViewModel() }
 
     @BeforeTest
     fun setUp() {
@@ -46,31 +45,46 @@ class GitHubUserListViewModelTest {
     }
 
     @Test
-    fun `state gives back an empty list after a search with empty string`() = runBlocking {
+    fun `state gives back the correct user after a refresh with userName`() = runBlocking {
         // Given
-        val emptyList = emptyList<GitHubUser>()
+        val userName = MockData.userName
 
         // When
-        viewModel.searchUser("")
+        viewModel.refreshUserDetails(userName)
 
         // Then
-        viewModel.state.filter { it.data.isEmpty() }.test {
-            assertEquals(emptyList, awaitItem().data)
+        viewModel.state.filter { it.userDetails != null }.test {
+            assertEquals(userName, awaitItem().userDetails?.login)
         }
     }
 
     @Test
-    fun `state gives back a non empty list after search`() = runBlocking {
+    fun `state gives back user details as null after refresh and delete`() = runBlocking {
         // Given
-        val listIsNotEmpty = true
         val userName = MockData.userName
 
         // When
-        viewModel.searchUser(userName)
+        viewModel.refreshUserDetails(userName)
+        viewModel.deleteUser()
 
         // Then
-        viewModel.state.filter { it.data.isNotEmpty() }.test {
-            assertEquals(awaitItem().data.isNotEmpty(), listIsNotEmpty)
+        viewModel.state.test {
+            assertEquals(null, awaitItem().userDetails)
+        }
+    }
+
+    @Test
+    fun `state gives back user details after refresh and save`() = runBlocking {
+        // Given
+        val userName = MockData.userName
+
+        // When
+        viewModel.refreshUserDetails(userName)
+        viewModel.saveUser()
+
+        // Then
+        viewModel.state.filter { it.userDetails != null }.test {
+            assertEquals(userName, awaitItem().userDetails?.login)
         }
     }
 }

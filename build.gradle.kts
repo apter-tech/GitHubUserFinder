@@ -34,7 +34,7 @@ allprojects {
                     kotlinx.kover.api.VerificationTarget.ALL
 
                 bound {
-                    minValue = 60
+                    minValue = 80
                     maxValue = 100
                     counter =
                         kotlinx.kover.api.CounterType.LINE
