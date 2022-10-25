@@ -9,6 +9,7 @@ import io.imrekaszab.githubuserfinder.di.repositoryModule
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
 import io.imrekaszab.githubuserfinder.viewmodel.list.GitHubUserListViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
@@ -52,6 +53,7 @@ class GitHubUserListViewModelTest {
 
         // When
         viewModel.searchUser("")
+        delay(200)
 
         // Then
         viewModel.state.filter { it.data.isEmpty() }.test {
