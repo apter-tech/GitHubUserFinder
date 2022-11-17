@@ -6,7 +6,7 @@ struct ContentView: View {
             GitHubUserListScreen()
                 .navigationBarTitle(Text("GitHubUserFinder"))
         }
-        .navigationViewStyle(StackNavigationViewStyle())
+        .navigationViewStyle(.stack)
     }
 }
 

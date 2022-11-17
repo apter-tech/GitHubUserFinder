@@ -8,7 +8,6 @@ object Versions {
     const val appCompat = "1.5.1"
     const val lifecycleViewModel = "2.5.1"
     const val sqldelight = "1.5.4"
-    const val kmpNativeCoroutines = "0.13.2"
     const val benManesVersions = "0.44.0"
     const val detekt = "1.19.0"
     const val kover = "0.6.1"
