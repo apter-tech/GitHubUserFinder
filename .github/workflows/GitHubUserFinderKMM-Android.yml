@@ -39,7 +39,7 @@ jobs:
 
   test-report:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     permissions:
       checks: write
       pull-requests: write

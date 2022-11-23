@@ -52,4 +52,7 @@ dependencies {
     implementation(Koin.core)
     implementation(Koin.android)
     implementation(Koin.compose)
+
+    // Detekt
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.detekt}")
 }
