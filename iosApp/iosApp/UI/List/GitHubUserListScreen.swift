@@ -15,49 +15,50 @@ struct GitHubUserListScreen: View {
                          GitHubUserListViewModel>(viewModel: GitHubUserListViewModel())
 
     var body: some View {
-        let state = reducer.viewModel.stateNativeValue
-        VStack(alignment: .center) {
-            SearchBar { query in
-                reducer.viewModel.searchUser(userName: query)
-            }
-            Spacer()
-            if state.isLoading {
-                ProgressView()
-            } else {
-                List {
-                    ForEach(state.data, id: \.id) { item in
-                        NavigationLink(destination: GitHubUserDetailsScreen(userName: item.login)) {
-                            GitHubUserRow(item: item)
+        if let state = reducer.state {
+            VStack(alignment: .center) {
+                SearchBar { query in
+                    reducer.viewModel.searchUser(userName: query)
+                }
+                Spacer()
+                if state.isLoading {
+                    ProgressView()
+                } else {
+                    List {
+                        ForEach(state.data, id: \.id) { item in
+                            NavigationLink(destination: GitHubUserDetailsScreen(userName: item.login)) {
+                                GitHubUserRow(item: item)
+                            }
+                        }
+                        if !state.isFetchingFinished {
+                            HStack {
+                                Spacer()
+                                ProgressView()
+                                Spacer()
+                            }
+                            .onAppear {
+                                reducer.viewModel.requestNextPage()
+                            }
                         }
                     }
-                    if !state.isFetchingFinished {
-                        HStack {
-                            Spacer()
-                            ProgressView()
-                            Spacer()
-                        }
-                        .onAppear {
-                            reducer.viewModel.requestNextPage()
-                        }
+                    .listStateModifier(state.data.isEmpty) {
+                        Text("We don't have any content, sorry 😔")
+                    }
+                    .listStateModifier(!state.error.isEmpty) {
+                        Text("Something went wrong 🤯 \n\n" + state.error)
                     }
                 }
-                .listStateModifier(state.data.isEmpty) {
-                    Text("We don't have any content, sorry 😔")
-                }
-                .listStateModifier(!state.error.isEmpty) {
-                    Text("Something went wrong 🤯 \n\n" + state.error)
+                Spacer()
+            }
+            .toolbar {
+                HStack {
+                    NavigationLink(destination: FavouriteUsersScreen()) {
+                        Image(systemName: "star.circle")
+                    }
                 }
             }
-            Spacer()
+            .navigationTitle("GutHubUserFinder")
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .toolbar {
-            HStack {
-                NavigationLink(destination: FavouriteUsersScreen()) {
-                    Image(systemName: "star.circle")
-                }
-            }
-        }
-        .navigationTitle("GutHubUserFinder")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }

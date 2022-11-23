@@ -15,7 +15,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
 
@@ -27,14 +26,34 @@ jobs:
       - name: Verify and generate coverage report
         run: ./gradlew koverMergedReport --stacktrace
 
-      - name: Add coverage report to PR
-        id: kover
-        uses: mi-kas/kover-report@v1.1
+      - name: Upload test reports
+        uses: actions/upload-artifact@v3
+        if: always()
         with:
+          name: shared-test-report
           path: ${{ github.workspace }}/build/reports/kover/merged/xml/report.xml
-          token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
-          title: Code Coverage
-          update-comment: true
+          retention-days: 5
 
       - name: Build
         run: ./gradlew check --stacktrace
+
+  test-report:
+    needs: build
+    runs-on: ubuntu-20.04
+    permissions:
+      checks: write
+      pull-requests: write
+    steps:
+      - name: Download report
+        uses: actions/download-artifact@v3
+        with:
+          name: shared-test-report
+
+      - name: Add coverage report to PR
+        id: kover
+        uses: mi-kas/kover-report@v1.2-beta
+        with:
+          path: ${{ github.workspace }}/report.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: Code Coverage
+          update-comment: true

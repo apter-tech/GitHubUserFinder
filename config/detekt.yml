@@ -87,7 +87,7 @@ complexity:
     threshold: 10
     includeStaticDeclarations: false
     includePrivateDeclarations: false
-  ComplexMethod:
+  CyclomaticComplexMethod:
     active: true
     threshold: 15
     ignoreSingleWhenExpression: false
@@ -306,7 +306,6 @@ formatting:
     active: true
     autoCorrect: true
     indentSize: 4
-    continuationIndentSize: 4
   MaximumLineLength:
     active: true
     maxLineLength: 120
@@ -358,7 +357,6 @@ formatting:
   ParameterListWrapping:
     active: true
     autoCorrect: true
-    indentSize: 4
     maxLineLength: 120
   SpacingAroundAngleBrackets:
     active: true
@@ -402,6 +400,21 @@ formatting:
   StringTemplate:
     active: true
     autoCorrect: true
+#
+#libraries:
+#  active: true
+#  ForbiddenPublicDataClass:
+#    active: true
+#    excludes: ['**']
+#    ignorePackages:
+#      - '*.internal'
+#      - '*.internal.*'
+  LibraryEntitiesShouldNotBePublic:
+    active: false
+    excludes: ['**']
+  LibraryCodeMustSpecifyReturnType:
+    active: false
+    excludes: ['**']
 
 naming:
   active: true
@@ -507,8 +520,6 @@ potential-bugs:
     active: true
   DoubleMutabilityForCollection:
     active: true
-  DuplicateCaseInWhenExpression:
-    active: true
   EqualsAlwaysReturnsTrueOrFalse:
     active: true
   EqualsWithHashCodeExist:
@@ -521,7 +532,7 @@ potential-bugs:
     active: true
   IgnoredReturnValue:
     active: true
-    restrictToAnnotatedMethods: true
+    restrictToConfig: true
     returnValueAnnotations:
       - '*.CheckResult'
       - '*.CheckReturnValue'
@@ -546,12 +557,7 @@ potential-bugs:
   MissingPackageDeclaration:
     active: true
     excludes: ['**/*.kts']
-  MissingWhenCase:
-    active: true
-    allowElseExpression: true
   NullableToStringCall:
-    active: true
-  RedundantElseInWhen:
     active: true
   UnconditionalJumpStatementInLoop:
     active: true
@@ -582,7 +588,7 @@ style:
     active: true
   DataClassContainsFunctions:
     active: true
-    conversionFunctionPrefix: 'to'
+    conversionFunctionPrefix: ['to']
   DataClassShouldBeImmutable:
     active: true
   DestructuringDeclarationWithTooManyEntries:
@@ -616,12 +622,6 @@ style:
     methods:
       - 'kotlin.io.print'
       - 'kotlin.io.println'
-  ForbiddenPublicDataClass:
-    active: true
-    excludes: ['**']
-    ignorePackages:
-      - '*.internal'
-      - '*.internal.*'
   ForbiddenVoid:
     active: true
     ignoreOverridden: false
@@ -630,14 +630,8 @@ style:
     active: true
     ignoreOverridableFunction: true
     ignoreActualFunction: true
-    excludedFunctions: 'describeContents'
+    excludedFunctions: ['describeContents']
     ignoreAnnotated: ['Provides']
-  LibraryCodeMustSpecifyReturnType:
-    active: false
-    excludes: ['**']
-  LibraryEntitiesShouldNotBePublic:
-    active: false
-    excludes: ['**']
   LoopWithTooManyJumpStatements:
     active: true
     maxJumpCount: 1
@@ -681,8 +675,6 @@ style:
   NoTabs:
     active: true
   ObjectLiteralToLambda:
-    active: true
-  ObjectLiteralToLambda:
     active: false
   OptionalAbstractKeyword:
     active: true
@@ -703,7 +695,7 @@ style:
   ReturnCount:
     active: true
     max: 2
-    excludedFunctions: 'equals'
+    excludedFunctions: ['equals']
     excludeLabeled: false
     excludeReturnFromLambda: true
     excludeGuardClauses: false

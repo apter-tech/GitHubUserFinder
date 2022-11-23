@@ -1,7 +1,6 @@
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.kotlin.plugin.serialization") version Versions.kotlin
-    id("com.rickclephas.kmp.nativecoroutines") version Versions.kmpNativeCoroutines
     id("com.android.library")
     id("com.squareup.sqldelight")
 }

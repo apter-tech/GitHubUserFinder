@@ -35,9 +35,6 @@ Android | iOS
 ### Libraries
 > Check [Dependencies.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/main/buildSrc/src/main/java/Dependencies.kt) for more details
 
-- :boom: [KMP-NativeCoroutines](https://github.com/rickclephas/KMP-NativeCoroutines) - Native coroutines and flows
-  [![GitHub Repo stars](https://img.shields.io/github/stars/rickclephas/KMP-NativeCoroutines)](https://github.com/rickclephas/KMP-NativeCoroutines)
-  [![latest release](https://img.shields.io/github/v/release/rickclephas/KMP-NativeCoroutines?label=latest%20release&sort=semver)](https://github.com/rickclephas/KMP-NativeCoroutines/releases)
 - 🌎 [Ktor](https://github.com/ktorio/ktor) - Network
   [![GitHub Repo stars](https://img.shields.io/github/stars/ktorio/ktor)](https://github.com/ktorio/ktor)
   [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.ktor/ktor/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.ktor)

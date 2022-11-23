@@ -3,28 +3,28 @@ object Versions {
     const val minsdk = 23
     const val targetsdk = 33
     const val gradle = "7.3.1"
-    const val kotlin = "1.7.20"
+    const val kotlin = "1.7.21"
     const val coroutines = "1.6.4"
     const val appCompat = "1.5.1"
     const val lifecycleViewModel = "2.5.1"
     const val sqldelight = "1.5.4"
-    const val kmpNativeCoroutines = "0.13.1"
-    const val benManesVersions = "0.43.0"
-    const val detekt = "1.19.0"
+    const val benManesVersions = "0.44.0"
+    const val detekt = "1.22.0"
     const val kover = "0.6.1"
 
-    const val compose = "1.3.0-rc01"
-    const val composeActivity = "1.6.0"
-    const val composeCompiler = "1.3.2"
+    const val compose = "1.4.0-alpha02"
+    const val composeActivity = "1.6.1"
+    const val composeCompiler = "1.4.0-alpha02"
     const val composeCoil = "2.2.2"
-    const val composeNavigation = "2.5.2"
+    const val composeNavigation = "2.5.3"
 
     const val koin = "3.2.2"
-    const val ktor = "2.1.2"
-    const val kermit = "1.1.3"
+    const val koinAndroid = "3.3.0"
+    const val ktor = "2.1.3"
+    const val kermit = "1.2.2"
     const val slf4j = "2.0.3"
-    const val junitKtx = "1.1.3"
-    const val turbine = "0.12.0"
+    const val junitKtx = "1.1.4"
+    const val turbine = "0.12.1"
 }
 
 object AndroidX {
@@ -47,8 +47,8 @@ object Compose {
 
 object Koin {
     const val core = "io.insert-koin:koin-core:${Versions.koin}"
-    const val android = "io.insert-koin:koin-android:${Versions.koin}"
-    const val compose = "io.insert-koin:koin-androidx-compose:${Versions.koin}"
+    const val android = "io.insert-koin:koin-android:${Versions.koinAndroid}"
+    const val compose = "io.insert-koin:koin-androidx-compose:${Versions.koinAndroid}"
 }
 
 object Ktor {

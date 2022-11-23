@@ -10,8 +10,8 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}")
         classpath("com.android.tools.build:gradle:${Versions.gradle}")
         classpath("com.squareup.sqldelight:gradle-plugin:${Versions.sqldelight}")
-        classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}")
         classpath("org.jetbrains.kotlinx:kover:${Versions.kover}")
+        classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}")
     }
 }
 
