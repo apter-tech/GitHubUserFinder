@@ -5,11 +5,11 @@ plugins {
 
 android {
     namespace = "io.imrekaszab.githubuserfinder.android"
-    compileSdk = Versions.targetsdk
+    compileSdk = libs.versions.targetSdk.get().toInt()
     defaultConfig {
         applicationId = "io.imrekaszab.githubuserfinder.android"
-        minSdk = Versions.minsdk
-        targetSdk = Versions.targetsdk
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -21,7 +21,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.composeCompiler
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
 
     buildTypes {
@@ -35,24 +35,15 @@ dependencies {
     implementation(project(":shared"))
 
     // AndroidX
-    implementation(AndroidX.appCompat)
+    implementation(libs.androidx.appcompat)
 
     // Compose
-    implementation(Compose.compiler)
-    implementation(Compose.ui)
-    implementation(Compose.runtime)
-    implementation(Compose.activity)
-    implementation(Compose.material)
-    implementation(Compose.coilCompose)
-    implementation(Compose.navigation)
-    implementation(Compose.preview)
-    debugImplementation(Compose.tooling)
+    debugImplementation(libs.compose.tooling)
+    implementation(libs.bundles.compose)
 
     // DI
-    implementation(Koin.core)
-    implementation(Koin.android)
-    implementation(Koin.compose)
+    implementation(libs.bundles.koinAndroid)
 
     // Detekt
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.detekt}")
+    detektPlugins(libs.detekt.formatting)
 }
