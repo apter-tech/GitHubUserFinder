@@ -1,6 +1,6 @@
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.kotlin.plugin.serialization") version Versions.kotlin
+    id("org.jetbrains.kotlin.plugin.serialization") version libs.versions.kotlin.get()
     id("com.android.library")
     id("com.squareup.sqldelight")
 }
@@ -32,14 +32,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(Koin.core)
-                implementation(Ktor.ktorCore)
-                implementation(Ktor.ktorSerialization)
-                implementation(Ktor.ktorContentNegotiation)
-                implementation(Ktor.logging)
-                implementation(SQLDelight.coroutines)
-                implementation(Log.kermit)
-                implementation(Log.slf4j)
+                implementation(libs.bundles.commonMain)
             }
         }
         val commonTest by getting {
@@ -47,30 +40,22 @@ kotlin {
                 implementation(kotlin("test-junit"))
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
-                implementation(Test.coroutines)
-                implementation(Test.turbine)
-                implementation(Test.ktor)
-                implementation(Test.koin)
+                implementation(libs.bundles.commonTest)
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation(Ktor.ktorAndroid)
-                implementation(AndroidX.lifecycleViewModel)
-                implementation(AndroidX.lifecycleRuntime)
-                implementation(SQLDelight.androidDriver)
+                implementation(libs.bundles.androidMain)
             }
         }
         val androidTest by getting {
             dependencies {
-                implementation(Test.junitKtx)
-                implementation(SQLDelight.nativeDriver)
+                implementation(libs.bundles.androidTest)
             }
         }
         val iosMain by getting {
             dependencies {
-                implementation(SQLDelight.native)
-                implementation(Ktor.ktoriOS)
+                implementation(libs.bundles.iosMain)
             }
         }
         val iosTest by getting
@@ -85,10 +70,10 @@ kotlin {
 
 android {
     namespace = "io.imrekaszab.githubuserfinder"
-    compileSdk = Versions.targetsdk
+    compileSdk = libs.versions.targetSdk.get().toInt()
     defaultConfig {
-        minSdk = Versions.minsdk
-        targetSdk = Versions.targetsdk
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
     }
     testOptions {
         unitTests {

@@ -1,4 +1,7 @@
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+plugins {
+    id("io.gitlab.arturbosch.detekt") version libs.versions.detekt.get()
+    id("org.jetbrains.kotlinx.kover") version libs.versions.kover.get()
+}
 
 buildscript {
     repositories {
@@ -7,11 +10,11 @@ buildscript {
         maven("https://plugins.gradle.org/m2/")
     }
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}")
-        classpath("com.android.tools.build:gradle:${Versions.gradle}")
-        classpath("com.squareup.sqldelight:gradle-plugin:${Versions.sqldelight}")
-        classpath("org.jetbrains.kotlinx:kover:${Versions.kover}")
-        classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}")
+        classpath("com.android.tools.build:gradle:${libs.versions.gradle.get()}")
+        classpath("com.squareup.sqldelight:gradle-plugin:${libs.versions.sqldelight.get()}")
+        classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${libs.versions.detekt.get()}")
+        classpath("org.jetbrains.kotlinx:kover:${libs.versions.kover.get()}")
     }
 }
 
@@ -83,32 +86,12 @@ subprojects {
     }
 }
 
-plugins {
-    id("com.github.ben-manes.versions") version Versions.benManesVersions
-    id("io.gitlab.arturbosch.detekt") version Versions.detekt
-    id("org.jetbrains.kotlinx.kover") version Versions.kover
-}
-
 koverMerged {
     enable()
     filters {
         projects {
             excludes += listOf("androidApp")
         }
-    }
-}
-
-tasks.withType<DependencyUpdatesTask> {
-    rejectVersionIf {
-        fun isNonStable(version: String): Boolean {
-            val stableKeyword =
-                listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
-            val regex = "^[0-9,.v-]+(-r)?$".toRegex()
-            val isStable = stableKeyword || regex.matches(version)
-            return isStable.not()
-        }
-
-        isNonStable(candidate.version) && !isNonStable(currentVersion)
     }
 }
 
