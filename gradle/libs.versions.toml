@@ -18,7 +18,8 @@ composeCoil = "2.2.2"
 composeNavigation = "2.5.3"
 
 koin = "3.2.2"
-koinAndroid = "3.3.0"
+koinAndroid = "3.3.1"
+koinAndroidCompose = "3.4.0"
 ktor = "2.2.1"
 kermit = "1.2.2"
 slf4j = "2.0.6"
@@ -43,7 +44,7 @@ compose-coil = { module = "io.coil-kt:coil-compose", version.ref = "composeCoil"
 
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
-koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroid" }
+koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroidCompose" }
 
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
