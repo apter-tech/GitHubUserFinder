@@ -18,7 +18,7 @@ composeCoil = "2.2.2"
 composeNavigation = "2.5.3"
 
 koin = "3.2.2"
-koinAndroid = "3.3.1"
+koinAndroid = "3.3.2"
 koinAndroidCompose = "3.4.0"
 ktor = "2.2.1"
 kermit = "1.2.2"
