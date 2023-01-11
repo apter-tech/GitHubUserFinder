@@ -17,7 +17,7 @@ composeCompiler = "1.4.0-alpha02"
 composeCoil = "2.2.2"
 composeNavigation = "2.5.3"
 
-koin = "3.2.2"
+koin = "3.3.2"
 koinAndroid = "3.3.2"
 koinAndroidCompose = "3.4.1"
 ktor = "2.2.2"
