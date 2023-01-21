@@ -13,7 +13,7 @@ kover = "0.6.1"
 
 compose = "1.4.0-alpha03"
 composeActivity = "1.6.1"
-composeCompiler = "1.4.0-alpha02"
+composeCompiler = "1.4.0"
 composeCoil = "2.2.2"
 composeNavigation = "2.5.3"
 
