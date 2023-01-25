@@ -24,7 +24,6 @@ kotlin {
         all {
             languageSettings.apply {
                 optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
-                optIn("com.russhwolf.settings.ExperimentalSettingsApi")
             }
         }
     }

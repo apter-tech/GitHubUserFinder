@@ -1,13 +1,7 @@
 package io.imrekaszab.githubuserfinder
 
-import app.cash.turbine.test
 import io.imrekaszab.githubuserfinder.action.GitHubUserAction
-import io.imrekaszab.githubuserfinder.di.apiModule
-import io.imrekaszab.githubuserfinder.di.coreModule
-import io.imrekaszab.githubuserfinder.di.dataModule
-import io.imrekaszab.githubuserfinder.di.factoryModule
-import io.imrekaszab.githubuserfinder.di.platformModule
-import io.imrekaszab.githubuserfinder.di.repositoryModule
+import io.imrekaszab.githubuserfinder.di.*
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
 import io.imrekaszab.githubuserfinder.store.GitHubUserStore
 import kotlinx.coroutines.flow.first
@@ -109,9 +103,8 @@ class GitHubUserServiceTest : KoinTest {
         action.refreshUserDetails(userName)
 
         // Then
-        store.getUserDetails().test {
-            assertEquals(userName, awaitItem()?.login)
-        }
+        val result = store.getUserDetails().first()
+        assertEquals(userName, result?.login)
     }
 
     @Test
@@ -124,9 +117,9 @@ class GitHubUserServiceTest : KoinTest {
         action.saveUser()
 
         // Then
-        store.getUserDetails().test {
-            assertEquals(userName, awaitItem()?.login)
-        }
+
+        val result = store.getUserDetails().first()
+        assertEquals(userName, result?.login)
     }
 
     @Test
@@ -169,8 +162,7 @@ class GitHubUserServiceTest : KoinTest {
         action.saveUser()
 
         // Then
-        store.getSavedUsers().test {
-            assertEquals(isNonEmpty, awaitItem().isNotEmpty())
-        }
+        val result = store.getSavedUsers().first()
+        assertEquals(isNonEmpty, result.isNotEmpty())
     }
 }

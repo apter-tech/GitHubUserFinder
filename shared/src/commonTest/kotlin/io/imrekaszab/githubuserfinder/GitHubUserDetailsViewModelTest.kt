@@ -1,14 +1,9 @@
 package io.imrekaszab.githubuserfinder
 
-import app.cash.turbine.test
-import io.imrekaszab.githubuserfinder.di.apiModule
-import io.imrekaszab.githubuserfinder.di.coreModule
-import io.imrekaszab.githubuserfinder.di.dataModule
-import io.imrekaszab.githubuserfinder.di.platformModule
-import io.imrekaszab.githubuserfinder.di.repositoryModule
+import io.imrekaszab.githubuserfinder.di.*
 import io.imrekaszab.githubuserfinder.viewmodel.details.GitHubUserDetailsViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -53,9 +48,8 @@ class GitHubUserDetailsViewModelTest {
         viewModel.refreshUserDetails(userName)
 
         // Then
-        viewModel.state.filter { it.userDetails != null }.test {
-            assertEquals(userName, awaitItem().userDetails?.login)
-        }
+        val state = viewModel.state.first { it.userDetails != null }
+        assertEquals(userName, state.userDetails?.login)
     }
 
     @Test
@@ -68,9 +62,8 @@ class GitHubUserDetailsViewModelTest {
         viewModel.deleteUser()
 
         // Then
-        viewModel.state.test {
-            assertEquals(null, awaitItem().userDetails)
-        }
+        val state = viewModel.state.first()
+        assertEquals(null, state.userDetails)
     }
 
     @Test
@@ -83,8 +76,7 @@ class GitHubUserDetailsViewModelTest {
         viewModel.saveUser()
 
         // Then
-        viewModel.state.filter { it.userDetails != null }.test {
-            assertEquals(userName, awaitItem().userDetails?.login)
-        }
+        val state = viewModel.state.first { it.userDetails != null }
+        assertEquals(userName, state.userDetails?.login)
     }
 }
