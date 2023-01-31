@@ -1,13 +1,9 @@
 package io.imrekaszab.githubuserfinder
 
-import app.cash.turbine.test
-import io.imrekaszab.githubuserfinder.di.apiModule
-import io.imrekaszab.githubuserfinder.di.coreModule
-import io.imrekaszab.githubuserfinder.di.dataModule
-import io.imrekaszab.githubuserfinder.di.platformModule
-import io.imrekaszab.githubuserfinder.di.repositoryModule
+import io.imrekaszab.githubuserfinder.di.*
 import io.imrekaszab.githubuserfinder.viewmodel.favourite.FavouriteUsersViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -52,8 +48,8 @@ class FavouriteUsersViewModelTest {
         viewModel.deleteAllUser()
 
         // Then
-        viewModel.state.test {
-            assertEquals(listIsEmpty, awaitItem().data.isEmpty())
-        }
+
+        val state = viewModel.state.first()
+        assertEquals(listIsEmpty, state.data.isEmpty())
     }
 }

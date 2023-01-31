@@ -1,16 +1,11 @@
 package io.imrekaszab.githubuserfinder
 
-import app.cash.turbine.test
-import io.imrekaszab.githubuserfinder.di.apiModule
-import io.imrekaszab.githubuserfinder.di.coreModule
-import io.imrekaszab.githubuserfinder.di.dataModule
-import io.imrekaszab.githubuserfinder.di.platformModule
-import io.imrekaszab.githubuserfinder.di.repositoryModule
+import io.imrekaszab.githubuserfinder.di.*
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
 import io.imrekaszab.githubuserfinder.viewmodel.list.GitHubUserListViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -56,9 +51,9 @@ class GitHubUserListViewModelTest {
         delay(200)
 
         // Then
-        viewModel.state.filter { it.data.isEmpty() }.test {
-            assertEquals(emptyList, awaitItem().data)
-        }
+
+        val state = viewModel.state.first { it.data.isEmpty() }
+        assertEquals(emptyList, state.data)
     }
 
     @Test
@@ -71,8 +66,7 @@ class GitHubUserListViewModelTest {
         viewModel.searchUser(userName)
 
         // Then
-        viewModel.state.filter { it.data.isNotEmpty() }.test {
-            assertEquals(awaitItem().data.isNotEmpty(), listIsNotEmpty)
-        }
+        val state = viewModel.state.first { it.data.isNotEmpty() }
+        assertEquals(listIsNotEmpty, state.data.isNotEmpty())
     }
 }
