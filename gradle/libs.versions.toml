@@ -14,7 +14,7 @@ kover = "0.6.1"
 compose = "1.4.0"
 composeActivity = "1.6.1"
 composeCompiler = "1.4.0"
-composeUITooling = "1.4.0-beta01"
+composeUITooling = "1.4.0"
 composeCoil = "2.2.2"
 composeNavigation = "2.5.3"
 
