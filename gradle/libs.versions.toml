@@ -23,7 +23,7 @@ koinAndroid = "3.3.3"
 koinAndroidCompose = "3.4.3"
 ktor = "2.2.3"
 kermit = "1.2.2"
-slf4j = "2.0.6"
+slf4j = "2.0.7"
 junitKtx = "1.1.5"
 
 [libraries]
