@@ -12,7 +12,7 @@ detekt = "1.22.0"
 kover = "0.6.1"
 
 compose = "1.4.0"
-composeActivity = "1.6.1"
+composeActivity = "1.7.0"
 composeCompiler = "1.4.0"
 composeUITooling = "1.4.0"
 composeCoil = "2.2.2"
