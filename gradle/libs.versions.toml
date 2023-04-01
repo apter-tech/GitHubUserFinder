@@ -3,7 +3,7 @@ minSdk = "23"
 targetSdk = "33"
 
 gradle = "7.3.1"
-kotlin = "1.8.0"
+kotlin = "1.8.10"
 coroutines = "1.6.4"
 appCompat = "1.6.1"
 lifecycleViewModel = "2.6.1"
