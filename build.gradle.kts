@@ -11,7 +11,7 @@ buildscript {
     }
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}")
-        classpath("com.android.tools.build:gradle:${libs.versions.gradle.get()}")
+        classpath("com.android.tools.build:gradle:${libs.versions.agp.get()}")
         classpath("com.squareup.sqldelight:gradle-plugin:${libs.versions.sqldelight.get()}")
         classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${libs.versions.detekt.get()}")
         classpath("org.jetbrains.kotlinx:kover:${libs.versions.kover.get()}")
@@ -75,14 +75,6 @@ allprojects {
                     ).contains(sourceSet.name)
                 }
             }
-    }
-}
-
-subprojects {
-    afterEvaluate {
-        tasks.named("check").configure {
-            dependsOn(tasks.getByName("detekt"))
-        }
     }
 }
 

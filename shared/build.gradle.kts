@@ -44,17 +44,22 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(libs.bundles.androidMain)
+                implementation(libs.androidx.lifecycle.runtime)
+                implementation(libs.androidx.lifecycle.viewmodel)
+                implementation(libs.sqldelight.android.driver)
+                implementation(libs.ktor.android)
             }
         }
         val androidTest by getting {
             dependencies {
-                implementation(libs.bundles.androidTest)
+                implementation(libs.test.junitKtx)
+                implementation(libs.sqldelight.sqlite.driver)
             }
         }
         val iosMain by getting {
             dependencies {
-                implementation(libs.bundles.iosMain)
+                implementation(libs.ktor.ios)
+                implementation(libs.sqldelight.native)
             }
         }
         val iosTest by getting
@@ -72,23 +77,6 @@ android {
     compileSdk = libs.versions.targetSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
-    }
-    testOptions {
-        unitTests {
-            isIncludeAndroidResources = true
-        }
-        unitTests.all {
-            it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
-                isDisabled.set(it.name == "testDebugUnitTest")
-            }
-        }
-    }
-
-    kover {
-        instrumentation {
-            excludeTasks.add("testDebugUnitTest")
-        }
     }
 }
 

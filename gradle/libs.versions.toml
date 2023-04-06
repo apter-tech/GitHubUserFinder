@@ -2,14 +2,19 @@
 minSdk = "23"
 targetSdk = "33"
 
-gradle = "7.3.1"
-kotlin = "1.8.0"
-coroutines = "1.7.1"
+agp = "7.4.2"
+kotlin = "1.8.10"
+kotlinCoroutines = "1.7.1"
+kotlinDate = "0.4.0"
+
 appCompat = "1.6.1"
 lifecycleViewModel = "2.6.1"
 sqldelight = "1.5.5"
 detekt = "1.22.0"
 kover = "0.6.1"
+mockmp = "1.13.0"
+mokoResources = "0.21.1"
+mokoGraphics = "0.9.0"
 
 compose = "1.4.3"
 composeActivity = "1.7.2"
@@ -22,11 +27,20 @@ koin = "3.4.1"
 koinAndroid = "3.4.2"
 koinAndroidCompose = "3.4.5"
 ktor = "2.3.1"
+
 kermit = "1.2.2"
 slf4j = "2.0.7"
 junitKtx = "1.1.5"
+accompanistNavigation = "0.30.1"
 
 [libraries]
+
+kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
+kotlin-date = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinDate" }
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+kotlin-test-common = { module = "org.jetbrains.kotlin:kotlin-test-common", version.ref = "kotlin" }
+kotlin-test-annotations-common = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common", version.ref = "kotlin" }
+accompanist-navigation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanistNavigation" }
 
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat" }
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleViewModel" }
@@ -61,11 +75,24 @@ sqldelight-sqlite-driver = { module = "com.squareup.sqldelight:sqlite-driver", v
 test-ktor = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 test-koin = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 test-junitKtx = { module = "androidx.test.ext:junit-ktx", version.ref = "junitKtx" }
-test-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+test-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinCoroutines" }
 
 log-kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 log-slf4j = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+moko-resources = { module = "dev.icerock.moko:resources", version.ref = "mokoResources" }
+moko-resources-test = { module = "dev.icerock.moko:resources-test", version.ref = "mokoResources" }
+moko-graphics = { module = "dev.icerock.moko:graphics", version.ref = "mokoGraphics" }
+
+# plugins classpath dependencies
+android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kover-gradle-plugin = { module = "org.jetbrains.kotlinx:kover", version.ref = "kover" }
+mockmp-gradle-plugin = { module = "org.kodein.mock:mockmp-gradle-plugin", version.ref = "mockmp" }
+detekt-gradle-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
+moko-resources-gradle-plugin = { module = "dev.icerock.moko:resources-generator", version.ref = "mokoResources" }
+sqldelight-gradle-plugin = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqldelight" }
+kotlin-serialization-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 
 [bundles]
 compose = [
@@ -95,26 +122,11 @@ commonMain = [
     "log-kermit",
     "log-slf4j"
 ]
-
 commonTest = [
     "test-coroutines",
     "test-ktor",
-    "test-koin"
-]
-
-androidMain = [
-    "androidx-lifecycle-runtime",
-    "androidx-lifecycle-viewmodel",
-    "sqldelight-android-driver",
-    "ktor-android"
-]
-
-androidTest = [
-    "test-junitKtx",
-    "sqldelight-sqlite-driver"
-]
-
-iosMain = [
-    "ktor-ios",
-    "sqldelight-native"
+    "test-koin",
+    "koin-core",
+    "ktor-serialization",
+    "ktor-content-negotiation"
 ]
