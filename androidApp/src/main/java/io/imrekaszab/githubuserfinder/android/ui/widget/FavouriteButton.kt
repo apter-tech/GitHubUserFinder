@@ -13,15 +13,15 @@ import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 
 @Composable
 fun FavoriteButton(
-    isFavourite: Boolean,
     modifier: Modifier,
-    onFavouriteCLick: (Boolean) -> Unit
+    isFavourite: Boolean,
+    onFavouriteClick: (Boolean) -> Unit
 ) {
     IconToggleButton(
         modifier = modifier,
         checked = isFavourite,
         onCheckedChange = {
-            onFavouriteCLick(!isFavourite)
+            onFavouriteClick(!isFavourite)
         }
     ) {
         Icon(

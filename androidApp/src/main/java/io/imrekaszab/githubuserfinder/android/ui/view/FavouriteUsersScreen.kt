@@ -1,65 +1,70 @@
 package io.imrekaszab.githubuserfinder.android.ui.view
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import io.imrekaszab.githubuserfinder.android.R
+import io.imrekaszab.githubuserfinder.android.ui.navigation.GitHubUserScreens
 import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
+import io.imrekaszab.githubuserfinder.android.ui.theme.GitHubUserFinderTheme
+import io.imrekaszab.githubuserfinder.android.ui.widget.CommonAppBar
 import io.imrekaszab.githubuserfinder.android.ui.widget.EmptyView
 import io.imrekaszab.githubuserfinder.android.ui.widget.ErrorView
+import io.imrekaszab.githubuserfinder.android.ui.widget.GitHubUserListView
 import io.imrekaszab.githubuserfinder.android.ui.widget.RemoveAllUserDialog
+import io.imrekaszab.githubuserfinder.viewmodel.favourite.FavouriteUsersScreenState
 import io.imrekaszab.githubuserfinder.viewmodel.favourite.FavouriteUsersViewModel
+import org.koin.compose.koinInject
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun FavouriteGitHubUsersScreen(navController: NavController) {
-    val viewModel = remember { FavouriteUsersViewModel() }
+    val viewModel: FavouriteUsersViewModel = koinInject()
     val state = viewModel.state.collectAsState()
-    val showRemoveDialog = remember { mutableStateOf(false) }
+    val error = viewModel.error.collectAsState()
 
+    LaunchedEffect(Unit) {
+        viewModel.loadUsers()
+    }
+
+    FavouriteGitHubUsersContent(
+        state = state.value,
+        error = error.value,
+        onArrowClick = { navController.popBackStack() },
+        onRemoveUsers = { viewModel.deleteAllUser() },
+        onItemClick = {
+            navController.navigate(GitHubUserScreens.GitHubUserDetailScreen.route + "/$it")
+        }
+    )
+}
+
+@Composable
+fun FavouriteGitHubUsersContent(
+    state: FavouriteUsersScreenState,
+    error: String? = null,
+    onArrowClick: () -> Unit = {},
+    onRemoveUsers: () -> Unit = {},
+    onItemClick: (String) -> Unit = {},
+) {
+    val showRemoveDialog = remember { mutableStateOf(false) }
     Scaffold(topBar = {
-        TopAppBar {
-            Row(
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .padding(start = Dimens.tiny)
-                    .fillMaxWidth()
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Arrow Back",
-                    modifier = Modifier.clickable {
-                        navController.popBackStack()
-                    }
-                )
-                Text(
-                    text = stringResource(id = R.string.favourite_screen_title),
-                    style = MaterialTheme.typography.h6,
-                    modifier = Modifier.padding(start = Dimens.default)
-                )
-                Spacer(modifier = Modifier.weight(1.0f))
-                if (state.value.data.isNotEmpty()) {
+        CommonAppBar(
+            title = stringResource(id = R.string.favourite_screen_title),
+            onArrowClick = onArrowClick,
+            trailing = {
+                if (state.data.isNotEmpty()) {
                     Icon(
                         imageVector = Icons.Default.Clear,
                         contentDescription = "Remove all user",
@@ -69,24 +74,36 @@ fun FavouriteGitHubUsersScreen(navController: NavController) {
                     )
                 }
             }
-        }
+        )
     }) {
-        when {
-            showRemoveDialog.value -> RemoveAllUserDialog(
-                onPositiveButtonClick = {
-                    viewModel.deleteAllUser()
-                    showRemoveDialog.value = false
-                },
-                onDismissRequest = {
-                    showRemoveDialog.value = false
-                }
-            )
-            state.value.error.isNotEmpty() -> ErrorView(state.value.error)
-            state.value.data.isEmpty() -> EmptyView()
-            else -> GitHubUserListView(
-                navController = navController,
-                itemList = state.value.data
-            )
+        Box(modifier = Modifier.padding(it)) {
+            when {
+                !error.isNullOrEmpty() -> ErrorView(error)
+                state.data.isEmpty() -> EmptyView()
+                else -> GitHubUserListView(
+                    itemList = state.data,
+                    onItemClick = onItemClick
+                )
+            }
+            if (showRemoveDialog.value) {
+                RemoveAllUserDialog(
+                    onPositiveButtonClick = {
+                        onRemoveUsers()
+                        showRemoveDialog.value = false
+                    },
+                    onDismissRequest = {
+                        showRemoveDialog.value = false
+                    }
+                )
+            }
         }
+    }
+}
+
+@Preview(name = "FavouriteGitHubUsersScreen", group = "Screens")
+@Composable
+private fun FavouriteGitHubUsersScreenPreview() {
+    GitHubUserFinderTheme {
+        FavouriteGitHubUsersContent(FavouriteUsersScreenState.initial())
     }
 }

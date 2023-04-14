@@ -9,8 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 
 @Composable
-fun ErrorView(errorText: String?) {
-    errorText ?: return
+fun ErrorView(errorText: String) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
