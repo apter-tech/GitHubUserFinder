@@ -6,8 +6,14 @@ pluginManagement {
     }
 }
 
+dependencyResolutionManagement {
+    @Suppress("UnstableApiUsage")
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
 rootProject.name = "GitHubUserFinder"
 include(":androidApp")
 include(":shared")
-
-enableFeaturePreview("VERSION_CATALOGS")

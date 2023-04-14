@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.application")
-    kotlin("android")
+    alias(libs.plugins.android.application)
+    id(libs.plugins.kotlin.android.get().pluginId)
 }
 
 android {
@@ -16,14 +16,17 @@ android {
         buildConfigField("String", "BASE_PATH", "\"https://api.github.com\"")
     }
 
+    @Suppress("UnstableApiUsage")
     buildFeatures {
         compose = true
     }
 
+    @Suppress("UnstableApiUsage")
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
 
+    @Suppress("UnstableApiUsage")
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false

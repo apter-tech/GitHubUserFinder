@@ -13,8 +13,6 @@ sqldelight = "1.5.5"
 detekt = "1.22.0"
 kover = "0.6.1"
 mockmp = "1.13.0"
-mokoResources = "0.21.1"
-mokoGraphics = "0.9.0"
 
 compose = "1.4.3"
 composeActivity = "1.7.2"
@@ -80,19 +78,18 @@ test-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", ve
 log-kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 log-slf4j = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
-moko-resources = { module = "dev.icerock.moko:resources", version.ref = "mokoResources" }
-moko-resources-test = { module = "dev.icerock.moko:resources-test", version.ref = "mokoResources" }
-moko-graphics = { module = "dev.icerock.moko:graphics", version.ref = "mokoGraphics" }
 
-# plugins classpath dependencies
-android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
-kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-kover-gradle-plugin = { module = "org.jetbrains.kotlinx:kover", version.ref = "kover" }
-mockmp-gradle-plugin = { module = "org.kodein.mock:mockmp-gradle-plugin", version.ref = "mockmp" }
-detekt-gradle-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
-moko-resources-gradle-plugin = { module = "dev.icerock.moko:resources-generator", version.ref = "mokoResources" }
-sqldelight-gradle-plugin = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqldelight" }
-kotlin-serialization-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
+[plugins]
+
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+mockmp = { id = "org.kodein.mock.mockmp", version.ref = "mockmp" }
+sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqldelight" }
 
 [bundles]
 compose = [

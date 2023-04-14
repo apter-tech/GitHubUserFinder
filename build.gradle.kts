@@ -1,22 +1,18 @@
 plugins {
-    id("io.gitlab.arturbosch.detekt") version libs.versions.detekt.get()
-    id("org.jetbrains.kotlinx.kover") version libs.versions.kover.get()
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.multiplatform) apply false
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.kover)
 }
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-        maven("https://plugins.gradle.org/m2/")
-    }
-    dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}")
-        classpath("com.android.tools.build:gradle:${libs.versions.agp.get()}")
-        classpath("com.squareup.sqldelight:gradle-plugin:${libs.versions.sqldelight.get()}")
-        classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${libs.versions.detekt.get()}")
-        classpath("org.jetbrains.kotlinx:kover:${libs.versions.kover.get()}")
-    }
-}
+val koverExcludeList = listOf(
+    "*.BuildConfig",
+    "*.Mock*",
+     "*.TestUtilAndroidKt",
+    "io.imrekaszab.githubuserfinder.db.*",
+    "*.di.*",
+)
 
 allprojects {
     apply(plugin = "io.gitlab.arturbosch.detekt")
@@ -29,6 +25,11 @@ allprojects {
 
     apply(plugin = "kover")
     kover {
+        filters {
+            classes {
+                excludes += koverExcludeList
+            }
+        }
         verify {
             rule {
                 isEnabled = true
@@ -37,7 +38,7 @@ allprojects {
                     kotlinx.kover.api.VerificationTarget.ALL
 
                 bound {
-                    minValue = 80
+                    minValue = 90
                     maxValue = 100
                     counter =
                         kotlinx.kover.api.CounterType.LINE
@@ -83,6 +84,9 @@ koverMerged {
     filters {
         projects {
             excludes += listOf("androidApp")
+        }
+        classes {
+            excludes += koverExcludeList
         }
     }
 }

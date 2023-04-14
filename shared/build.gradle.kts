@@ -1,8 +1,9 @@
 plugins {
-    kotlin("multiplatform")
-    id("org.jetbrains.kotlin.plugin.serialization") version libs.versions.kotlin.get()
-    id("com.android.library")
-    id("com.squareup.sqldelight")
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.mockmp)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
@@ -84,4 +85,8 @@ sqldelight {
     database("GitHubUserFinderDB") {
         packageName = "io.imrekaszab.githubuserfinder.db"
     }
+}
+
+mockmp {
+    usesHelper = true
 }
