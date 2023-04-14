@@ -1,42 +1,41 @@
 package io.imrekaszab.githubuserfinder.viewmodel.favourite
 
-import io.imrekaszab.githubuserfinder.action.GitHubUserAction
-import io.imrekaszab.githubuserfinder.store.GitHubUserStore
-import io.imrekaszab.githubuserfinder.util.mvi.Reducer
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import io.imrekaszab.githubuserfinder.service.action.GitHubUserAction
+import io.imrekaszab.githubuserfinder.service.store.GitHubUserStore
+import io.imrekaszab.githubuserfinder.util.reducer.Reducer
+import kotlinx.coroutines.flow.first
 
-class FavouriteUsersViewModel :
-    Reducer<FavouriteUsersScreenState, FavouriteUsersScreenUiEvent>(FavouriteUsersScreenState.initial()),
-    KoinComponent {
-    private val gitHubUserAction: GitHubUserAction by inject()
-    private val gitHubUserStore: GitHubUserStore by inject()
-
-    init {
-        mainScope.launch {
-            gitHubUserStore.getSavedUsers()
-                .collectLatest {
-                    sendEvent(FavouriteUsersScreenUiEvent.ShowData(it))
-                }
-        }
+class FavouriteUsersViewModel(
+    private val gitHubUserAction: GitHubUserAction,
+    private val gitHubUserStore: GitHubUserStore
+) : Reducer<FavouriteUsersScreenState, FavouriteUsersScreenUiEvent>(
+    FavouriteUsersScreenState.initial()
+) {
+    fun loadUsers() {
+        sendEvent(FavouriteUsersScreenUiEvent.LoadUsers)
     }
 
     fun deleteAllUser() {
         sendEvent(FavouriteUsersScreenUiEvent.DeleteUsers)
     }
 
-    override fun reduce(oldState: FavouriteUsersScreenState, event: FavouriteUsersScreenUiEvent) {
-        mainScope.launch {
-            when (event) {
-                FavouriteUsersScreenUiEvent.DeleteUsers -> {
-                    gitHubUserAction.deleteAllUser()
-                }
-                is FavouriteUsersScreenUiEvent.ShowData -> {
-                    setState(oldState.copy(data = event.items))
-                }
+    override suspend fun reduce(
+        oldState: FavouriteUsersScreenState,
+        event: FavouriteUsersScreenUiEvent
+    ) {
+        when (event) {
+            FavouriteUsersScreenUiEvent.DeleteUsers -> {
+                gitHubUserAction.deleteAllUser()
+                loadUsers(oldState)
+            }
+            is FavouriteUsersScreenUiEvent.LoadUsers -> {
+                loadUsers(oldState)
             }
         }
+    }
+
+    private suspend fun loadUsers(oldState: FavouriteUsersScreenState) {
+        val users = gitHubUserStore.getSavedUsers().first()
+        setState(oldState.copy(data = users))
     }
 }

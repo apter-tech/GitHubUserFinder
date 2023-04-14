@@ -4,7 +4,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 
-class FlowAdapter<T : Any>(
+class FlowAdapter<T : Any?>(
     private val scope: CoroutineScope,
     private val flow: Flow<T>
 ) {

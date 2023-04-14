@@ -1,34 +1,27 @@
 package io.imrekaszab.githubuserfinder.viewmodel.list
 
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
-import io.imrekaszab.githubuserfinder.util.mvi.UiEvent
-import io.imrekaszab.githubuserfinder.util.mvi.UiState
+import io.imrekaszab.githubuserfinder.util.reducer.UiEvent
+import io.imrekaszab.githubuserfinder.util.reducer.UiState
 
 sealed class UserListScreenUiEvent : UiEvent {
-    data class ShowData(val items: List<GitHubUser>) : UserListScreenUiEvent()
-    data class FetchingFinished(val finished: Boolean) : UserListScreenUiEvent()
     data class Search(val query: String) : UserListScreenUiEvent()
     object RequestNextPage : UserListScreenUiEvent()
-    data class NavigateToDetails(val userName: String) : UserListScreenUiEvent()
+    object LoadUsers : UserListScreenUiEvent()
 }
 
 data class UserListScreenState(
     val isLoading: Boolean,
     val data: List<GitHubUser>,
     val isFetchingFinished: Boolean,
-    val navigateToDetails: Boolean,
-    val error: String
+    val navigateToDetails: Boolean
 ) : UiState {
     companion object {
         fun initial() = UserListScreenState(
             isLoading = false,
             data = emptyList(),
             isFetchingFinished = true,
-            navigateToDetails = false,
-            error = ""
+            navigateToDetails = false
         )
     }
-
-    override fun toString() =
-        "isLoading: $isLoading, data.size: ${data.size}, isFetchingFinished: $isFetchingFinished"
 }
