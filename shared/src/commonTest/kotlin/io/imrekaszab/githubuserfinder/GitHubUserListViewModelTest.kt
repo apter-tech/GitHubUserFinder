@@ -1,72 +1,128 @@
 package io.imrekaszab.githubuserfinder
 
-import io.imrekaszab.githubuserfinder.di.*
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
+import io.imrekaszab.githubuserfinder.service.action.GitHubUserAction
+import io.imrekaszab.githubuserfinder.service.store.GitHubUserStore
 import io.imrekaszab.githubuserfinder.viewmodel.list.GitHubUserListViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
+import org.kodein.mock.Mock
+import org.kodein.mock.tests.TestsWithMocks
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
-class GitHubUserListViewModelTest {
-    private val viewModel by lazy { GitHubUserListViewModel() }
+class GitHubUserListViewModelTest : TestsWithMocks() {
+    @Mock
+    lateinit var action: GitHubUserAction
+
+    @Mock
+    lateinit var store: GitHubUserStore
+
+    private val viewModel by withMocks { GitHubUserListViewModel(action, store) }
+
+    override fun setUpMocks() = injectMocks(mocker)
 
     @BeforeTest
     fun setUp() {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        startKoin {
-            modules(
-                apiModule,
-                repositoryModule,
-                coreModule,
-                platformModule,
-                dataModule,
-                mockModule
-            )
-        }
     }
 
     @AfterTest
     fun clear() {
         Dispatchers.resetMain()
         viewModel.clear()
-        stopKoin()
     }
 
     @Test
-    fun `state gives back an empty list after a search with empty string`() = runBlocking {
+    fun `given emptyList when loadUsers called then returns emptyList`() = runTest {
         // Given
         val emptyList = emptyList<GitHubUser>()
+        every { store.getUsers() } returns flowOf(emptyList)
+        every { store.isFetchingFinished() } returns flowOf(true)
 
         // When
-        viewModel.searchUser("")
-        delay(200)
+        viewModel.loadUsers()
 
         // Then
+        val result = viewModel.state.first()
 
-        val state = viewModel.state.first { it.data.isEmpty() }
-        assertEquals(emptyList, state.data)
+        assertEquals(emptyList, result.data)
+
+        verifyWithSuspend {
+            viewModel.loadUsers()
+            viewModel.setState(isAny())
+        }
     }
-
     @Test
-    fun `state gives back a non empty list after search`() = runBlocking {
+    fun `given null userName when searchUser called then returns emptyList`() = runTest {
         // Given
-        val listIsNotEmpty = true
-        val userName = MockData.userName
+        val userName = null
+        everySuspending { action.searchUser(isAny()) } returns Unit
+        every { store.getUsers() } returns flowOf(emptyList())
+        every { store.isFetchingFinished() } returns flowOf(true)
 
         // When
         viewModel.searchUser(userName)
 
         // Then
-        val state = viewModel.state.first { it.data.isNotEmpty() }
-        assertEquals(listIsNotEmpty, state.data.isNotEmpty())
+        val result = viewModel.state.first()
+
+        assertTrue(result.data.isEmpty())
+
+        verifyWithSuspend {
+            viewModel.searchUser(isAny())
+            viewModel.setState(isAny())
+        }
+    }
+
+    @Test
+    fun `given mock username when searchUser called then returns non-emptyList with the user`() = runTest {
+        // Given
+        val userName = MockData.userName
+        everySuspending { action.searchUser(isAny()) } returns Unit
+        every { store.getUsers() } returns flowOf(listOf(MockData.user))
+        every { store.isFetchingFinished() } returns flowOf(true)
+
+        // When
+        viewModel.searchUser(userName)
+
+        // Then
+        val result = viewModel.state.first()
+
+        assertEquals(userName, result.data.first().login)
+
+        verifyWithSuspend {
+            viewModel.searchUser(isAny())
+            viewModel.setState(isAny())
+        }
+    }
+
+    @Test
+    fun `given mock user when requestNextPage called then returns non-emptyList with the user`() = runTest {
+        // Given
+        val userName = MockData.userName
+        everySuspending { action.fetchNextPage() } returns Unit
+        every { store.getUsers() } returns flowOf(listOf(MockData.user))
+        every { store.isFetchingFinished() } returns flowOf(true)
+
+        // When
+        viewModel.requestNextPage()
+
+        // Then
+        val result = viewModel.state.first()
+
+        assertEquals(userName, result.data.first().login)
+
+        verifyWithSuspend {
+            viewModel.requestNextPage()
+            viewModel.setState(isAny())
+        }
     }
 }

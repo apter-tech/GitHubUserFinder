@@ -1,9 +1,9 @@
 package io.imrekaszab.githubuserfinder
 
-import io.imrekaszab.githubuserfinder.action.GitHubUserAction
+import io.imrekaszab.githubuserfinder.service.action.GitHubUserAction
 import io.imrekaszab.githubuserfinder.di.*
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
-import io.imrekaszab.githubuserfinder.store.GitHubUserStore
+import io.imrekaszab.githubuserfinder.service.store.GitHubUserStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
