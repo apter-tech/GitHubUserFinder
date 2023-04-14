@@ -8,6 +8,9 @@ import io.imrekaszab.githubuserfinder.api.GitHubApiImpl
 import io.imrekaszab.githubuserfinder.database.DatabaseHelper
 import io.imrekaszab.githubuserfinder.repository.GitHubUserRepository
 import io.imrekaszab.githubuserfinder.repository.GitHubUserRepositoryImpl
+import io.imrekaszab.githubuserfinder.viewmodel.details.GitHubUserDetailsViewModel
+import io.imrekaszab.githubuserfinder.viewmodel.favourite.FavouriteUsersViewModel
+import io.imrekaszab.githubuserfinder.viewmodel.list.GitHubUserListViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
@@ -37,7 +40,8 @@ fun initKoin(baseUrl: String, appModule: Module): KoinApplication {
             repositoryModule,
             factoryModule,
             dataModule,
-            apiModule
+            apiModule,
+            viewModelModule
         )
     }
 
@@ -63,7 +67,13 @@ var apiModule = module {
 }
 
 var repositoryModule = module {
-    single<GitHubUserRepository> { GitHubUserRepositoryImpl() }
+    single<GitHubUserRepository> { GitHubUserRepositoryImpl(get()) }
+}
+
+var viewModelModule = module {
+    factory { GitHubUserListViewModel(get(), get()) }
+    factory { GitHubUserDetailsViewModel(get(), get()) }
+    factory { FavouriteUsersViewModel(get(), get()) }
 }
 
 internal val factoryModule = module {

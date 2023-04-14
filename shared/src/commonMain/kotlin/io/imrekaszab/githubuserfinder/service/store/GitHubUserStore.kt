@@ -1,4 +1,4 @@
-package io.imrekaszab.githubuserfinder.store
+package io.imrekaszab.githubuserfinder.service.store
 
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
 import kotlinx.coroutines.flow.Flow

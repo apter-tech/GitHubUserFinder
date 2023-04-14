@@ -1,7 +1,7 @@
 package io.imrekaszab.githubuserfinder.service
 
 import co.touchlab.kermit.Logger
-import io.imrekaszab.githubuserfinder.action.GitHubUserAction
+import io.imrekaszab.githubuserfinder.service.action.GitHubUserAction
 import io.imrekaszab.githubuserfinder.api.GitHubApi
 import io.imrekaszab.githubuserfinder.di.injectLogger
 import io.imrekaszab.githubuserfinder.mapper.toDomain
@@ -9,7 +9,7 @@ import io.imrekaszab.githubuserfinder.mapper.toDomainModels
 import io.imrekaszab.githubuserfinder.model.domain.GitHubPagingInfo
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
 import io.imrekaszab.githubuserfinder.repository.GitHubUserRepository
-import io.imrekaszab.githubuserfinder.store.GitHubUserStore
+import io.imrekaszab.githubuserfinder.service.store.GitHubUserStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,12 +19,12 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
+class GitHubUserService(
+    private val gitHubApi: GitHubApi,
+    private val gitHubUserRepository: GitHubUserRepository
+) : GitHubUserAction, GitHubUserStore, KoinComponent {
     private val logger: Logger by injectLogger("GitHubUserService")
-    private val gitHubApi: GitHubApi by inject()
-    private val gitHubUserRepository: GitHubUserRepository by inject()
 
     private val gitHubUserDetailsStateFlow = MutableStateFlow<GitHubUser?>(null)
     private val gitHubUserListStateFlow = MutableStateFlow<List<GitHubUser>>(listOf())
@@ -38,12 +38,11 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
             val result = gitHubApi.searchUser(userName, pagingInfo.page, pagingInfo.offset)
             val userList = result.items.toDomainModels().toMutableList()
 
-            val newPagingInfo =
-                pagingInfo.copy(
-                    totalItemCount = result.total_count,
-                    userName = userName,
-                    currentCount = userList.size
-                )
+            val newPagingInfo = pagingInfo.copy(
+                totalItemCount = result.total_count,
+                userName = userName,
+                currentCount = userList.size
+            )
             gitHubUserListStateFlow.emit(userList)
             gitHubPagingInfoStateFlow.emit(newPagingInfo)
         } catch (exception: Exception) {
@@ -75,25 +74,24 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
             }
         } catch (exception: Exception) {
             gitHubUserListStateFlow.emit(mutableListOf())
-            logger.e("Error happened: $exception")
+            logger.d("Error happened: $exception")
             throw exception
         }
     }
 
-    override suspend fun refreshUserDetails(userName: String) =
-        withContext(Dispatchers.Default) {
-            try {
-                var result = gitHubUserRepository.getUserByUserName(userName).firstOrNull()
-                if (result == null) {
-                    result = gitHubApi.refreshUserDetails(userName).toDomain()
-                }
-                logger.i("Result: $result")
-                gitHubUserDetailsStateFlow.emit(result)
-            } catch (exception: Exception) {
-                logger.e("Error happened: $exception")
-                throw exception
+    override suspend fun refreshUserDetails(userName: String) = withContext(Dispatchers.Default) {
+        try {
+            var result = gitHubUserRepository.getUserByUserName(userName).firstOrNull()
+            if (result == null) {
+                result = gitHubApi.refreshUserDetails(userName).toDomain()
             }
+            logger.i("Result: $result")
+            gitHubUserDetailsStateFlow.emit(result)
+        } catch (exception: Exception) {
+            logger.e("Error happened: $exception")
+            throw exception
         }
+    }
 
     override suspend fun saveUser() = withContext(Dispatchers.Default) {
         val user = getUserDetails().first() ?: return@withContext
@@ -119,9 +117,11 @@ class GitHubUserService : GitHubUserAction, GitHubUserStore, KoinComponent {
     override fun getUserDetails(): Flow<GitHubUser?> =
         gitHubUserDetails
             .combine(gitHubUserRepository.getSavedUserList()) { currentUserDetail, savedUserList ->
-                logger.i("User details params " +
+                logger.i(
+                    "User details params " +
                         "current: $currentUserDetail " +
-                        "savedUserList: $savedUserList")
+                        "savedUserList: $savedUserList"
+                )
                 savedUserList.firstOrNull { it.id == currentUserDetail?.id } ?: currentUserDetail
             }
 

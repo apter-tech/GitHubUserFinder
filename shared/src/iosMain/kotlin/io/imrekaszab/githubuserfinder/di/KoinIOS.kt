@@ -25,5 +25,4 @@ actual val platformModule = module {
 
 // Access from Swift to create a logger
 @Suppress("unused")
-fun Koin.loggerWithTag(tag: String) =
-    get<Logger>(qualifier = null) { parametersOf(tag) }
+fun Koin.loggerWithTag(tag: String) = get<Logger>(qualifier = null) { parametersOf(tag) }

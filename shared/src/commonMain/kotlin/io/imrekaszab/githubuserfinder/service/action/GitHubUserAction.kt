@@ -1,4 +1,4 @@
-package io.imrekaszab.githubuserfinder.action
+package io.imrekaszab.githubuserfinder.service.action
 
 interface GitHubUserAction {
     suspend fun searchUser(userName: String)
