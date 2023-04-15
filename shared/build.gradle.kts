@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.mockmp)
     alias(libs.plugins.sqldelight)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -78,6 +79,14 @@ android {
     compileSdk = libs.versions.targetSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.valueOf(
+            "VERSION_" + libs.versions.javaSourceCompatibility.get().replace(".", "_")
+        )
+        targetCompatibility = JavaVersion.valueOf(
+            "VERSION_" + libs.versions.javaTargetCompatibility.get().replace(".", "_")
+        )
     }
 }
 

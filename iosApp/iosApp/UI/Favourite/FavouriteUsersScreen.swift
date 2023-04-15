@@ -10,9 +10,7 @@ import SwiftUI
 import shared
 
 struct FavouriteUsersScreen: View {
-    @StateObject private var reducer =
-    ReducerViewModel<FavouriteUsersScreenState,
-                     FavouriteUsersViewModel>(viewModel: FavouriteUsersViewModel())
+    @StateObject private var reducer = ReducerViewModel<FavouriteUsersScreenState, FavouriteUsersViewModel>()
     @State private var showConfirmDialog = false
 
     var body: some View {
@@ -29,10 +27,13 @@ struct FavouriteUsersScreen: View {
                 .listStateModifier(state.data.isEmpty) {
                     Text("We don't have any content, sorry 😔")
                 }
-                .listStateModifier(!state.error.isEmpty) {
-                    Text("Something went wrong 🤯 \n\n" + state.error)
+                .listStateModifier(reducer.error != nil) {
+                    Text("Something went wrong 🤯 \n\n" + (reducer.error ?? ""))
                 }
                 Spacer()
+            }
+            .task {
+                reducer.viewModel.loadUsers()
             }
             .navigationTitle("Favourite users")
             .toolbar {
@@ -41,7 +42,7 @@ struct FavouriteUsersScreen: View {
                         Button {
                             showConfirmDialog.toggle()
                         } label: {
-                            Image(systemName: "pip.remove")
+                            Image(systemName: "trash.fill")
                         }
                     }
                 }

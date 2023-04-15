@@ -21,12 +21,19 @@ android {
         compose = true
     }
 
-    @Suppress("UnstableApiUsage")
+    compileOptions {
+        sourceCompatibility = JavaVersion.valueOf(
+            "VERSION_" + libs.versions.javaSourceCompatibility.get().replace(".", "_")
+        )
+        targetCompatibility = JavaVersion.valueOf(
+            "VERSION_" + libs.versions.javaTargetCompatibility.get().replace(".", "_")
+        )
+    }
+
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
 
-    @Suppress("UnstableApiUsage")
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false

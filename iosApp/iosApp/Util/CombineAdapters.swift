@@ -11,9 +11,9 @@ import shared
 
 /// Create a Combine publisher from the supplied `FlowAdapter`. Use this in contexts where more transformation will be
 /// done on the Swift side before the value is bound to UI
-func createPublisher<T>(_ flowAdapter: FlowAdapter<T>) -> AnyPublisher<T, KotlinError> {
-    return Deferred<Publishers.HandleEvents<PassthroughSubject<T, KotlinError>>> {
-        let subject = PassthroughSubject<T, KotlinError>()
+func createPublisher<T>(_ flowAdapter: FlowAdapter<T>) -> AnyPublisher<T?, KotlinError> {
+    return Deferred<Publishers.HandleEvents<PassthroughSubject<T?, KotlinError>>> {
+        let subject = PassthroughSubject<T?, KotlinError>()
         let canceller = flowAdapter.subscribe(
             onEach: { item in subject.send(item) },
             onComplete: { subject.send(completion: .finished) },
@@ -28,10 +28,9 @@ func createPublisher<T>(_ flowAdapter: FlowAdapter<T>) -> AnyPublisher<T, Kotlin
 /// on every new emission.
 ///
 /// Note that this calls `assertNoFailure()` internally so you should handle errors upstream to avoid crashes.
-func doPublish<T>(_ flowAdapter: FlowAdapter<T>, onEach: @escaping (T) -> Void) -> Cancellable {
+func doPublish<T>(_ flowAdapter: FlowAdapter<T>, onEach: @escaping (T?) -> Void) -> Cancellable {
     return createPublisher(flowAdapter)
         .assertNoFailure()
-        .compactMap { $0 }
         .receive(on: DispatchQueue.main)
         .sink { onEach($0) }
 }

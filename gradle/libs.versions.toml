@@ -1,11 +1,14 @@
 [versions]
-minSdk = "23"
+minSdk = "26"
 targetSdk = "33"
+javaTargetCompatibility = "17"
+javaSourceCompatibility = "11"
 
-agp = "7.4.2"
-kotlin = "1.8.10"
+agp = "8.0.2"
+kotlin = "1.8.20"
 kotlinCoroutines = "1.7.1"
 kotlinDate = "0.4.0"
+ksp = "1.8.20-1.0.11"
 
 appCompat = "1.6.1"
 lifecycleViewModel = "2.6.1"
@@ -16,7 +19,7 @@ mockmp = "1.13.0"
 
 compose = "1.4.3"
 composeActivity = "1.7.2"
-composeCompiler = "1.4.0"
+composeCompiler = "1.4.6"
 composeUITooling = "1.4.3"
 composeCoil = "2.4.0"
 composeNavigation = "2.6.0"
@@ -90,6 +93,7 @@ kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref 
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 mockmp = { id = "org.kodein.mock.mockmp", version.ref = "mockmp" }
 sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqldelight" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 [bundles]
 compose = [

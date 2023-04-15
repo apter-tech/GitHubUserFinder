@@ -10,9 +10,7 @@ import SwiftUI
 import shared
 
 struct GitHubUserListScreen: View {
-    @StateObject private var reducer =
-        ReducerViewModel<UserListScreenState,
-                         GitHubUserListViewModel>(viewModel: GitHubUserListViewModel())
+    @StateObject private var reducer = ReducerViewModel<UserListScreenState, GitHubUserListViewModel>()
 
     var body: some View {
         if let state = reducer.state {
@@ -44,8 +42,8 @@ struct GitHubUserListScreen: View {
                     .listStateModifier(state.data.isEmpty) {
                         Text("We don't have any content, sorry 😔")
                     }
-                    .listStateModifier(!state.error.isEmpty) {
-                        Text("Something went wrong 🤯 \n\n" + state.error)
+                    .listStateModifier(reducer.error != nil) {
+                        Text("Something went wrong 🤯 \n\n" + (reducer.error ?? ""))
                     }
                 }
                 Spacer()
@@ -56,6 +54,9 @@ struct GitHubUserListScreen: View {
                         Image(systemName: "star.circle")
                     }
                 }
+            }
+            .task {
+                reducer.viewModel.loadUsers()
             }
             .navigationTitle("GutHubUserFinder")
             .navigationBarTitleDisplayMode(.inline)
