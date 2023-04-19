@@ -20,7 +20,7 @@ composeNavigation = "2.5.3"
 
 koin = "3.4.0"
 koinAndroid = "3.4.0"
-koinAndroidCompose = "3.4.3"
+koinAndroidCompose = "3.4.4"
 ktor = "2.2.4"
 kermit = "1.2.2"
 slf4j = "2.0.7"
