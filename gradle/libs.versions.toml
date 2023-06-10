@@ -16,7 +16,7 @@ composeActivity = "1.7.2"
 composeCompiler = "1.4.0"
 composeUITooling = "1.4.3"
 composeCoil = "2.4.0"
-composeNavigation = "2.5.3"
+composeNavigation = "2.6.0"
 
 koin = "3.4.1"
 koinAndroid = "3.4.2"
