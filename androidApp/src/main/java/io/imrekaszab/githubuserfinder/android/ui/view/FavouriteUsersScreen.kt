@@ -67,7 +67,7 @@ fun FavouriteGitHubUsersContent(
                 if (state.data.isNotEmpty()) {
                     Icon(
                         imageVector = Icons.Default.Clear,
-                        contentDescription = "Remove all user",
+                        contentDescription = stringResource(id = R.string.clear_button_content_description),
                         modifier = Modifier
                             .clickable { showRemoveDialog.value = true }
                             .padding(end = Dimens.tiny)

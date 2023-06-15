@@ -26,7 +26,7 @@ import org.koin.compose.koinInject
 @Composable
 fun GitHubUserDetailScreen(navController: NavController, userName: String?) {
     val viewModel: GitHubUserDetailsViewModel = koinInject()
-    LaunchedEffect("RefreshUser") {
+    LaunchedEffect(userName) {
         userName ?: return@LaunchedEffect
         viewModel.refreshUserDetails(userName)
     }

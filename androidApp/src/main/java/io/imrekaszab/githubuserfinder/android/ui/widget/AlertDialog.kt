@@ -10,16 +10,18 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import io.imrekaszab.githubuserfinder.android.R
 import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 
 @Composable
 fun RemoveAllUserDialog(onPositiveButtonClick: () -> Unit, onDismissRequest: () -> Unit) {
     AlertDialog(
         title = {
-            Text(text = "Remove all user")
+            Text(text = stringResource(id = R.string.remove_all_user_dialog_title))
         },
         text = {
-            Text(text = "Are you sure?")
+            Text(text = stringResource(id = R.string.remove_all_user_dialog_description))
         },
         backgroundColor = Color.Transparent,
         buttons = {
@@ -33,13 +35,13 @@ fun RemoveAllUserDialog(onPositiveButtonClick: () -> Unit, onDismissRequest: () 
                     modifier = Modifier.padding(all = Dimens.tiny),
                     onClick = onDismissRequest
                 ) {
-                    Text("Dismiss")
+                    Text(stringResource(id = R.string.remove_all_user_dialog_dismiss))
                 }
                 Button(
                     modifier = Modifier.padding(all = Dimens.tiny),
                     onClick = onPositiveButtonClick
                 ) {
-                    Text("Remove")
+                    Text(stringResource(id = R.string.remove_all_user_dialog_remove))
                 }
             }
         },

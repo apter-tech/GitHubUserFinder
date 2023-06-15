@@ -6,7 +6,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import io.imrekaszab.githubuserfinder.android.R
 
 @Composable
 fun ErrorView(errorText: String) {
@@ -15,7 +17,7 @@ fun ErrorView(errorText: String) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Something went wrong \uD83E\uDD2F \n\n $errorText",
+            text = stringResource(id = R.string.error_view_title, errorText),
             textAlign = TextAlign.Center
         )
     }

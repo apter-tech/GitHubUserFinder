@@ -15,6 +15,8 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import io.imrekaszab.githubuserfinder.android.R
 import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 
 @Composable
@@ -33,7 +35,7 @@ fun CommonAppBar(
         ) {
             Icon(
                 imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Arrow Back",
+                contentDescription = stringResource(id = R.string.common_app_bar_back_arrow_content_description),
                 modifier = Modifier.clickable { onArrowClick() }
             )
             Text(

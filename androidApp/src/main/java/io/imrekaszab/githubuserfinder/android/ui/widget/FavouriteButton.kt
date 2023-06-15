@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.stringResource
+import io.imrekaszab.githubuserfinder.android.R
 import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 
 @Composable
@@ -20,9 +22,7 @@ fun FavoriteButton(
     IconToggleButton(
         modifier = modifier,
         checked = isFavourite,
-        onCheckedChange = {
-            onFavouriteClick(!isFavourite)
-        }
+        onCheckedChange = { onFavouriteClick(!isFavourite) }
     ) {
         Icon(
             tint = Color.White,
@@ -35,7 +35,7 @@ fun FavoriteButton(
             } else {
                 Icons.Default.FavoriteBorder
             },
-            contentDescription = "FavouriteButton"
+            contentDescription = stringResource(id = R.string.favourite_button_content_description)
         )
     }
 }
