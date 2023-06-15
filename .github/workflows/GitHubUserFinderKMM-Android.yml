@@ -16,14 +16,12 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.5.2
 
-      - name: set up JDK 11
-        uses: actions/setup-java@v3
+      - uses: actions/setup-java@v3.11.0
         with:
-          java-version: '11'
-          distribution: 'adopt'
-          cache: gradle
+          distribution: corretto
+          java-version: 18
 
       - name: Verify and generate coverage report
         run: ./gradlew koverMergedXmlReport --stacktrace
