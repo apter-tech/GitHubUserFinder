@@ -18,8 +18,10 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import coil.compose.AsyncImage
+import io.imrekaszab.githubuserfinder.android.R
 import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
 
@@ -55,7 +57,7 @@ fun GitHubUserRow(
                 AsyncImage(
                     model = item.avatarUrl,
                     modifier = Modifier.size(Dimens.imageSize),
-                    contentDescription = "userName"
+                    contentDescription = item.login
                 )
             }
             Text(
@@ -68,7 +70,7 @@ fun GitHubUserRow(
             if (showFavouriteIconOnItem && item.favourite) {
                 Icon(
                     imageVector = Icons.Default.Favorite,
-                    contentDescription = "Favourite user"
+                    contentDescription = stringResource(id = R.string.favourite_button_content_description)
                 )
             }
         }

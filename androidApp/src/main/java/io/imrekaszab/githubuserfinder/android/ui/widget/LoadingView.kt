@@ -8,6 +8,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import io.imrekaszab.githubuserfinder.android.R
 
 @Composable
 fun LoadingView() {
@@ -16,7 +18,7 @@ fun LoadingView() {
             modifier = Modifier.align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Loading")
+            Text(text = stringResource(R.string.loading_title))
             CircularProgressIndicator()
         }
     }

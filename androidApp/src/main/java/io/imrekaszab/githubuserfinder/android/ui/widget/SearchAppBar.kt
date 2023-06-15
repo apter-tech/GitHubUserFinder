@@ -29,17 +29,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import io.imrekaszab.githubuserfinder.android.R
 import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 
 @Composable
 fun SearchAppBar(onSearchCLick: (String) -> Unit, onStarClick: () -> Unit) {
-    var query: String by rememberSaveable { mutableStateOf("") }
-    val showClearIcon by remember { derivedStateOf { query.isNotEmpty() } }
-    val focusManager = LocalFocusManager.current
-
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -47,51 +45,65 @@ fun SearchAppBar(onSearchCLick: (String) -> Unit, onStarClick: () -> Unit) {
         elevation = AppBarDefaults.TopAppBarElevation,
         color = MaterialTheme.colors.primary
     ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            TextField(
-                value = query,
-                onValueChange = { onQueryChanged ->
-                    query = onQueryChanged
-                },
-                trailingIcon = {
-                    if (showClearIcon) {
-                        IconButton(onClick = { query = "" }) {
-                            Icon(
-                                imageVector = Icons.Rounded.Clear,
-                                contentDescription = "Clear Icon"
-                            )
-                        }
+        SearchAppBarContent(onSearchCLick, onStarClick)
+    }
+}
+
+@Composable
+fun SearchAppBarContent(onSearchCLick: (String) -> Unit, onStarClick: () -> Unit) {
+    var query: String by rememberSaveable { mutableStateOf("") }
+    val showClearIcon by remember { derivedStateOf { query.isNotEmpty() } }
+    val focusManager = LocalFocusManager.current
+    Row(
+        horizontalArrangement = Arrangement.SpaceAround,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        TextField(
+            value = query,
+            onValueChange = { onQueryChanged ->
+                query = onQueryChanged
+            },
+            trailingIcon = {
+                if (showClearIcon) {
+                    IconButton(onClick = { query = "" }) {
+                        Icon(
+                            imageVector = Icons.Rounded.Clear,
+                            contentDescription =
+                            stringResource(id = R.string.clear_button_content_description)
+                        )
                     }
-                },
-                colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color.Transparent,
-                    cursorColor = Color.White.copy(alpha = ContentAlpha.medium)
-                ),
-                maxLines = 1,
-                placeholder = { Text(text = "Search...", style = MaterialTheme.typography.h6) },
-                textStyle = MaterialTheme.typography.h6,
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Search
-                ),
-                keyboardActions = KeyboardActions(
-                    onSearch = {
-                        focusManager.clearFocus()
-                        onSearchCLick(query)
-                    }
+                }
+            },
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = Color.Transparent,
+                cursorColor = Color.White.copy(alpha = ContentAlpha.medium)
+            ),
+            maxLines = 1,
+            placeholder = {
+                Text(
+                    text = stringResource(id = R.string.search_app_bar_title),
+                    style = MaterialTheme.typography.h6
                 )
+            },
+            textStyle = MaterialTheme.typography.h6,
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Search
+            ),
+            keyboardActions = KeyboardActions(
+                onSearch = {
+                    focusManager.clearFocus()
+                    onSearchCLick(query)
+                }
             )
-            IconButton(onClick = onStarClick) {
-                Icon(
-                    imageVector = Icons.Rounded.Star,
-                    contentDescription = "Favourite users"
-                )
-            }
+        )
+        IconButton(onClick = onStarClick) {
+            Icon(
+                imageVector = Icons.Rounded.Star,
+                contentDescription = stringResource(id = R.string.favourite_button_content_description)
+            )
         }
     }
 }
