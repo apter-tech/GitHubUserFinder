@@ -72,6 +72,10 @@ kotlin {
             dependsOn(iosTest)
         }
     }
+
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(libs.versions.javaTargetCompatibility.get().toInt()))
+    }
 }
 
 android {

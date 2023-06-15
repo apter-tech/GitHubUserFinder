@@ -1,27 +1,22 @@
 package io.imrekaszab.githubuserfinder.service
 
 import co.touchlab.kermit.Logger
-import io.imrekaszab.githubuserfinder.service.action.GitHubUserAction
-import io.imrekaszab.githubuserfinder.api.GitHubApi
 import io.imrekaszab.githubuserfinder.di.injectLogger
-import io.imrekaszab.githubuserfinder.mapper.toDomain
-import io.imrekaszab.githubuserfinder.mapper.toDomainModels
 import io.imrekaszab.githubuserfinder.model.domain.GitHubPagingInfo
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
 import io.imrekaszab.githubuserfinder.repository.GitHubUserRepository
+import io.imrekaszab.githubuserfinder.service.action.GitHubUserAction
 import io.imrekaszab.githubuserfinder.service.store.GitHubUserStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 
 class GitHubUserService(
-    private val gitHubApi: GitHubApi,
     private val gitHubUserRepository: GitHubUserRepository
 ) : GitHubUserAction, GitHubUserStore, KoinComponent {
     private val logger: Logger by injectLogger("GitHubUserService")
@@ -35,19 +30,19 @@ class GitHubUserService(
     override suspend fun searchUser(userName: String) = withContext(Dispatchers.Default) {
         try {
             val pagingInfo = GitHubPagingInfo()
-            val result = gitHubApi.searchUser(userName, pagingInfo.page, pagingInfo.offset)
-            val userList = result.items.toDomainModels().toMutableList()
+            val result = gitHubUserRepository.searchUser(userName, pagingInfo.page, pagingInfo.offset)
+            val userList = result.second
 
             val newPagingInfo = pagingInfo.copy(
-                totalItemCount = result.total_count,
+                totalItemCount = result.first,
                 userName = userName,
                 currentCount = userList.size
             )
             gitHubUserListStateFlow.emit(userList)
             gitHubPagingInfoStateFlow.emit(newPagingInfo)
-        } catch (exception: Exception) {
+        } catch (@Suppress("TooGenericExceptionCaught") exception: Exception) {
             gitHubUserListStateFlow.emit(mutableListOf())
-            logger.e("Error happened: $exception")
+            logger.e("searchUser, error happened $exception")
             throw exception
         }
     }
@@ -57,38 +52,39 @@ class GitHubUserService(
             if (!fetchingInProgress && !isFetchingFinished().first()) {
                 val pagingInfo = gitHubPagingInfoStateFlow.first()
                 fetchingInProgress = true
-                val result = gitHubApi.searchUser(
+                val result = gitHubUserRepository.searchUser(
                     pagingInfo.userName,
                     pagingInfo.page + 1,
                     pagingInfo.offset
                 )
-                val userList = result.items.toDomainModels().toMutableList()
+                val userList = result.second
 
                 val currentResults = getUsers().first().toMutableList()
                 currentResults.addAll(userList)
                 gitHubUserListStateFlow.emit(currentResults.distinctBy { it.id })
                 gitHubPagingInfoStateFlow.emit(
-                    pagingInfo.copy(currentCount = currentResults.size, page = pagingInfo.page + 1)
+                    pagingInfo.copy(
+                        totalItemCount = result.first,
+                        currentCount = currentResults.size,
+                        page = pagingInfo.page + 1
+                    )
                 )
                 fetchingInProgress = false
             }
-        } catch (exception: Exception) {
+        } catch (@Suppress("TooGenericExceptionCaught") exception: Exception) {
             gitHubUserListStateFlow.emit(mutableListOf())
-            logger.d("Error happened: $exception")
+            logger.e("fetchNextPage, error happened $exception")
             throw exception
         }
     }
 
     override suspend fun refreshUserDetails(userName: String) = withContext(Dispatchers.Default) {
         try {
-            var result = gitHubUserRepository.getUserByUserName(userName).firstOrNull()
-            if (result == null) {
-                result = gitHubApi.refreshUserDetails(userName).toDomain()
-            }
+            val result = gitHubUserRepository.refreshUserDetails(userName)
             logger.i("Result: $result")
             gitHubUserDetailsStateFlow.emit(result)
-        } catch (exception: Exception) {
-            logger.e("Error happened: $exception")
+        } catch (@Suppress("TooGenericExceptionCaught") exception: Exception) {
+            logger.e("refreshUserDetails, error happened $exception")
             throw exception
         }
     }
@@ -105,8 +101,8 @@ class GitHubUserService(
         gitHubUserDetailsStateFlow.emit(user.copy(favourite = false))
     }
 
-    override suspend fun deleteAllUser() = withContext(Dispatchers.Default) {
-        gitHubUserRepository.deleteAll()
+    override suspend fun deleteAllUsers() = withContext(Dispatchers.Default) {
+        gitHubUserRepository.deleteAllUsers()
     }
 
     override fun getUsers(): Flow<List<GitHubUser>> = gitHubUserListStateFlow
@@ -127,7 +123,10 @@ class GitHubUserService(
 
     override fun isFetchingFinished(): Flow<Boolean> =
         gitHubPagingInfoStateFlow
-            .map { it.currentCount == it.totalItemCount }
+            .map {
+                println("isFetchingFinished pisa: ${it.currentCount} == ${it.totalItemCount}")
+                it.currentCount == it.totalItemCount
+            }
 
     override fun getSavedUsers(): Flow<List<GitHubUser>> =
         gitHubUserRepository.getSavedUserList()

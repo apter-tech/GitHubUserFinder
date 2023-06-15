@@ -33,9 +33,7 @@ class GitHubUserListViewModel(
                 gitHubUserAction.fetchNextPage()
                 refreshStateByUsers(oldState)
             }
-            UserListScreenUiEvent.LoadUsers -> {
-                refreshStateByUsers(oldState)
-            }
+            UserListScreenUiEvent.LoadUsers -> refreshStateByUsers(oldState)
         }
     }
 

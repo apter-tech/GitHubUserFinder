@@ -41,6 +41,12 @@ android {
     }
 }
 
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(libs.versions.javaTargetCompatibility.get().toInt()))
+    }
+}
+
 dependencies {
     implementation(project(":shared"))
 

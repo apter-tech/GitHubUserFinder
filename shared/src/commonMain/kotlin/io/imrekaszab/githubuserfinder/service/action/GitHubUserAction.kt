@@ -6,5 +6,5 @@ interface GitHubUserAction {
     suspend fun refreshUserDetails(userName: String)
     suspend fun saveUser()
     suspend fun deleteUser()
-    suspend fun deleteAllUser()
+    suspend fun deleteAllUsers()
 }

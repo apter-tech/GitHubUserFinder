@@ -67,7 +67,7 @@ var apiModule = module {
 }
 
 var repositoryModule = module {
-    single<GitHubUserRepository> { GitHubUserRepositoryImpl(get()) }
+    single<GitHubUserRepository> { GitHubUserRepositoryImpl(get(), get()) }
 }
 
 var viewModelModule = module {

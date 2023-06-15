@@ -17,8 +17,6 @@ import io.ktor.http.hostWithPort
 import io.ktor.http.takeFrom
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import org.koin.core.parameter.parametersOf
-import org.koin.core.scope.Scope
 
 private val Url.hostWithPortIfRequired: String
     get() = if (port == protocol.defaultPort) {
@@ -30,10 +28,6 @@ private val Url.urlWithoutPath: String
     get() = "${protocol.name}://$hostWithPortIfRequired"
 private val Url.fullUrl: String
     get() = "${protocol.name}://$hostWithPortIfRequired$fullPath"
-
-internal inline fun <reified T> Scope.getWith(vararg params: Any?): T {
-    return get(parameters = { parametersOf(*params) })
-}
 
 internal val mockHttpClient =
     HttpClient(MockEngine) {
@@ -55,30 +49,28 @@ internal val mockHttpClient =
 
         engine {
             addHandler { request ->
-                when (request.url.urlWithoutPath) {
-                    MockData.baseUrl -> {
-                        when (request.method) {
-                            HttpMethod.Get -> {
-                                if (request.url.fullUrl.contains("search/users")) {
-                                    respond(
-                                        content = getSearchResponseContentByUrl(request.url.fullUrl),
-                                        status = HttpStatusCode.OK,
-                                        headers = headersOf("Content-Type", "application/json")
-                                    )
-                                } else if (request.url.fullUrl.contains("users/")) {
-                                    respond(
-                                        content = MockData.userDetailsResponse,
-                                        status = HttpStatusCode.OK,
-                                        headers = headersOf("Content-Type", "application/json")
-                                    )
-                                } else {
-                                    respondError(HttpStatusCode.BadRequest)
-                                }
-                            }
-                            else -> respondError(HttpStatusCode.Unauthorized)
+                if (request.url.urlWithoutPath == MockData.baseUrl) {
+                    if (request.method == HttpMethod.Get) {
+                        when {
+                            request.url.fullUrl.contains("search/users") -> respond(
+                                content = getSearchResponseContentByUrl(request.url.fullUrl),
+                                status = HttpStatusCode.OK,
+                                headers = headersOf("Content-Type", "application/json")
+                            )
+
+                            request.url.fullUrl.contains("users/") -> respond(
+                                content = MockData.userDetailsResponse,
+                                status = HttpStatusCode.OK,
+                                headers = headersOf("Content-Type", "application/json")
+                            )
+
+                            else -> respondError(HttpStatusCode.BadRequest)
                         }
+                    } else {
+                        respondError(HttpStatusCode.Unauthorized)
                     }
-                    else -> respondError(HttpStatusCode.NotFound)
+                } else {
+                    respondError(HttpStatusCode.NotFound)
                 }
             }
         }

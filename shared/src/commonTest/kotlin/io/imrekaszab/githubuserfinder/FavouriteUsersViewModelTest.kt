@@ -63,7 +63,7 @@ class FavouriteUsersViewModelTest : TestsWithMocks() {
     fun `given emptyList when deleteAllUser called then returns emptyList`() = runTest {
         // Given
         val userList = emptyList<GitHubUser>()
-        everySuspending { action.deleteAllUser() } returns Unit
+        everySuspending { action.deleteAllUsers() } returns Unit
         every { store.getSavedUsers() } returns flowOf(userList)
 
         // When

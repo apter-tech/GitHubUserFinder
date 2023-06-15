@@ -13,7 +13,7 @@ ksp = "1.8.20-1.0.11"
 appCompat = "1.6.1"
 lifecycleViewModel = "2.6.1"
 sqldelight = "1.5.5"
-detekt = "1.22.0"
+detekt = "1.23.0"
 kover = "0.6.1"
 mockmp = "1.13.0"
 

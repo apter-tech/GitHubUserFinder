@@ -25,12 +25,10 @@ class FavouriteUsersViewModel(
     ) {
         when (event) {
             FavouriteUsersScreenUiEvent.DeleteUsers -> {
-                gitHubUserAction.deleteAllUser()
+                gitHubUserAction.deleteAllUsers()
                 loadUsers(oldState)
             }
-            is FavouriteUsersScreenUiEvent.LoadUsers -> {
-                loadUsers(oldState)
-            }
+            is FavouriteUsersScreenUiEvent.LoadUsers -> loadUsers(oldState)
         }
     }
 

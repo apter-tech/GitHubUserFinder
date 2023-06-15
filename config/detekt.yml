@@ -105,7 +105,7 @@ complexity:
       - 'with'
   LabeledExpression:
     active: false
-    ignoredLabels: []
+    ignoredLabels: [ ]
   LargeClass:
     active: true
     threshold: 600
@@ -118,8 +118,8 @@ complexity:
     constructorThreshold: 9
     ignoreDefaultParameters: true
     ignoreDataClasses: true
-    ignoreAnnotatedParameter: []
-    ignoreAnnotated: ['Composable']
+    ignoreAnnotatedParameter: [ ]
+    ignoreAnnotated: [ 'Composable' ]
   MethodOverloading:
     active: true
     threshold: 6
@@ -137,6 +137,7 @@ complexity:
     ignoreAnnotation: true
     excludeStringsWithLessThan5Characters: true
     ignoreStringsRegex: '$^'
+    excludes: [ '**/commonTest/**' ]
   TooManyFunctions:
     active: true
     thresholdInFiles: 30
@@ -260,6 +261,7 @@ exceptions:
       - 'RuntimeException'
       - 'Throwable'
     allowedExceptionNameRegex: '_|(ignore|expected).*'
+    excludes: [ '**/commonTest/**' ]
   TooGenericExceptionThrown:
     active: true
     exceptionNames:
@@ -267,154 +269,6 @@ exceptions:
       - 'Exception'
       - 'RuntimeException'
       - 'Throwable'
-
-formatting:
-  active: true
-  android: true
-  autoCorrect: false
-  AnnotationOnSeparateLine:
-    active: false
-    autoCorrect: false
-  AnnotationSpacing:
-    active: true
-    autoCorrect: true
-  ArgumentListWrapping:
-    active: false
-    autoCorrect: false
-    indentSize: 4
-    maxLineLength: 120
-  ChainWrapping:
-    active: true
-    autoCorrect: true
-  CommentSpacing:
-    active: true
-    autoCorrect: true
-  EnumEntryNameCase:
-    active: true
-    autoCorrect: true
-  Filename:
-    active: true
-  FinalNewline:
-    active: true
-    autoCorrect: true
-    insertFinalNewLine: true
-  ImportOrdering:
-    active: true
-    autoCorrect: true
-    layout: '*,java.**,javax.**,kotlin.**,^'
-  Indentation:
-    active: true
-    autoCorrect: true
-    indentSize: 4
-  MaximumLineLength:
-    active: true
-    maxLineLength: 120
-    ignoreBackTickedIdentifier: false
-  ModifierOrdering:
-    active: true
-    autoCorrect: true
-  MultiLineIfElse:
-    active: true
-    autoCorrect: true
-  NoBlankLineBeforeRbrace:
-    active: true
-    autoCorrect: true
-  NoConsecutiveBlankLines:
-    active: true
-    autoCorrect: true
-  NoEmptyClassBody:
-    active: true
-    autoCorrect: true
-  NoEmptyFirstLineInMethodBlock:
-    active: true
-    autoCorrect: true
-  NoLineBreakAfterElse:
-    active: true
-    autoCorrect: true
-  NoLineBreakBeforeAssignment:
-    active: true
-    autoCorrect: true
-  NoMultipleSpaces:
-    active: true
-    autoCorrect: true
-  NoSemicolons:
-    active: true
-    autoCorrect: true
-  NoTrailingSpaces:
-    active: true
-    autoCorrect: true
-  NoUnitReturn:
-    active: true
-    autoCorrect: true
-  NoUnusedImports:
-    active: false
-    autoCorrect: true
-  NoWildcardImports:
-    active: true
-  PackageName:
-    active: true
-    autoCorrect: true
-  ParameterListWrapping:
-    active: true
-    autoCorrect: true
-    maxLineLength: 120
-  SpacingAroundAngleBrackets:
-    active: true
-    autoCorrect: true
-  SpacingAroundColon:
-    active: true
-    autoCorrect: true
-  SpacingAroundComma:
-    active: true
-    autoCorrect: true
-  SpacingAroundCurly:
-    active: true
-    autoCorrect: true
-  SpacingAroundDot:
-    active: true
-    autoCorrect: true
-  SpacingAroundDoubleColon:
-    active: true
-    autoCorrect: true
-  SpacingAroundKeyword:
-    active: true
-    autoCorrect: true
-  SpacingAroundOperators:
-    active: true
-    autoCorrect: true
-  SpacingAroundParens:
-    active: true
-    autoCorrect: true
-  SpacingAroundRangeOperator:
-    active: true
-    autoCorrect: true
-  SpacingAroundUnaryOperator:
-    active: true
-    autoCorrect: true
-  SpacingBetweenDeclarationsWithAnnotations:
-    active: false
-    autoCorrect: true
-  SpacingBetweenDeclarationsWithComments:
-    active: true
-    autoCorrect: true
-  StringTemplate:
-    active: true
-    autoCorrect: true
-#
-#libraries:
-#  active: true
-#  ForbiddenPublicDataClass:
-#    active: true
-#    excludes: ['**']
-#    ignorePackages:
-#      - '*.internal'
-#      - '*.internal.*'
-  LibraryEntitiesShouldNotBePublic:
-    active: false
-    excludes: ['**']
-  LibraryCodeMustSpecifyReturnType:
-    active: false
-    excludes: ['**']
 
 naming:
   active: true
@@ -429,13 +283,12 @@ naming:
     parameterPattern: '[a-z][A-Za-z0-9]*'
     privateParameterPattern: '[a-z][A-Za-z0-9]*'
     excludeClassPattern: '$^'
-    ignoreOverridden: true
   EnumNaming:
     active: true
     enumEntryPattern: '[A-Z][_a-zA-Z0-9]*'
   ForbiddenClassName:
     active: false
-    forbiddenName: []
+    forbiddenName: [ ]
   FunctionMaxLength:
     active: false
     maximumFunctionNameLength: 30
@@ -446,13 +299,11 @@ naming:
     active: true
     functionPattern: '([a-z][a-zA-Z0-9]*)|(`.*`)'
     excludeClassPattern: '$^'
-    ignoreOverridden: true
-    ignoreAnnotated: ['Composable']
+    ignoreAnnotated: [ 'Composable' ]
   FunctionParameterNaming:
     active: true
     parameterPattern: '[a-z][A-Za-z0-9]*'
     excludeClassPattern: '$^'
-    ignoreOverridden: true
   InvalidPackageDeclaration:
     active: true
     rootPackage: ''
@@ -493,7 +344,6 @@ naming:
     variablePattern: '[a-z][A-Za-z0-9]*'
     privateVariablePattern: '(_)?[a-z][A-Za-z0-9]*'
     excludeClassPattern: '$^'
-    ignoreOverridden: true
 
 performance:
   active: true
@@ -556,7 +406,7 @@ potential-bugs:
     active: true
   MissingPackageDeclaration:
     active: true
-    excludes: ['**/*.kts']
+    excludes: [ '**/*.kts' ]
   NullableToStringCall:
     active: true
   UnconditionalJumpStatementInLoop:
@@ -588,7 +438,7 @@ style:
     active: true
   DataClassContainsFunctions:
     active: true
-    conversionFunctionPrefix: ['to']
+    conversionFunctionPrefix: [ 'to' ]
   DataClassShouldBeImmutable:
     active: true
   DestructuringDeclarationWithTooManyEntries:
@@ -607,15 +457,19 @@ style:
     includeLineWrapping: false
   ForbiddenComment:
     active: true
-    values:
-      - 'FIXME:'
-      - 'STOPSHIP:'
-      - 'TODO:'
+    comments:
+      - value: 'FIXME:'
+        reason: 'Forbidden FIXME todo marker in comment, please fix the problem.'
+      - value: 'FIXME'
+        reason: 'Forbidden FIXME todo marker in comment, please fix the problem.'
+      - value: 'STOPSHIP:'
+        reason: 'Forbidden STOPSHIP todo marker in comment, please address the problem before shipping the code.'
+      - value: 'STOPSHIP'
+        reason: 'Forbidden STOPSHIP todo marker in comment, please address the problem before shipping the code.'
     allowedPatterns: ''
-    customMessage: ''
   ForbiddenImport:
     active: false
-    imports: []
+    imports: [ ]
     forbiddenPatterns: ''
   ForbiddenMethodCall:
     active: false
@@ -630,8 +484,8 @@ style:
     active: true
     ignoreOverridableFunction: true
     ignoreActualFunction: true
-    excludedFunctions: ['describeContents']
-    ignoreAnnotated: ['Provides']
+    excludedFunctions: [ 'describeContents' ]
+    ignoreAnnotated: [ 'Provides' ]
   LoopWithTooManyJumpStatements:
     active: true
     maxJumpCount: 1
@@ -652,8 +506,9 @@ style:
     ignoreEnums: false
     ignoreRanges: false
     ignoreExtensionFunctions: true
-  MandatoryBracesIfStatements:
+  BracesOnIfStatements:
     active: true
+    multiLine: always
   MandatoryBracesLoops:
     active: true
   MaxLineLength:
@@ -661,7 +516,8 @@ style:
     maxLineLength: 120
     excludePackageStatements: true
     excludeImportStatements: true
-    excludeCommentStatements: false
+    excludeCommentStatements: true
+    excludes: [ '**/commonTest/**' ]
   MayBeConst:
     active: true
   ModifierOrder:
@@ -695,7 +551,7 @@ style:
   ReturnCount:
     active: true
     max: 2
-    excludedFunctions: ['equals']
+    excludedFunctions: [ 'equals' ]
     excludeLabeled: false
     excludeReturnFromLambda: true
     excludeGuardClauses: false
@@ -716,7 +572,7 @@ style:
     acceptableLength: 5
   UnnecessaryAbstractClass:
     active: true
-    ignoreAnnotated: ['Module']
+    ignoreAnnotated: [ 'Module' ]
   UnnecessaryAnnotationUseSiteTarget:
     active: true
   UnnecessaryApply:
@@ -738,7 +594,7 @@ style:
   UnusedPrivateMember:
     active: true
     allowedNames: '(_|ignored|expected|serialVersionUID)'
-    ignoreAnnotated: ['Preview']
+    ignoreAnnotated: [ 'Preview' ]
   UseAnyOrNoneInsteadOfFind:
     active: true
   UseArrayLiteralsInAnnotations:

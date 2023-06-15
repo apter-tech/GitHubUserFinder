@@ -9,7 +9,7 @@ plugins {
 val koverExcludeList = listOf(
     "*.BuildConfig",
     "*.Mock*",
-     "*.TestUtilAndroidKt",
+    "*.TestUtilAndroidKt",
     "io.imrekaszab.githubuserfinder.db.*",
     "*.di.*",
 )
@@ -17,10 +17,39 @@ val koverExcludeList = listOf(
 allprojects {
     apply(plugin = "io.gitlab.arturbosch.detekt")
     detekt {
-        // preconfigure defaults
-        buildUponDefaultConfig = true
+        source.setFrom(
+            objects.fileCollection().from(
+                io.gitlab.arturbosch.detekt.extensions.DetektExtension.DEFAULT_SRC_DIR_JAVA,
+                io.gitlab.arturbosch.detekt.extensions.DetektExtension.DEFAULT_TEST_SRC_DIR_JAVA,
+                io.gitlab.arturbosch.detekt.extensions.DetektExtension.DEFAULT_SRC_DIR_KOTLIN,
+                io.gitlab.arturbosch.detekt.extensions.DetektExtension.DEFAULT_TEST_SRC_DIR_KOTLIN,
+                "src/androidMain",
+                "src/commonMain",
+                "src/iosMain",
+                "src/commonTest",
+                "src/iosTest",
+                "src/androidUnitTest",
+                "src/test",
+                "src/testDebug",
+                "src/testRelease",
+                "build.gradle.kts",
+            )
+        )
+        buildUponDefaultConfig = false
         // point to your custom config defining rules to run, overwriting default behavior
-        config = files("$rootDir/config/detekt.yml")
+        config.setFrom(files("$rootDir/config/detekt.yml"))
+    }
+
+    tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+        jvmTarget = libs.versions.javaTargetCompatibility.get()
+        reports {
+            html.required.set(true)
+            xml.required.set(true)
+        }
+    }
+
+    tasks.withType<io.gitlab.arturbosch.detekt.DetektCreateBaselineTask>().configureEach {
+        jvmTarget = libs.versions.javaSourceCompatibility.get()
     }
 
     apply(plugin = "kover")
@@ -34,9 +63,9 @@ allprojects {
             rule {
                 isEnabled = true
                 name = "Minimum coverage verification error"
-                target =
-                    kotlinx.kover.api.VerificationTarget.ALL
+                target = kotlinx.kover.api.VerificationTarget.ALL
 
+                @Suppress("MagicNumber")
                 bound {
                     minValue = 90
                     maxValue = 100
@@ -49,21 +78,6 @@ allprojects {
         }
     }
 
-    tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-        jvmTarget = "1.8"
-        reports {
-            html.required.set(true)
-            xml.required.set(true)
-        }
-    }
-
-    tasks.withType<io.gitlab.arturbosch.detekt.DetektCreateBaselineTask>().configureEach {
-        jvmTarget = "1.8"
-    }
-    repositories {
-        google()
-        mavenCentral()
-    }
     afterEvaluate {
         project.extensions.findByType<org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension>()
             ?.let { ext ->
