@@ -6,6 +6,7 @@
 //  Copyright © 2022. orgName. All rights reserved.
 //
 
+import shared
 import SwiftUI
 
 extension View {
@@ -40,7 +41,7 @@ struct EmptyStateView_Previews: PreviewProvider {
     static var previews: some View {
         Label("Content", systemImage: "heart")
             .listStateModifier(true) {
-                Text("We don't have any content, sorry 😔")
+                Text(MR.strings().empty_view_title.localize())
             }
     }
 }

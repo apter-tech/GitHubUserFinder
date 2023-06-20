@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.mockmp)
     alias(libs.plugins.sqldelight)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.moko.resources)
 }
 
 kotlin {
@@ -19,6 +20,8 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
+            export(libs.moko.resources)
+            export(libs.moko.graphics)
         }
     }
 
@@ -30,10 +33,12 @@ kotlin {
         }
     }
 
+    @Suppress("UNUSED_VARIABLE")
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation(libs.bundles.commonMain)
+                api(libs.moko.resources)
             }
         }
         val commonTest by getting {
@@ -50,6 +55,7 @@ kotlin {
                 implementation(libs.androidx.lifecycle.viewmodel)
                 implementation(libs.sqldelight.android.driver)
                 implementation(libs.ktor.android)
+                api(libs.moko.compose)
             }
         }
         val androidTest by getting {
@@ -81,6 +87,7 @@ kotlin {
 android {
     namespace = "io.imrekaszab.githubuserfinder"
     compileSdk = libs.versions.targetSdk.get().toInt()
+    sourceSets["main"].res.srcDir(File(buildDir, "generated/moko/androidMain/res"))
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
     }
@@ -102,4 +109,21 @@ sqldelight {
 
 mockmp {
     usesHelper = true
+}
+
+multiplatformResources {
+    multiplatformResourcesPackage = "io.imrekaszab.githubuserfinder"
+}
+
+val org.jetbrains.kotlin.konan.target.KonanTarget.enabledOnCurrentHost
+    get() = org.jetbrains.kotlin.konan.target.HostManager().isEnabled(this)
+
+extensions.configure<org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension> {
+    targets.matching { target ->
+        target is org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget &&
+            !target.konanTarget.enabledOnCurrentHost
+    }
+        .forEach { target ->
+            tasks.findByName("${target.name}ProcessResources")?.enabled = false
+        }
 }

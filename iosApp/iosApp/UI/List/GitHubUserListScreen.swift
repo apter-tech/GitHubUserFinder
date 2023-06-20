@@ -40,10 +40,10 @@ struct GitHubUserListScreen: View {
                         }
                     }
                     .listStateModifier(state.data.isEmpty) {
-                        Text("We don't have any content, sorry 😔")
+                        Text(MR.strings().empty_view_title.localize())
                     }
                     .listStateModifier(reducer.error != nil) {
-                        Text("Something went wrong 🤯 \n\n" + (reducer.error ?? ""))
+                        Text(MR.strings().error_view_title.localize(input: reducer.error ?? "" ))
                     }
                 }
                 Spacer()
@@ -51,14 +51,14 @@ struct GitHubUserListScreen: View {
             .toolbar {
                 HStack {
                     NavigationLink(destination: FavouriteUsersScreen()) {
-                        Image(systemName: "star.circle")
+                        MR.images().ic_star_fill.asImage()
                     }
                 }
             }
             .task {
                 reducer.viewModel.loadUsers()
             }
-            .navigationTitle("GutHubUserFinder")
+            .navigationTitle(MR.strings().app_name.localize())
             .navigationBarTitleDisplayMode(.inline)
         }
     }

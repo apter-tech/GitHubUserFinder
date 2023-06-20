@@ -15,9 +15,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Clear
-import androidx.compose.material.icons.rounded.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -29,11 +26,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import io.imrekaszab.githubuserfinder.android.R
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
+import io.imrekaszab.githubuserfinder.MR
 import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 
 @Composable
@@ -68,9 +66,9 @@ fun SearchAppBarContent(onSearchCLick: (String) -> Unit, onStarClick: () -> Unit
                 if (showClearIcon) {
                     IconButton(onClick = { query = "" }) {
                         Icon(
-                            imageVector = Icons.Rounded.Clear,
+                            painter = painterResource(imageResource = MR.images.ic_clear),
                             contentDescription =
-                            stringResource(id = R.string.clear_button_content_description)
+                            stringResource(MR.strings.clear_button_content_description)
                         )
                     }
                 }
@@ -82,7 +80,7 @@ fun SearchAppBarContent(onSearchCLick: (String) -> Unit, onStarClick: () -> Unit
             maxLines = 1,
             placeholder = {
                 Text(
-                    text = stringResource(id = R.string.search_app_bar_title),
+                    text = stringResource(MR.strings.search_app_bar_title),
                     style = MaterialTheme.typography.h6
                 )
             },
@@ -101,8 +99,8 @@ fun SearchAppBarContent(onSearchCLick: (String) -> Unit, onStarClick: () -> Unit
         )
         IconButton(onClick = onStarClick) {
             Icon(
-                imageVector = Icons.Rounded.Star,
-                contentDescription = stringResource(id = R.string.favourite_button_content_description)
+                painter = painterResource(imageResource = MR.images.ic_star_fill),
+                contentDescription = stringResource(MR.strings.favourite_button_content_description)
             )
         }
     }

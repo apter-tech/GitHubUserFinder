@@ -6,8 +6,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import io.imrekaszab.githubuserfinder.android.R
+import dev.icerock.moko.resources.compose.stringResource
+import io.imrekaszab.githubuserfinder.MR
 
 @Composable
 fun EmptyView() {
@@ -15,6 +15,6 @@ fun EmptyView() {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = stringResource(id = R.string.empty_view_title))
+        Text(text = stringResource(MR.strings.empty_view_title))
     }
 }

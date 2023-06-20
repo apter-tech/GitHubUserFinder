@@ -2,11 +2,13 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.kotlin.multiplatform) apply false
+    alias(libs.plugins.moko.resources) apply false
     alias(libs.plugins.detekt)
     alias(libs.plugins.kover)
 }
 
 val koverExcludeList = listOf(
+    "*.MR*",
     "*.BuildConfig",
     "*.Mock*",
     "*.TestUtilAndroidKt",

@@ -25,31 +25,32 @@ struct FavouriteUsersScreen: View {
                     }
                 }
                 .listStateModifier(state.data.isEmpty) {
-                    Text("We don't have any content, sorry 😔")
+                    Text(MR.strings().empty_view_title.localize())
                 }
                 .listStateModifier(reducer.error != nil) {
-                    Text("Something went wrong 🤯 \n\n" + (reducer.error ?? ""))
+                    Text(MR.strings().error_view_title.localize(input: reducer.error ?? "" ))
                 }
                 Spacer()
             }
             .task {
                 reducer.viewModel.loadUsers()
             }
-            .navigationTitle("Favourite users")
+            .navigationTitle(MR.strings().favourite_screen_title.localize())
             .toolbar {
                 if !state.data.isEmpty {
                     HStack {
                         Button {
                             showConfirmDialog.toggle()
                         } label: {
-                            Image(systemName: "trash.fill")
+                            MR.images().ic_trash.asImage()
                         }
                     }
                 }
             }
-            .confirmationDialog("Remove all user", isPresented: $showConfirmDialog, actions: {
+            .confirmationDialog(MR.strings().remove_all_user_dialog_title.localize(),
+                                isPresented: $showConfirmDialog, actions: {
                 HStack {
-                    Button("Remove all users") {
+                    Button(MR.strings().remove_all_user_dialog_title.localize()) {
                         reducer.viewModel.deleteAllUser()
                     }
                 }

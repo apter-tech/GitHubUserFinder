@@ -24,6 +24,9 @@
 		A751E2DE2809CDAA00B559D4 /* ListStateViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A751E2DD2809CDAA00B559D4 /* ListStateViewModifier.swift */; };
 		A780648F28D5F7910011ED92 /* FavouriteUsersScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780648E28D5F7910011ED92 /* FavouriteUsersScreen.swift */; };
 		A79E44BD2906B4420060B5AB /* Koin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79E44BC2906B4420060B5AB /* Koin.swift */; };
+		A7A79D612A3CAB23003A8773 /* ImageResource+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A79D602A3CAB23003A8773 /* ImageResource+Extensions.swift */; };
+		A7A79D632A404FE1003A8773 /* StringResource+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A79D622A404FE1003A8773 /* StringResource+Extensions.swift */; };
+		A7A79D652A405AA4003A8773 /* GitHubUserDetailItemViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A79D642A405AA4003A8773 /* GitHubUserDetailItemViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -59,6 +62,9 @@
 		A751E2DD2809CDAA00B559D4 /* ListStateViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListStateViewModifier.swift; sourceTree = "<group>"; };
 		A780648E28D5F7910011ED92 /* FavouriteUsersScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteUsersScreen.swift; sourceTree = "<group>"; };
 		A79E44BC2906B4420060B5AB /* Koin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Koin.swift; sourceTree = "<group>"; };
+		A7A79D602A3CAB23003A8773 /* ImageResource+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageResource+Extensions.swift"; sourceTree = "<group>"; };
+		A7A79D622A404FE1003A8773 /* StringResource+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringResource+Extensions.swift"; sourceTree = "<group>"; };
+		A7A79D642A405AA4003A8773 /* GitHubUserDetailItemViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubUserDetailItemViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +130,8 @@
 			isa = PBXGroup;
 			children = (
 				A73AB683292654C200179506 /* CombineAdapters.swift */,
+				A7A79D602A3CAB23003A8773 /* ImageResource+Extensions.swift */,
+				A7A79D622A404FE1003A8773 /* StringResource+Extensions.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -171,6 +179,7 @@
 				A751E2C42803362800B559D4 /* GitHubUserDetailsScreen.swift */,
 				A751E2D828034E4A00B559D4 /* GitHubUserDetailItemView.swift */,
 				A751E2DA280497CA00B559D4 /* GitHubUserDetailBioView.swift */,
+				A7A79D642A405AA4003A8773 /* GitHubUserDetailItemViews.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -314,6 +323,7 @@
 				2152FB042600AC8F00CF470E /* GitHubUserFinder.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				A751E2DE2809CDAA00B559D4 /* ListStateViewModifier.swift in Sources */,
+				A7A79D632A404FE1003A8773 /* StringResource+Extensions.swift in Sources */,
 				A751E2D928034E4A00B559D4 /* GitHubUserDetailItemView.swift in Sources */,
 				A751E2C52803362800B559D4 /* GitHubUserDetailsScreen.swift in Sources */,
 				A751E2DB280497CA00B559D4 /* GitHubUserDetailBioView.swift in Sources */,
@@ -321,8 +331,10 @@
 				A73C45B429E9B8B200EC7FB3 /* LazyKoin.swift in Sources */,
 				A780648F28D5F7910011ED92 /* FavouriteUsersScreen.swift in Sources */,
 				A73571C32812B58700C21DE6 /* ClearButtonModifier.swift in Sources */,
+				A7A79D652A405AA4003A8773 /* GitHubUserDetailItemViews.swift in Sources */,
 				A751E2BF280335D300B559D4 /* ReducerViewModel.swift in Sources */,
 				A751E2C32803361700B559D4 /* GitHubUserListScreen.swift in Sources */,
+				A7A79D612A3CAB23003A8773 /* ImageResource+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,6 +467,7 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				INFOPLIST_FILE = iosApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -480,6 +493,7 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				INFOPLIST_FILE = iosApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
