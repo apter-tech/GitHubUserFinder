@@ -1,6 +1,5 @@
 # GitHubUserFinderKMM
-![GitHub Actions build status](https://github.com/kaszabimre/GitHubUserFinderKMM/actions/workflows/GitHubUserFinderKMM-Android.yml/badge.svg)
-![GitHub Actions build status](https://github.com/kaszabimre/GitHubUserFinderKMM/actions/workflows/GitHubUserFinderKMM-iOS.yml/badge.svg)
+![GitHub Actions build status](https://github.com/kaszabimre/GitHubUserFinderKMM/actions/workflows/GitHubUserFinderKMM.yml/badge.svg)
 
 Kotlin Multiplatform Mobile sample project with Jetpack Compose and SwiftUI
 
@@ -20,6 +19,7 @@ Android | iOS
 ### About the project
 
 - Shared ViewModels :rocket:
+- Shared resources (svg, strings) with moko-resources
 - MVVM + Reducer implementation = MVI
 - List and detail screens
 - Favourite user feature with SQLDelight
@@ -28,7 +28,7 @@ Android | iOS
 - Common tests
 - Dark mode
 - Automated dependency update with Renovate
-- GitHub Actions config:  [GitHubUserFinderKMM-Android.yml](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/main/.github/workflows/GitHubUserFinderKMM-Android.yml) + [GitHubUserFinderKMM-iOS.yml](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/main/.github/workflows/GitHubUserFinderKMM-iOS.yml)
+- GitHub Actions config:  [GitHubUserFinderKMM.yml](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/main/.github/workflows/GitHubUserFinderKMM.yml)
 - [GitHub API](https://docs.github.com/en/rest/search#search-users)
 - Coverage report (kover)
 
@@ -43,6 +43,8 @@ Android | iOS
   [![GitHub Repo stars](https://img.shields.io/github/stars/InsertKoinIO/koin)](https://github.com/InsertKoinIO/koin)
 - 📋 [Kermit](https://github.com/touchlab/Kermit) - Logger
   [![GitHub Repo stars](https://img.shields.io/github/stars/touchlab/Kermit)](https://github.com/touchlab/Kermit)
+- 🎨 [moko resources](https://github.com/icerockdev/moko-resources) - Shared resources
+  [![GitHub Repo stars](https://img.shields.io/github/stars/icerockdev/moko-resources)](https://github.com/icerockdev/moko-resources)
 - 🚦 Testing - Common unit tests in `shared` module with [MockHttpClient](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/main/shared/src/commonTest/kotlin/io/imrekaszab/githubuserfinder/MockHttpClient.kt)
 - 🔍 Linter & formatter
     - [Detekt](https://github.com/detekt/detekt) - `shared + Android`
@@ -61,7 +63,6 @@ Android | iOS
 
 - 📋 [Kover](https://github.com/Kotlin/kotlinx-kover) - Kotlin code coverage tool
   [![GitHub Repo stars](https://img.shields.io/github/stars/Kotlin/kotlinx-kover)](https://github.com/Kotlin/kotlinx-kover)
-  [![Maven Central](https://img.shields.io/maven-central/v/org.jetbrains.kotlinx.kover/org.jetbrains.kotlinx.kover.gradle.plugin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22org.jetbrains.kotlinx.kover%22%20AND%20a:%22org.jetbrains.kotlinx.kover.gradle.plugin%22)
 
 > Use `./gradlew koverMergedVerify koverMergedReport` to verify and generate the coverage report with a custom rule:
 
@@ -94,21 +95,3 @@ kover {
 
 - Android Studio Flamingo | 2022.2.1 | with [KMM plugin](https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform-mobile)
 - Xcode 14.3
-
-## Dependency versions
-
-This project is using a [gradle-versions-plugin](https://github.com/ben-manes/gradle-versions-plugin) to manage dependency versions.
-
-### Checking for new versions
-
-To check if dependencies are in need of updating:
-
-```sh
-./gradlew dependencyUpdates
-```
-
-### What's next?
-
-- UI tests
-- Fancy animations
-
