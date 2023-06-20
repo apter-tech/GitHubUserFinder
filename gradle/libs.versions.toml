@@ -8,7 +8,7 @@ coroutines = "1.7.1"
 appCompat = "1.6.1"
 lifecycleViewModel = "2.6.1"
 sqldelight = "1.5.5"
-detekt = "1.22.0"
+detekt = "1.23.0"
 kover = "0.6.1"
 
 compose = "1.4.3"
