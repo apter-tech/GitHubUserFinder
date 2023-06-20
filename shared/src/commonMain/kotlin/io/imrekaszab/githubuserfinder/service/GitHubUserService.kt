@@ -123,10 +123,7 @@ class GitHubUserService(
 
     override fun isFetchingFinished(): Flow<Boolean> =
         gitHubPagingInfoStateFlow
-            .map {
-                println("isFetchingFinished pisa: ${it.currentCount} == ${it.totalItemCount}")
-                it.currentCount == it.totalItemCount
-            }
+            .map { it.currentCount == it.totalItemCount }
 
     override fun getSavedUsers(): Flow<List<GitHubUser>> =
         gitHubUserRepository.getSavedUserList()

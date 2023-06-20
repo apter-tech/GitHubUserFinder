@@ -26,13 +26,23 @@ abstract class Reducer<S : UiState, E : UiEvent>(initialVal: S) : ViewModel() {
                 reduce(_state.value, event)
             } catch (@Suppress("TooGenericExceptionCaught") ex: Throwable) {
                 _error.emit(ex.message)
+                doOnError()
             }
         }
     }
 
-    suspend fun setState(newState: S) {
+    private suspend fun clearError() {
+        _error.emit(null)
+    }
+
+    suspend fun setState(newState: S, withClearError: Boolean = true) {
+        if (withClearError) {
+            clearError()
+        }
         _state.emit(newState)
     }
+
+    open suspend fun doOnError() {}
 
     abstract suspend fun reduce(oldState: S, event: E)
 

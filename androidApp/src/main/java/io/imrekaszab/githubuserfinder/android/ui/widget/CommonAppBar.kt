@@ -10,13 +10,12 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import io.imrekaszab.githubuserfinder.android.R
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
+import io.imrekaszab.githubuserfinder.MR
 import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 
 @Composable
@@ -34,8 +33,8 @@ fun CommonAppBar(
                 .fillMaxWidth()
         ) {
             Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = stringResource(id = R.string.common_app_bar_back_arrow_content_description),
+                painter = painterResource(imageResource = MR.images.ic_arrow_left),
+                contentDescription = stringResource(MR.strings.common_app_bar_back_arrow_content_description),
                 modifier = Modifier.clickable { onArrowClick() }
             )
             Text(

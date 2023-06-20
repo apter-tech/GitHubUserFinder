@@ -6,6 +6,7 @@
 //  Copyright © 2022. orgName. All rights reserved.
 //
 
+import shared
 import SwiftUI
 
 struct ClearButtonModifier: ViewModifier {
@@ -19,7 +20,8 @@ struct ClearButtonModifier: ViewModifier {
                     self.text = ""
                 }
             label: {
-                Image(systemName: "delete.left")
+                MR.images().ic_arrow_left
+                    .asImage()
                     .foregroundColor(Color(UIColor.opaqueSeparator))
                 }
             }

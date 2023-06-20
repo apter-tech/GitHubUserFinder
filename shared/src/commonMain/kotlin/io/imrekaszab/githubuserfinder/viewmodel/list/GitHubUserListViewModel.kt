@@ -29,10 +29,12 @@ class GitHubUserListViewModel(
                 gitHubUserAction.searchUser(event.query)
                 refreshStateByUsers(oldState)
             }
+
             is UserListScreenUiEvent.RequestNextPage -> {
                 gitHubUserAction.fetchNextPage()
                 refreshStateByUsers(oldState)
             }
+
             UserListScreenUiEvent.LoadUsers -> refreshStateByUsers(oldState)
         }
     }
@@ -47,5 +49,9 @@ class GitHubUserListViewModel(
                 isFetchingFinished = isFetchingFinished
             )
         )
+    }
+
+    override suspend fun doOnError() {
+        setState(state.value.copy(isLoading = false), withClearError = false)
     }
 }

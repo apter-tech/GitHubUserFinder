@@ -6,9 +6,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import io.imrekaszab.githubuserfinder.android.R
+import dev.icerock.moko.resources.compose.stringResource
+import io.imrekaszab.githubuserfinder.MR
 
 @Composable
 fun ErrorView(errorText: String) {
@@ -17,7 +17,7 @@ fun ErrorView(errorText: String) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = stringResource(id = R.string.error_view_title, errorText),
+            text = stringResource(MR.strings.error_view_title, errorText),
             textAlign = TextAlign.Center
         )
     }
