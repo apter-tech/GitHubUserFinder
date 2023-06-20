@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="favourite_screen_title">Favourite users</string>
+    <string name="app_name">GitHubUserFinder</string>
+    <string name="search_app_bar_title">Search…</string>
+    <string name="remove_all_user_dialog_title">Remove all user</string>
+    <string name="remove_all_user_dialog_description">Are you sure?</string>
+    <string name="remove_all_user_dialog_dismiss">Dismiss</string>
+    <string name="remove_all_user_dialog_remove">Remove</string>
+    <string name="empty_view_title">We don\'t have any content, sorry 😔</string>
+    <string name="error_view_title">Something went wrong 🤯 \n\n %1$s</string>
+    <string name="details_view_followers">Followers</string>
+    <string name="details_view_following">Following</string>
+    <string name="details_view_public_repos">Public repos</string>
+    <string name="details_view_company">Company</string>
+    <string name="details_view_location">Location</string>
+    <string name="details_view_blog">Blog</string>
+    <string name="details_view_twitter">Twitter</string>
+    <string name="details_view_email">Email</string>
+    <string name="loading_title">Loading</string>
+
+    <string name="clear_button_content_description">Clear icon</string>
+    <string name="common_app_bar_back_arrow_content_description">Arrow back</string>
+    <string name="favourite_button_content_description">Favourite button</string>
+</resources>

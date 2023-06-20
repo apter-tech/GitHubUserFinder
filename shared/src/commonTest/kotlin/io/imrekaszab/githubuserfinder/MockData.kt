@@ -1,5 +1,7 @@
 package io.imrekaszab.githubuserfinder
 
+import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
+
 object MockData {
     const val baseUrl = "https://api.github.com"
     const val userName = "example"
@@ -26,4 +28,20 @@ object MockData {
     const val nonEmptyResponse = "{\n" +
         "\"total_count\": 1,\n" +
         "\"items\": [\n" + userDetailsResponse + "]\n" + "}"
+
+    val user = GitHubUser(
+        id = 1,
+        login = userName,
+        avatarUrl = "avatar_link",
+        name = "name",
+        company = "company",
+        blog = "blog",
+        location = "location",
+        email = "email",
+        bio = "bio",
+        twitterUsername = "twitter_username",
+        publicRepos = 1,
+        following = 1,
+        followers = 1
+    )
 }

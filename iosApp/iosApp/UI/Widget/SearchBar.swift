@@ -6,6 +6,7 @@
 //  Copyright © 2022. orgName. All rights reserved.
 //
 
+import shared
 import SwiftUI
 
 struct SearchBar: View {
@@ -14,7 +15,8 @@ struct SearchBar: View {
 
     var body: some View {
         HStack {
-            TextField("Tap to search ...", text: $searchQuery)
+            TextField(MR.strings().search_app_bar_title.localize(),
+                      text: $searchQuery)
                 .modifier(ClearButtonModifier(text: $searchQuery))
                 .padding(10)
                 .background(Color(.systemGray6))

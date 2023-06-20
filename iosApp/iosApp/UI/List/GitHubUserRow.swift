@@ -28,7 +28,7 @@ struct GitHubUserRow: View {
             }
             Spacer()
             if item.favourite {
-                Image(systemName: "star.fill")
+                MR.images().ic_star_fill.asImage()
             }
         }
         .padding(4)

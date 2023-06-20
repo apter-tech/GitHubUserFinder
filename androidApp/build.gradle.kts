@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.application")
-    kotlin("android")
+    alias(libs.plugins.android.application)
+    id(libs.plugins.kotlin.android.get().pluginId)
 }
 
 android {
@@ -16,8 +16,18 @@ android {
         buildConfigField("String", "BASE_PATH", "\"https://api.github.com\"")
     }
 
+    @Suppress("UnstableApiUsage")
     buildFeatures {
         compose = true
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.valueOf(
+            "VERSION_" + libs.versions.javaSourceCompatibility.get().replace(".", "_")
+        )
+        targetCompatibility = JavaVersion.valueOf(
+            "VERSION_" + libs.versions.javaTargetCompatibility.get().replace(".", "_")
+        )
     }
 
     composeOptions {
@@ -28,6 +38,12 @@ android {
         getByName("release") {
             isMinifyEnabled = false
         }
+    }
+}
+
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(libs.versions.javaTargetCompatibility.get().toInt()))
     }
 }
 

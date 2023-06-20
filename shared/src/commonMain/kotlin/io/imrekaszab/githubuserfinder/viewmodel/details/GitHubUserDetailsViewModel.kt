@@ -1,26 +1,14 @@
 package io.imrekaszab.githubuserfinder.viewmodel.details
 
-import io.imrekaszab.githubuserfinder.action.GitHubUserAction
-import io.imrekaszab.githubuserfinder.store.GitHubUserStore
-import io.imrekaszab.githubuserfinder.util.mvi.Reducer
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import io.imrekaszab.githubuserfinder.service.action.GitHubUserAction
+import io.imrekaszab.githubuserfinder.service.store.GitHubUserStore
+import io.imrekaszab.githubuserfinder.util.reducer.Reducer
+import kotlinx.coroutines.flow.first
 
-class GitHubUserDetailsViewModel :
-    Reducer<UserDetailsScreenState, UserDetailsScreenUiEvent>(UserDetailsScreenState.initial()),
-    KoinComponent {
-    private val gitHubUserAction: GitHubUserAction by inject()
-    private val gitHubUserStore: GitHubUserStore by inject()
-
-    init {
-        mainScope.launch {
-            gitHubUserStore.getUserDetails().collectLatest {
-                sendEvent(UserDetailsScreenUiEvent.ShowData(it))
-            }
-        }
-    }
+class GitHubUserDetailsViewModel(
+    private val gitHubUserAction: GitHubUserAction,
+    private val gitHubUserStore: GitHubUserStore
+) : Reducer<UserDetailsScreenState, UserDetailsScreenUiEvent>(UserDetailsScreenState.initial()) {
 
     fun refreshUserDetails(userName: String) {
         sendEvent(UserDetailsScreenUiEvent.RefreshUser(userName))
@@ -34,29 +22,25 @@ class GitHubUserDetailsViewModel :
         sendEvent(UserDetailsScreenUiEvent.DeleteUser)
     }
 
-    override fun reduce(oldState: UserDetailsScreenState, event: UserDetailsScreenUiEvent) {
-        mainScope.launch {
-            try {
-                when (event) {
-                    UserDetailsScreenUiEvent.DeleteUser -> {
-                        setState(oldState.copy(error = ""))
-                        gitHubUserAction.deleteUser()
-                    }
-                    is UserDetailsScreenUiEvent.RefreshUser -> {
-                        setState(oldState.copy(error = ""))
-                        gitHubUserAction.refreshUserDetails(event.userName)
-                    }
-                    UserDetailsScreenUiEvent.SaveUser -> {
-                        setState(oldState.copy(error = ""))
-                        gitHubUserAction.saveUser()
-                    }
-                    is UserDetailsScreenUiEvent.ShowData -> {
-                        setState(oldState.copy(userDetails = event.userDetails))
-                    }
-                }
-            } catch (ex: Exception) {
-                setState(oldState.copy(error = ex.message ?: ""))
+    override suspend fun reduce(oldState: UserDetailsScreenState, event: UserDetailsScreenUiEvent) {
+        when (event) {
+            UserDetailsScreenUiEvent.DeleteUser -> {
+                gitHubUserAction.deleteUser()
+                updateUserDetails(oldState)
+            }
+            is UserDetailsScreenUiEvent.RefreshUser -> {
+                gitHubUserAction.refreshUserDetails(event.userName)
+                updateUserDetails(oldState)
+            }
+            UserDetailsScreenUiEvent.SaveUser -> {
+                gitHubUserAction.saveUser()
+                updateUserDetails(oldState)
             }
         }
+    }
+
+    private suspend fun updateUserDetails(oldState: UserDetailsScreenState) {
+        val userDetails = gitHubUserStore.getUserDetails().first()
+        setState(oldState.copy(userDetails = userDetails))
     }
 }

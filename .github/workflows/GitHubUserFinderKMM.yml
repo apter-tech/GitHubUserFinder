@@ -1,0 +1,111 @@
+name: GitHubUserFinderKMM
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - development
+  pull_request:
+    paths-ignore:
+      - "**.md"
+      - "*.png"
+      - docs
+
+jobs:
+  pre-conditions:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3.11.0
+        with:
+          distribution: corretto
+          java-version: 18
+
+      - name: detekt
+        run: ./gradlew detekt --stacktrace
+
+      - name: GitHub Action for SwiftLint (Only files changed in the PR)
+        uses: norio-nomura/action-swiftlint@3.2.1
+        env:
+          WORKING_DIRECTORY: ./iosApp
+
+      - name: Verify and generate coverage report
+        run: ./gradlew koverMergedXmlReport --stacktrace
+
+      - name: Upload test reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: shared-test-report
+          path: ${{ github.workspace }}/build/reports/kover/merged/xml/report.xml
+          retention-days: 5
+
+  build-android:
+    needs: pre-conditions
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3.11.0
+        with:
+          distribution: corretto
+          java-version: 18
+
+      - name: Build
+        run: ./gradlew build --stacktrace
+
+  test-report:
+    needs: pre-conditions
+    runs-on: ubuntu-22.04
+    permissions:
+      checks: write
+      pull-requests: write
+    steps:
+      - name: Download report
+        uses: actions/download-artifact@v3
+        with:
+          name: shared-test-report
+
+      - name: Add coverage report to PR
+        id: kover
+        uses: mi-kas/kover-report@v1.6
+        with:
+          path: ${{ github.workspace }}/report.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: Code Coverage
+          update-comment: true
+
+  build-ios:
+    needs: pre-conditions
+    runs-on: macos-13
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3.11.0
+        with:
+          distribution: corretto
+          java-version: 18
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Select Xcode version
+        run: |
+          sudo xcode-select -s /Applications/Xcode_14.3.app
+
+      - name: Build
+        run: |
+          cd iosApp
+          xcodebuild build-for-testing \
+            -scheme iosApp \
+            -project iosApp.xcodeproj \
+            -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.4'

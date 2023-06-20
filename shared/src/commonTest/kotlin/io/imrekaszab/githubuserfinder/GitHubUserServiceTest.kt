@@ -1,9 +1,14 @@
 package io.imrekaszab.githubuserfinder
 
-import io.imrekaszab.githubuserfinder.action.GitHubUserAction
-import io.imrekaszab.githubuserfinder.di.*
+import io.imrekaszab.githubuserfinder.di.apiModule
+import io.imrekaszab.githubuserfinder.di.coreModule
+import io.imrekaszab.githubuserfinder.di.dataModule
+import io.imrekaszab.githubuserfinder.di.factoryModule
+import io.imrekaszab.githubuserfinder.di.platformModule
+import io.imrekaszab.githubuserfinder.di.repositoryModule
 import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
-import io.imrekaszab.githubuserfinder.store.GitHubUserStore
+import io.imrekaszab.githubuserfinder.service.action.GitHubUserAction
+import io.imrekaszab.githubuserfinder.service.store.GitHubUserStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
@@ -128,7 +133,7 @@ class GitHubUserServiceTest : KoinTest {
         val isEmpty = true
 
         // When
-        action.deleteAllUser()
+        action.deleteAllUsers()
         val result = store.getSavedUsers().first()
 
         // Then

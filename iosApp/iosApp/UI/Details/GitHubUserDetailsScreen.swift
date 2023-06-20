@@ -10,9 +10,7 @@ import SwiftUI
 import shared
 
 struct GitHubUserDetailsScreen: View {
-    @StateObject private var reducer =
-    ReducerViewModel<UserDetailsScreenState,
-                     GitHubUserDetailsViewModel>(viewModel: GitHubUserDetailsViewModel())
+    @StateObject private var reducer = ReducerViewModel<UserDetailsScreenState, GitHubUserDetailsViewModel>()
     var userName: String
 
     var body: some View {
@@ -32,17 +30,7 @@ struct GitHubUserDetailsScreen: View {
                         .frame(width: 100, height: 100)
                         .cornerRadius(16)
                         GitHubUserDetailBioView(bio: userDetails.bio)
-                        VStack {
-                            GitHubUserDetailItemView(label: "Followers", value: String(userDetails.followers))
-                            GitHubUserDetailItemView(label: "Following", value: String(userDetails.following))
-                            GitHubUserDetailItemView(label: "Public repos",
-                                                     value: String(userDetails.publicRepos))
-                            GitHubUserDetailItemView(label: "Company", value: userDetails.company)
-                            GitHubUserDetailItemView(label: "Location", value: userDetails.location)
-                            GitHubUserDetailItemView(label: "Email", value: userDetails.email)
-                            GitHubUserDetailItemView(label: "Blog", value: userDetails.blog)
-                            GitHubUserDetailItemView(label: "Twitter", value: userDetails.twitterUsername)
-                        }
+                        GitHubUserDetailItemViews(userDetails: userDetails)
                     }
                 }
             }
@@ -57,9 +45,9 @@ struct GitHubUserDetailsScreen: View {
                         }
                     } label: {
                         if state.userDetails?.favourite == true {
-                            Image(systemName: "star.circle.fill")
+                            MR.images().ic_star_fill.asImage()
                         } else {
-                            Image(systemName: "star.circle")
+                            MR.images().ic_star.asImage()
                         }
                     }
                 }

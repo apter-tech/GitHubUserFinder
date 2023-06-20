@@ -1,8 +1,11 @@
 plugins {
-    kotlin("multiplatform")
-    id("org.jetbrains.kotlin.plugin.serialization") version libs.versions.kotlin.get()
-    id("com.android.library")
-    id("com.squareup.sqldelight")
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.mockmp)
+    alias(libs.plugins.sqldelight)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.moko.resources)
 }
 
 kotlin {
@@ -17,6 +20,8 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
+            export(libs.moko.resources)
+            export(libs.moko.graphics)
         }
     }
 
@@ -28,10 +33,12 @@ kotlin {
         }
     }
 
+    @Suppress("UNUSED_VARIABLE")
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation(libs.bundles.commonMain)
+                api(libs.moko.resources)
             }
         }
         val commonTest by getting {
@@ -44,17 +51,23 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(libs.bundles.androidMain)
+                implementation(libs.androidx.lifecycle.runtime)
+                implementation(libs.androidx.lifecycle.viewmodel)
+                implementation(libs.sqldelight.android.driver)
+                implementation(libs.ktor.android)
+                api(libs.moko.compose)
             }
         }
         val androidTest by getting {
             dependencies {
-                implementation(libs.bundles.androidTest)
+                implementation(libs.test.junitKtx)
+                implementation(libs.sqldelight.sqlite.driver)
             }
         }
         val iosMain by getting {
             dependencies {
-                implementation(libs.bundles.iosMain)
+                implementation(libs.ktor.ios)
+                implementation(libs.sqldelight.native)
             }
         }
         val iosTest by getting
@@ -65,30 +78,26 @@ kotlin {
             dependsOn(iosTest)
         }
     }
+
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(libs.versions.javaTargetCompatibility.get().toInt()))
+    }
 }
 
 android {
     namespace = "io.imrekaszab.githubuserfinder"
     compileSdk = libs.versions.targetSdk.get().toInt()
+    sourceSets["main"].res.srcDir(File(buildDir, "generated/moko/androidMain/res"))
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
     }
-    testOptions {
-        unitTests {
-            isIncludeAndroidResources = true
-        }
-        unitTests.all {
-            it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
-                isDisabled.set(it.name == "testDebugUnitTest")
-            }
-        }
-    }
-
-    kover {
-        instrumentation {
-            excludeTasks.add("testDebugUnitTest")
-        }
+    compileOptions {
+        sourceCompatibility = JavaVersion.valueOf(
+            "VERSION_" + libs.versions.javaSourceCompatibility.get().replace(".", "_")
+        )
+        targetCompatibility = JavaVersion.valueOf(
+            "VERSION_" + libs.versions.javaTargetCompatibility.get().replace(".", "_")
+        )
     }
 }
 
@@ -96,4 +105,25 @@ sqldelight {
     database("GitHubUserFinderDB") {
         packageName = "io.imrekaszab.githubuserfinder.db"
     }
+}
+
+mockmp {
+    usesHelper = true
+}
+
+multiplatformResources {
+    multiplatformResourcesPackage = "io.imrekaszab.githubuserfinder"
+}
+
+val org.jetbrains.kotlin.konan.target.KonanTarget.enabledOnCurrentHost
+    get() = org.jetbrains.kotlin.konan.target.HostManager().isEnabled(this)
+
+extensions.configure<org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension> {
+    targets.matching { target ->
+        target is org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget &&
+            !target.konanTarget.enabledOnCurrentHost
+    }
+        .forEach { target ->
+            tasks.findByName("${target.name}ProcessResources")?.enabled = false
+        }
 }

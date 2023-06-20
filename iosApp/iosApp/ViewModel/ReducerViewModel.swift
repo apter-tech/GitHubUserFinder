@@ -11,19 +11,29 @@ import shared
 import Combine
 
 @MainActor
-class ReducerViewModel<S: UiState, V: ViewModel>: ObservableObject {
-    var viewModel: V
+final class ReducerViewModel<S: UiState, V: ViewModel>: ObservableObject {
+    @LazyKoin var viewModel: V
 
     @Published public var state: S?
-    var cancellables = Set<AnyCancellable>()
+    @Published public var error: String?
+    private var cancellables = Set<AnyCancellable>()
 
-    init(viewModel: V) {
-        self.viewModel = viewModel
-
-        guard let reducer = (viewModel as? Reducer<S, UiEvent>) else { return }
+    init() {
+        guard let reducer = (viewModel as? Reducer<S, shared.UiEvent>) else {
+            return
+        }
 
         doPublish(reducer.stateFlowAdapter) { [weak self] in
             self?.state = $0
+        }
+        .store(in: &cancellables)
+
+        doPublish(reducer.errorFlowAdapter) { [weak self] in
+            if let error = $0 {
+                self?.error = String(error)
+            } else {
+                self?.error = nil
+            }
         }
         .store(in: &cancellables)
     }

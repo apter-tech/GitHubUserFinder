@@ -15,9 +15,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Clear
-import androidx.compose.material.icons.rounded.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -32,14 +29,13 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
+import io.imrekaszab.githubuserfinder.MR
 import io.imrekaszab.githubuserfinder.android.ui.theme.Dimens
 
 @Composable
 fun SearchAppBar(onSearchCLick: (String) -> Unit, onStarClick: () -> Unit) {
-    var query: String by rememberSaveable { mutableStateOf("") }
-    val showClearIcon by remember { derivedStateOf { query.isNotEmpty() } }
-    val focusManager = LocalFocusManager.current
-
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -47,51 +43,65 @@ fun SearchAppBar(onSearchCLick: (String) -> Unit, onStarClick: () -> Unit) {
         elevation = AppBarDefaults.TopAppBarElevation,
         color = MaterialTheme.colors.primary
     ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            TextField(
-                value = query,
-                onValueChange = { onQueryChanged ->
-                    query = onQueryChanged
-                },
-                trailingIcon = {
-                    if (showClearIcon) {
-                        IconButton(onClick = { query = "" }) {
-                            Icon(
-                                imageVector = Icons.Rounded.Clear,
-                                contentDescription = "Clear Icon"
-                            )
-                        }
+        SearchAppBarContent(onSearchCLick, onStarClick)
+    }
+}
+
+@Composable
+fun SearchAppBarContent(onSearchCLick: (String) -> Unit, onStarClick: () -> Unit) {
+    var query: String by rememberSaveable { mutableStateOf("") }
+    val showClearIcon by remember { derivedStateOf { query.isNotEmpty() } }
+    val focusManager = LocalFocusManager.current
+    Row(
+        horizontalArrangement = Arrangement.SpaceAround,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        TextField(
+            value = query,
+            onValueChange = { onQueryChanged ->
+                query = onQueryChanged
+            },
+            trailingIcon = {
+                if (showClearIcon) {
+                    IconButton(onClick = { query = "" }) {
+                        Icon(
+                            painter = painterResource(imageResource = MR.images.ic_clear),
+                            contentDescription =
+                            stringResource(MR.strings.clear_button_content_description)
+                        )
                     }
-                },
-                colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color.Transparent,
-                    cursorColor = Color.White.copy(alpha = ContentAlpha.medium)
-                ),
-                maxLines = 1,
-                placeholder = { Text(text = "Search...", style = MaterialTheme.typography.h6) },
-                textStyle = MaterialTheme.typography.h6,
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Search
-                ),
-                keyboardActions = KeyboardActions(
-                    onSearch = {
-                        focusManager.clearFocus()
-                        onSearchCLick(query)
-                    }
+                }
+            },
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = Color.Transparent,
+                cursorColor = Color.White.copy(alpha = ContentAlpha.medium)
+            ),
+            maxLines = 1,
+            placeholder = {
+                Text(
+                    text = stringResource(MR.strings.search_app_bar_title),
+                    style = MaterialTheme.typography.h6
                 )
+            },
+            textStyle = MaterialTheme.typography.h6,
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Search
+            ),
+            keyboardActions = KeyboardActions(
+                onSearch = {
+                    focusManager.clearFocus()
+                    onSearchCLick(query)
+                }
             )
-            IconButton(onClick = onStarClick) {
-                Icon(
-                    imageVector = Icons.Rounded.Star,
-                    contentDescription = "Favourite users"
-                )
-            }
+        )
+        IconButton(onClick = onStarClick) {
+            Icon(
+                painter = painterResource(imageResource = MR.images.ic_star_fill),
+                contentDescription = stringResource(MR.strings.favourite_button_content_description)
+            )
         }
     }
 }

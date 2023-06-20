@@ -2,6 +2,7 @@ package io.imrekaszab.githubuserfinder.model.api
 
 import kotlinx.serialization.Serializable
 
+@Suppress("ConstructorParameterNaming")
 @Serializable
 data class GitHubUserApiModel(
     val id: Int,

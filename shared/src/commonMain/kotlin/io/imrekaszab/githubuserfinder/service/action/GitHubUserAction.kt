@@ -1,4 +1,4 @@
-package io.imrekaszab.githubuserfinder.action
+package io.imrekaszab.githubuserfinder.service.action
 
 interface GitHubUserAction {
     suspend fun searchUser(userName: String)
@@ -6,5 +6,5 @@ interface GitHubUserAction {
     suspend fun refreshUserDetails(userName: String)
     suspend fun saveUser()
     suspend fun deleteUser()
-    suspend fun deleteAllUser()
+    suspend fun deleteAllUsers()
 }

@@ -7,16 +7,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import dev.icerock.moko.resources.compose.stringResource
+import io.imrekaszab.githubuserfinder.MR
 
 @Composable
-fun ErrorView(errorText: String?) {
-    errorText ?: return
+fun ErrorView(errorText: String) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Something went wrong \uD83E\uDD2F \n\n $errorText",
+            text = stringResource(MR.strings.error_view_title, errorText),
             textAlign = TextAlign.Center
         )
     }

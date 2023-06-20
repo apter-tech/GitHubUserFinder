@@ -1,55 +1,82 @@
 package io.imrekaszab.githubuserfinder
 
-import io.imrekaszab.githubuserfinder.di.*
+import io.imrekaszab.githubuserfinder.model.domain.GitHubUser
+import io.imrekaszab.githubuserfinder.service.action.GitHubUserAction
+import io.imrekaszab.githubuserfinder.service.store.GitHubUserStore
 import io.imrekaszab.githubuserfinder.viewmodel.favourite.FavouriteUsersViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
+import org.kodein.mock.Mock
+import org.kodein.mock.tests.TestsWithMocks
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class FavouriteUsersViewModelTest {
-    private val viewModel by lazy { FavouriteUsersViewModel() }
+class FavouriteUsersViewModelTest : TestsWithMocks() {
+    @Mock
+    lateinit var action: GitHubUserAction
+
+    @Mock
+    lateinit var store: GitHubUserStore
+
+    private val viewModel by withMocks { FavouriteUsersViewModel(action, store) }
+
+    override fun setUpMocks() = injectMocks(mocker)
 
     @BeforeTest
     fun setUp() {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        startKoin {
-            modules(
-                apiModule,
-                repositoryModule,
-                coreModule,
-                platformModule,
-                dataModule,
-                mockModule
-            )
-        }
     }
 
     @AfterTest
     fun clear() {
         Dispatchers.resetMain()
         viewModel.clear()
-        stopKoin()
     }
 
     @Test
-    fun `state gives back an empty list after deleteAllUser`() = runBlocking {
+    fun `given non-emptyList when loadUsers called then returns non-emptyList`() = runTest {
         // Given
-        val listIsEmpty = true
+        val userList = listOf(MockData.user)
+        every { store.getSavedUsers() } returns flowOf(userList)
+
+        // When
+        viewModel.loadUsers()
+
+        // Then
+        val result = viewModel.state.first()
+
+        assertEquals(userList, result.data)
+
+        verifyWithSuspend {
+            viewModel.loadUsers()
+            viewModel.setState(isAny())
+        }
+    }
+
+    @Test
+    fun `given emptyList when deleteAllUser called then returns emptyList`() = runTest {
+        // Given
+        val userList = emptyList<GitHubUser>()
+        everySuspending { action.deleteAllUsers() } returns Unit
+        every { store.getSavedUsers() } returns flowOf(userList)
 
         // When
         viewModel.deleteAllUser()
 
         // Then
+        val result = viewModel.state.first()
 
-        val state = viewModel.state.first()
-        assertEquals(listIsEmpty, state.data.isEmpty())
+        assertEquals(userList, result.data)
+
+        verifyWithSuspend {
+            viewModel.deleteAllUser()
+            viewModel.setState(isAny())
+        }
     }
 }

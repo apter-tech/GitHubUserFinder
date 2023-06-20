@@ -10,9 +10,7 @@ import SwiftUI
 import shared
 
 struct FavouriteUsersScreen: View {
-    @StateObject private var reducer =
-    ReducerViewModel<FavouriteUsersScreenState,
-                     FavouriteUsersViewModel>(viewModel: FavouriteUsersViewModel())
+    @StateObject private var reducer = ReducerViewModel<FavouriteUsersScreenState, FavouriteUsersViewModel>()
     @State private var showConfirmDialog = false
 
     var body: some View {
@@ -27,28 +25,32 @@ struct FavouriteUsersScreen: View {
                     }
                 }
                 .listStateModifier(state.data.isEmpty) {
-                    Text("We don't have any content, sorry 😔")
+                    Text(MR.strings().empty_view_title.localize())
                 }
-                .listStateModifier(!state.error.isEmpty) {
-                    Text("Something went wrong 🤯 \n\n" + state.error)
+                .listStateModifier(reducer.error != nil) {
+                    Text(MR.strings().error_view_title.localize(input: reducer.error ?? "" ))
                 }
                 Spacer()
             }
-            .navigationTitle("Favourite users")
+            .task {
+                reducer.viewModel.loadUsers()
+            }
+            .navigationTitle(MR.strings().favourite_screen_title.localize())
             .toolbar {
                 if !state.data.isEmpty {
                     HStack {
                         Button {
                             showConfirmDialog.toggle()
                         } label: {
-                            Image(systemName: "pip.remove")
+                            MR.images().ic_trash.asImage()
                         }
                     }
                 }
             }
-            .confirmationDialog("Remove all user", isPresented: $showConfirmDialog, actions: {
+            .confirmationDialog(MR.strings().remove_all_user_dialog_title.localize(),
+                                isPresented: $showConfirmDialog, actions: {
                 HStack {
-                    Button("Remove all users") {
+                    Button(MR.strings().remove_all_user_dialog_title.localize()) {
                         reducer.viewModel.deleteAllUser()
                     }
                 }
