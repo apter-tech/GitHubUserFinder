@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
+      - main
       - development
   pull_request:
     paths-ignore:
@@ -12,7 +13,7 @@ on:
       - docs
 
 jobs:
-  SwiftLint:
+  pre-conditions:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -23,23 +24,14 @@ jobs:
         with:
           distribution: corretto
           java-version: 18
+
+      - name: detekt
+        run: ./gradlew detekt --stacktrace
 
       - name: GitHub Action for SwiftLint (Only files changed in the PR)
         uses: norio-nomura/action-swiftlint@3.2.1
         env:
           WORKING_DIRECTORY: ./iosApp
-
-  build-android:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up JDK
-        uses: actions/setup-java@v3.11.0
-        with:
-          distribution: corretto
-          java-version: 18
 
       - name: Verify and generate coverage report
         run: ./gradlew koverMergedXmlReport --stacktrace
@@ -52,11 +44,24 @@ jobs:
           path: ${{ github.workspace }}/build/reports/kover/merged/xml/report.xml
           retention-days: 5
 
+  build-android:
+    needs: pre-conditions
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3.11.0
+        with:
+          distribution: corretto
+          java-version: 18
+
       - name: Build
-        run: ./gradlew check --stacktrace
+        run: ./gradlew build --stacktrace
 
   test-report:
-    needs: build-android
+    needs: pre-conditions
     runs-on: ubuntu-22.04
     permissions:
       checks: write
@@ -77,7 +82,7 @@ jobs:
           update-comment: true
 
   build-ios:
-    needs: SwiftLint
+    needs: pre-conditions
     runs-on: macos-13
 
     steps:
