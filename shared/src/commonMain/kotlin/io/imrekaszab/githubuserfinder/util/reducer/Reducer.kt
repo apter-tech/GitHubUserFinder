@@ -6,8 +6,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-abstract class Reducer<S : UiState, E : UiEvent>(initialVal: S) : ViewModel() {
-    protected val mainScope = viewModelScope
+interface StateFlowAdaptable {
+    val stateFlowAdapter: FlowAdapter<*>
+    val errorFlowAdapter: FlowAdapter<*>
+}
+
+abstract class Reducer<S : UiState, E : UiEvent>(initialVal: S) : ViewModel(), StateFlowAdaptable {
+    private val mainScope = viewModelScope
 
     private val _state: MutableStateFlow<S> = MutableStateFlow(initialVal)
     val state: StateFlow<S>
@@ -17,8 +22,8 @@ abstract class Reducer<S : UiState, E : UiEvent>(initialVal: S) : ViewModel() {
     val error: StateFlow<String?>
         get() = _error
 
-    val stateFlowAdapter = state.asCallbacks()
-    val errorFlowAdapter = error.asCallbacks()
+    override val stateFlowAdapter = state.asCallbacks()
+    override val errorFlowAdapter = error.asCallbacks()
 
     fun sendEvent(event: E) {
         mainScope.launch {
