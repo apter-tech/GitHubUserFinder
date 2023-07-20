@@ -27,6 +27,7 @@ composeCoil = "2.4.0"
 composeNavigation = "2.6.0"
 
 koin = "3.4.2"
+koinTest = "3.4.1"
 koinAndroid = "3.4.2"
 koinAndroidCompose = "3.4.5"
 ktor = "2.3.2"
@@ -76,7 +77,7 @@ sqldelight-coroutines = { module = "com.squareup.sqldelight:coroutines-extension
 sqldelight-sqlite-driver = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 
 test-ktor = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
-test-koin = { module = "io.insert-koin:koin-test", version.ref = "koin" }
+test-koin = { module = "io.insert-koin:koin-test", version.ref = "koinTest" }
 test-junitKtx = { module = "androidx.test.ext:junit-ktx", version.ref = "junitKtx" }
 test-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinCoroutines" }
 
