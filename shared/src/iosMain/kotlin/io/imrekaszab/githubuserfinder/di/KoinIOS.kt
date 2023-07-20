@@ -4,6 +4,7 @@ import co.touchlab.kermit.Logger
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import io.imrekaszab.githubuserfinder.db.GitHubUserFinderDB
+import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ObjCClass
 import kotlinx.cinterop.ObjCProtocol
 import kotlinx.cinterop.getOriginalKotlinClass
@@ -30,11 +31,13 @@ actual val platformModule = module {
 @Suppress("unused")
 fun Koin.loggerWithTag(tag: String) = get<Logger>(qualifier = null) { parametersOf(tag) }
 
+@OptIn(BetaInteropApi::class)
 fun Koin.get(objCClass: ObjCClass): Any? {
     val kClazz = getOriginalKotlinClass(objCClass) ?: return null
     return get(kClazz)
 }
 
+@OptIn(BetaInteropApi::class)
 fun Koin.get(objCProtocol: ObjCProtocol): Any? {
     val kClazz = getOriginalKotlinClass(objCProtocol) ?: return null
     return get(kClazz)

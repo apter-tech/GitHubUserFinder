@@ -122,6 +122,7 @@ koinAndroid = [
 ]
 
 commonMain = [
+    "kotlin-coroutines",
     "koin-core",
     "ktor-core",
     "ktor-serialization",
