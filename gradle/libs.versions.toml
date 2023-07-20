@@ -26,7 +26,7 @@ composeUITooling = "1.4.3"
 composeCoil = "2.4.0"
 composeNavigation = "2.6.0"
 
-koin = "3.4.1"
+koin = "3.4.2"
 koinAndroid = "3.4.2"
 koinAndroidCompose = "3.4.5"
 ktor = "2.3.2"
