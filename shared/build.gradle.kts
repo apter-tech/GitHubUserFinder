@@ -8,8 +8,18 @@ plugins {
     alias(libs.plugins.moko.resources)
 }
 
+val appJvmTarget: JavaVersion by rootProject.extra
+
 kotlin {
-    androidTarget()
+    jvmToolchain(appJvmTarget.majorVersion.toInt())
+
+    androidTarget {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "$appJvmTarget"
+            }
+        }
+    }
     ios()
     iosSimulatorArm64()
 
@@ -78,10 +88,6 @@ kotlin {
             dependsOn(iosTest)
         }
     }
-
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(libs.versions.javaTargetCompatibility.get().toInt()))
-    }
 }
 
 android {
@@ -90,14 +96,6 @@ android {
     sourceSets["main"].res.srcDir(File(buildDir, "generated/moko/androidMain/res"))
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.valueOf(
-            "VERSION_" + libs.versions.javaSourceCompatibility.get().replace(".", "_")
-        )
-        targetCompatibility = JavaVersion.valueOf(
-            "VERSION_" + libs.versions.javaTargetCompatibility.get().replace(".", "_")
-        )
     }
 }
 
