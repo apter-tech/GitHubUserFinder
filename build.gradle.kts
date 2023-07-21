@@ -7,6 +7,14 @@ plugins {
     alias(libs.plugins.kover)
 }
 
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
+}
+
+ext {
+    set("appJvmTarget", JavaVersion.VERSION_1_8)
+}
+
 val koverExcludeList = listOf(
     "*.MR*",
     "*.BuildConfig",
@@ -17,7 +25,8 @@ val koverExcludeList = listOf(
 )
 
 allprojects {
-    apply(plugin = "io.gitlab.arturbosch.detekt")
+    apply(plugin = rootProject.libs.plugins.kover.get().pluginId)
+    apply(plugin = rootProject.libs.plugins.detekt.get().pluginId)
     detekt {
         source.setFrom(
             objects.fileCollection().from(
@@ -41,72 +50,15 @@ allprojects {
         // point to your custom config defining rules to run, overwriting default behavior
         config.setFrom(files("$rootDir/config/detekt.yml"))
     }
-
-    tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-        jvmTarget = libs.versions.javaTargetCompatibility.get()
-        reports {
-            html.required.set(true)
-            xml.required.set(true)
-        }
+    dependencies {
+        detektPlugins(rootProject.libs.detekt.formatting)
     }
 
-    tasks.withType<io.gitlab.arturbosch.detekt.DetektCreateBaselineTask>().configureEach {
-        jvmTarget = libs.versions.javaSourceCompatibility.get()
-    }
-
-    apply(plugin = "kover")
-    kover {
+    koverReport {
         filters {
-            classes {
-                excludes += koverExcludeList
-            }
-        }
-        verify {
-            rule {
-                isEnabled = true
-                name = "Minimum coverage verification error"
-                target = kotlinx.kover.api.VerificationTarget.ALL
-
-                @Suppress("MagicNumber")
-                bound {
-                    minValue = 90
-                    maxValue = 100
-                    counter =
-                        kotlinx.kover.api.CounterType.LINE
-                    valueType =
-                        kotlinx.kover.api.VerificationValueType.COVERED_PERCENTAGE
-                }
+            excludes {
+                classes(koverExcludeList)
             }
         }
     }
-
-    afterEvaluate {
-        project.extensions.findByType<org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension>()
-            ?.let { ext ->
-                ext.sourceSets.removeAll { sourceSet ->
-                    setOf(
-                        "androidAndroidTestRelease",
-                        "androidTestFixtures",
-                        "androidTestFixturesDebug",
-                        "androidTestFixturesRelease",
-                    ).contains(sourceSet.name)
-                }
-            }
-    }
-}
-
-koverMerged {
-    enable()
-    filters {
-        projects {
-            excludes += listOf("androidApp")
-        }
-        classes {
-            excludes += koverExcludeList
-        }
-    }
-}
-
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
 }

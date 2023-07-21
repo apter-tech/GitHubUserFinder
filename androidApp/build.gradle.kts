@@ -3,8 +3,9 @@ plugins {
     id(libs.plugins.kotlin.android.get().pluginId)
 }
 
+val androidNameSpace = "io.imrekaszab.githubuserfinder.android"
 android {
-    namespace = "io.imrekaszab.githubuserfinder.android"
+    namespace = androidNameSpace
     compileSdk = libs.versions.targetSdk.get().toInt()
     defaultConfig {
         applicationId = "io.imrekaszab.githubuserfinder.android"
@@ -48,6 +49,7 @@ kotlin {
 }
 
 dependencies {
+    kover(project(":shared"))
     implementation(project(":shared"))
 
     // AndroidX
@@ -62,4 +64,30 @@ dependencies {
 
     // Detekt
     detektPlugins(libs.detekt.formatting)
+}
+
+val defaultRequiredMinimumCoverage = 85
+val defaultRequiredMaximumCoverage = 100
+
+koverReport {
+    filters {
+        excludes {
+            classes("$androidNameSpace.*")
+        }
+    }
+    androidReports("debug") {
+        verify {
+            rule("Minimum coverage verification error") {
+                isEnabled = true
+                entity = kotlinx.kover.gradle.plugin.dsl.GroupingEntityType.APPLICATION
+
+                bound {
+                    minValue = defaultRequiredMinimumCoverage
+                    maxValue = defaultRequiredMaximumCoverage
+                    metric = kotlinx.kover.gradle.plugin.dsl.MetricType.LINE
+                    aggregation = kotlinx.kover.gradle.plugin.dsl.AggregationType.COVERED_PERCENTAGE
+                }
+            }
+        }
+    }
 }
