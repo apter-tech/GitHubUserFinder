@@ -4,7 +4,7 @@ targetSdk = "33"
 javaTargetCompatibility = "17"
 javaSourceCompatibility = "11"
 
-agp = "8.0.2"
+agp = "8.1.0"
 kotlin = "1.9.0"
 kotlinCoroutines = "1.7.3"
 kotlinDate = "0.4.0"
