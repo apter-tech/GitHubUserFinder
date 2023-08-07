@@ -536,8 +536,8 @@ style:
     active: true
   OptionalUnit:
     active: true
-  OptionalWhenBraces:
-    active: true
+  BracesOnWhenStatements:
+    active: false
   PreferToOverPairSyntax:
     active: true
   ProtectedMemberInFinalClass:
