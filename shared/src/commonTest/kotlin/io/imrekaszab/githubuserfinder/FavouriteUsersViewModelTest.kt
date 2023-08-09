@@ -13,7 +13,6 @@ import kotlinx.coroutines.test.setMain
 import org.kodein.mock.Mock
 import org.kodein.mock.tests.TestsWithMocks
 import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -26,11 +25,9 @@ class FavouriteUsersViewModelTest : TestsWithMocks() {
 
     private val viewModel by withMocks { FavouriteUsersViewModel(action, store) }
 
-    override fun setUpMocks() = injectMocks(mocker)
-
-    @BeforeTest
-    fun setUp() {
+    override fun setUpMocks() {
         Dispatchers.setMain(Dispatchers.Unconfined)
+        injectMocks(mocker)
     }
 
     @AfterTest
