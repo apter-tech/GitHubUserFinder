@@ -13,7 +13,6 @@ import kotlinx.coroutines.test.setMain
 import org.kodein.mock.Mock
 import org.kodein.mock.tests.TestsWithMocks
 import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -27,11 +26,9 @@ class GitHubUserListViewModelTest : TestsWithMocks() {
 
     private val viewModel by withMocks { GitHubUserListViewModel(action, store) }
 
-    override fun setUpMocks() = injectMocks(mocker)
-
-    @BeforeTest
-    fun setUp() {
+    override fun setUpMocks() {
         Dispatchers.setMain(Dispatchers.Unconfined)
+        injectMocks(mocker)
     }
 
     @AfterTest
@@ -60,6 +57,7 @@ class GitHubUserListViewModelTest : TestsWithMocks() {
             viewModel.setState(isAny())
         }
     }
+
     @Test
     fun `given null userName when searchUser called then returns emptyList`() = runTest {
         // Given

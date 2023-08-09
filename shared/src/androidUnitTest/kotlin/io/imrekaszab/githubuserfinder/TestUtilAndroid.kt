@@ -17,7 +17,7 @@ internal actual fun testDbConnection(): SqlDriver {
             app,
             "GitHubUserFinderDB"
         )
-    } catch (exception: IllegalStateException) {
+    } catch (@Suppress("SwallowedException") exception: IllegalStateException) {
         JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
             .also { GitHubUserFinderDB.Schema.create(it) }
     }

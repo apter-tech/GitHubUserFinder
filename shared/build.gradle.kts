@@ -68,7 +68,7 @@ kotlin {
                 api(libs.moko.compose)
             }
         }
-        val androidTest by getting {
+        val androidUnitTest by getting {
             dependencies {
                 implementation(libs.test.junitKtx)
                 implementation(libs.sqldelight.sqlite.driver)
@@ -94,6 +94,7 @@ android {
     namespace = "io.imrekaszab.githubuserfinder"
     compileSdk = libs.versions.targetSdk.get().toInt()
     sourceSets["main"].res.srcDir(File(buildDir, "generated/moko/androidMain/res"))
+    sourceSets["main"].java.srcDir(File(buildDir, "generated/moko/androidMain/src"))
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
     }
