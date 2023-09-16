@@ -28,7 +28,7 @@ composeNavigation = "2.6.0"
 
 koin = "3.4.3"
 koinTest = "3.4.3"
-koinAndroid = "3.4.3"
+koinAndroid = "3.5.0"
 koinAndroidCompose = "3.4.6"
 ktor = "2.3.4"
 
