@@ -27,7 +27,7 @@ composeCoil = "2.4.0"
 composeNavigation = "2.6.0"
 
 koin = "3.5.0"
-koinTest = "3.4.3"
+koinTest = "3.5.0"
 koinAndroid = "3.5.0"
 koinAndroidCompose = "3.5.0"
 ktor = "2.3.4"
