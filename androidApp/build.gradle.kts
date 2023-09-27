@@ -17,9 +17,9 @@ android {
         buildConfigField("String", "BASE_PATH", "\"https://api.github.com\"")
     }
 
-    @Suppress("UnstableApiUsage")
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     compileOptions {
