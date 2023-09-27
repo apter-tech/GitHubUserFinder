@@ -57,7 +57,6 @@ class GitHubUserListViewModelTest : TestsWithMocks() {
             viewModel.setState(isAny())
         }
     }
-
     @Test
     fun `given null userName when searchUser called then returns emptyList`() = runTest {
         // Given
