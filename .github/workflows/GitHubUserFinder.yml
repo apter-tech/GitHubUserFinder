@@ -1,4 +1,4 @@
-name: GitHubUserFinderKMM
+name: GitHubUserFinder
 
 on:
   workflow_dispatch:
