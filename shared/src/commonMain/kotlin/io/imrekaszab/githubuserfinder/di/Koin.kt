@@ -80,7 +80,7 @@ internal val factoryModule = module {
     val baseLogger =
         Logger(
             config = StaticConfig(logWriterList = listOf(platformLogWriter())),
-            "GitHubUserFinderKMM"
+            "GitHubUserFinder"
         )
     factory { (tag: String?) -> if (tag != null) baseLogger.withTag(tag) else baseLogger }
 }

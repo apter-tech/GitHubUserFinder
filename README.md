@@ -1,5 +1,5 @@
-# GitHubUserFinderKMM
-![GitHub Actions build status](https://github.com/kaszabimre/GitHubUserFinderKMM/actions/workflows/GitHubUserFinderKMM.yml/badge.svg)
+# GitHubUserFinder
+![GitHub Actions build status](https://github.com/kaszabimre/GitHubUserFinder/actions/workflows/GitHubUserFinder.yml/badge.svg)
 
 Kotlin Multiplatform Mobile sample project with Jetpack Compose and SwiftUI
 
@@ -28,12 +28,12 @@ Android | iOS
 - Common tests
 - Dark mode
 - Automated dependency update with Renovate
-- GitHub Actions config:  [GitHubUserFinderKMM.yml](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/main/.github/workflows/GitHubUserFinderKMM.yml)
+- GitHub Actions config:  [GitHubUserFinder.yml](https://github.com/kaszabimre/GitHubUserFinder/blob/main/.github/workflows/GitHubUserFinder.yml)
 - [GitHub API](https://docs.github.com/en/rest/search#search-users)
 - Coverage report (kover)
 
 ### Libraries
-> Check [Dependencies.kt](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/main/buildSrc/src/main/java/Dependencies.kt) for more details
+> Check [Dependencies.kt](https://github.com/kaszabimre/GitHubUserFinder/blob/main/buildSrc/src/main/java/Dependencies.kt) for more details
 
 - 🌎 [Ktor](https://github.com/ktorio/ktor) - Network
   [![GitHub Repo stars](https://img.shields.io/github/stars/ktorio/ktor)](https://github.com/ktorio/ktor)
@@ -45,7 +45,7 @@ Android | iOS
   [![GitHub Repo stars](https://img.shields.io/github/stars/touchlab/Kermit)](https://github.com/touchlab/Kermit)
 - 🎨 [moko resources](https://github.com/icerockdev/moko-resources) - Shared resources
   [![GitHub Repo stars](https://img.shields.io/github/stars/icerockdev/moko-resources)](https://github.com/icerockdev/moko-resources)
-- 🚦 Testing - Common unit tests in `shared` module with [MockHttpClient](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/main/shared/src/commonTest/kotlin/io/imrekaszab/githubuserfinder/MockHttpClient.kt)
+- 🚦 Testing - Common unit tests in `shared` module with [MockHttpClient](https://github.com/kaszabimre/GitHubUserFinder/blob/main/shared/src/commonTest/kotlin/io/imrekaszab/githubuserfinder/MockHttpClient.kt)
 - 🔍 Linter & formatter
     - [Detekt](https://github.com/detekt/detekt) - `shared + Android`
       ![GitHub Repo stars](https://img.shields.io/github/stars/detekt/Detekt)
@@ -54,7 +54,7 @@ Android | iOS
        ```
     - [Swiftlint](https://github.com/realm/SwiftLint) - `iOS`
       ![GitHub Repo stars](https://img.shields.io/github/stars/realm/SwiftLint)
-        - [Rules in swiftlint.yaml](https://github.com/kaszabimre/GitHubUserFinderKMM/blob/main/iosApp/.swiftlint.yml)
+        - [Rules in swiftlint.yaml](https://github.com/kaszabimre/GitHubUserFinder/blob/main/iosApp/.swiftlint.yml)
        ```
        swiftlint --fix
        ```
