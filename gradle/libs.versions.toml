@@ -24,7 +24,7 @@ composeActivity = "1.7.2"
 composeCompiler = "1.5.3"
 composeUITooling = "1.5.3"
 composeCoil = "2.4.0"
-composeNavigation = "2.7.3"
+composeNavigation = "2.7.4"
 
 koin = "3.5.0"
 koinTest = "3.5.0"
