@@ -30,7 +30,7 @@ koin = "3.5.0"
 koinTest = "3.5.0"
 koinAndroid = "3.5.0"
 koinAndroidCompose = "3.5.0"
-ktor = "2.3.4"
+ktor = "2.3.5"
 
 kermit = "1.2.3"
 slf4j = "2.0.9"
