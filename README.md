@@ -1,9 +1,9 @@
 # GitHubUserFinder
 ![GitHub Actions build status](https://github.com/kaszabimre/GitHubUserFinder/actions/workflows/GitHubUserFinder.yml/badge.svg)
 
-Kotlin Multiplatform Mobile sample project with Jetpack Compose and SwiftUI
+Kotlin Multiplatform sample project with Jetpack Compose and SwiftUI
 
-Check this basic, simple KMM project with latest and greatest libraries. You can also easily learn and keep your knowledge up-to-date in both [Jeptack Compose](https://developer.android.com/jetpack/compose?gclid=CjwKCAjw7vuUBhBUEiwAEdu2pHTM59Y0NTVLcoFuOJHq5g8p3dJludRLuITkxy54fKMp-3YafHSjNRoCSIwQAvD_BwE&gclsrc=aw.ds) and [SwiftUI](https://developer.apple.com/xcode/swiftui/).
+Check this basic, simple KMP project with latest and greatest libraries. You can also easily learn and keep your knowledge up-to-date in both [Jeptack Compose](https://developer.android.com/jetpack/compose?gclid=CjwKCAjw7vuUBhBUEiwAEdu2pHTM59Y0NTVLcoFuOJHq5g8p3dJludRLuITkxy54fKMp-3YafHSjNRoCSIwQAvD_BwE&gclsrc=aw.ds) and [SwiftUI](https://developer.apple.com/xcode/swiftui/).
 
 ![iOS](https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=ios&logoColor=white)
 ![Swift](https://img.shields.io/badge/Swift-FA7343?style=for-the-badge&logo=swift&logoColor=white)
