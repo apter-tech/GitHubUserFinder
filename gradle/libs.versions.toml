@@ -4,11 +4,10 @@ targetSdk = "34"
 javaTargetCompatibility = "17"
 javaSourceCompatibility = "11"
 
-agp = "8.2.0-rc02"
-kotlin = "1.9.10"
+agp = "8.3.0-alpha06"
+kotlin = "1.9.20"
 kotlinCoroutines = "1.7.3"
-kotlinDate = "0.4.1"
-ksp = "1.9.10-1.0.13"
+ksp = "1.9.20-1.0.13"
 
 appCompat = "1.6.1"
 lifecycleViewModel = "2.6.2"
@@ -21,7 +20,7 @@ mokoGraphics = "0.9.0"
 
 compose = "1.5.4"
 composeActivity = "1.8.0"
-composeCompiler = "1.5.3"
+composeCompiler = "1.5.4-dev-k1.9.20-50f08dfa4b4"
 composeUITooling = "1.5.4"
 composeCoil = "2.5.0"
 composeNavigation = "2.7.5"
@@ -32,19 +31,13 @@ koinAndroid = "3.5.0"
 koinAndroidCompose = "3.5.0"
 ktor = "2.3.5"
 
-kermit = "1.2.3"
+kermit = "2.0.1"
 slf4j = "2.0.9"
 junitKtx = "1.1.5"
-accompanistNavigation = "0.32.0"
 
 [libraries]
 
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
-kotlin-date = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinDate" }
-kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
-kotlin-test-common = { module = "org.jetbrains.kotlin:kotlin-test-common", version.ref = "kotlin" }
-kotlin-test-annotations-common = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common", version.ref = "kotlin" }
-accompanist-navigation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanistNavigation" }
 
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat" }
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleViewModel" }
@@ -86,7 +79,6 @@ log-slf4j = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 
 moko-resources = { module = "dev.icerock.moko:resources", version.ref = "mokoResources" }
-moko-resources-test = { module = "dev.icerock.moko:resources-test", version.ref = "mokoResources" }
 moko-graphics = { module = "dev.icerock.moko:graphics", version.ref = "mokoGraphics" }
 moko-compose = { module = "dev.icerock.moko:resources-compose", version.ref = "mokoResources" }
 

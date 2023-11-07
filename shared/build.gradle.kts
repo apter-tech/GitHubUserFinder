@@ -20,7 +20,7 @@ kotlin {
             }
         }
     }
-    ios()
+    applyDefaultHierarchyTemplate()
     iosSimulatorArm64()
 
     listOf(
@@ -43,58 +43,41 @@ kotlin {
         }
     }
 
-    @Suppress("UNUSED_VARIABLE")
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(libs.bundles.commonMain)
-                api(libs.moko.resources)
-            }
+        commonMain.dependencies {
+            implementation(libs.bundles.commonMain)
+            api(libs.moko.resources)
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test-junit"))
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-                implementation(libs.bundles.commonTest)
-            }
+        commonTest.dependencies {
+            implementation(kotlin("test-junit"))
+            implementation(kotlin("test-common"))
+            implementation(kotlin("test-annotations-common"))
+            implementation(libs.bundles.commonTest)
         }
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.androidx.lifecycle.runtime)
-                implementation(libs.androidx.lifecycle.viewmodel)
-                implementation(libs.sqldelight.android.driver)
-                implementation(libs.ktor.android)
-                api(libs.moko.compose)
-            }
+        androidMain.dependencies {
+            api(libs.moko.compose)
+            implementation(libs.androidx.lifecycle.runtime)
+            implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.sqldelight.android.driver)
+            implementation(libs.ktor.android)
+
+            // Test dependencies
+            implementation(libs.test.junitKtx)
+            implementation(libs.sqldelight.sqlite.driver)
         }
-        val androidUnitTest by getting {
-            dependencies {
-                implementation(libs.test.junitKtx)
-                implementation(libs.sqldelight.sqlite.driver)
-            }
-        }
-        val iosMain by getting {
-            dependencies {
-                implementation(libs.ktor.ios)
-                implementation(libs.sqldelight.native)
-            }
-        }
-        val iosTest by getting
-        val iosSimulatorArm64Main by getting {
-            dependsOn(iosMain)
-        }
-        val iosSimulatorArm64Test by getting {
-            dependsOn(iosTest)
+        iosMain.dependencies {
+            implementation(libs.ktor.ios)
+            implementation(libs.sqldelight.native)
         }
     }
 }
 
+val androidNameSpace = "io.imrekaszab.githubuserfinder"
 android {
     namespace = "io.imrekaszab.githubuserfinder"
     compileSdk = libs.versions.targetSdk.get().toInt()
-    sourceSets["main"].res.srcDir(File(buildDir, "generated/moko/androidMain/res"))
-    sourceSets["main"].java.srcDir(File(buildDir, "generated/moko/androidMain/src"))
+    sourceSets["main"].res.srcDir(File(layout.buildDirectory.asFile.get(), "generated/moko/androidMain/res"))
+    sourceSets["main"].java.srcDir(File(layout.buildDirectory.asFile.get(), "generated/moko/androidMain/src"))
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
     }
@@ -102,7 +85,7 @@ android {
 
 sqldelight {
     database("GitHubUserFinderDB") {
-        packageName = "io.imrekaszab.githubuserfinder.db"
+        packageName = "$androidNameSpace.db"
     }
 }
 
@@ -111,7 +94,7 @@ mockmp {
 }
 
 multiplatformResources {
-    multiplatformResourcesPackage = "io.imrekaszab.githubuserfinder"
+    multiplatformResourcesPackage = androidNameSpace
 }
 
 val org.jetbrains.kotlin.konan.target.KonanTarget.enabledOnCurrentHost

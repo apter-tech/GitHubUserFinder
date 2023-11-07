@@ -9,6 +9,9 @@ pluginManagement {
 dependencyResolutionManagement {
     @Suppress("UnstableApiUsage")
     repositories {
+        maven {
+            setUrl("https://androidx.dev/storage/compose-compiler/repository/")
+        }
         google()
         mavenCentral()
     }
