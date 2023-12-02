@@ -7,7 +7,7 @@ javaSourceCompatibility = "11"
 agp = "8.2.0"
 kotlin = "1.9.10"
 kotlinCoroutines = "1.7.3"
-kotlinDate = "0.4.1"
+kotlinDate = "0.5.0"
 ksp = "1.9.21-1.0.15"
 
 appCompat = "1.6.1"
