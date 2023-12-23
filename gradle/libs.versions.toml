@@ -26,7 +26,7 @@ composeUITooling = "1.5.4"
 composeCoil = "2.5.0"
 composeNavigation = "2.7.6"
 
-koin = "3.5.0"
+koin = "3.5.3"
 koinTest = "3.5.0"
 koinAndroid = "3.5.3"
 koinAndroidCompose = "3.5.3"
