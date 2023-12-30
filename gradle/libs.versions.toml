@@ -33,7 +33,7 @@ koinAndroidCompose = "3.5.3"
 ktor = "2.3.7"
 
 kermit = "1.2.3"
-slf4j = "2.0.9"
+slf4j = "2.0.10"
 junitKtx = "1.1.5"
 accompanistNavigation = "0.32.0"
 
