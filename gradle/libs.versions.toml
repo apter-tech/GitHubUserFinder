@@ -35,7 +35,7 @@ ktor = "2.3.7"
 kermit = "1.2.3"
 slf4j = "2.0.11"
 junitKtx = "1.1.5"
-accompanistNavigation = "0.32.0"
+accompanistNavigation = "0.34.0"
 
 [libraries]
 
