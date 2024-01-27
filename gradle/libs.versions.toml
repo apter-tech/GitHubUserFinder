@@ -21,7 +21,7 @@ mokoGraphics = "0.9.0"
 
 compose = "1.6.0"
 composeActivity = "1.8.2"
-composeCompiler = "1.5.3"
+composeCompiler = "1.5.8"
 composeUITooling = "1.6.0"
 composeCoil = "2.5.0"
 composeNavigation = "2.7.6"
