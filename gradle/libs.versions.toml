@@ -5,7 +5,7 @@ javaTargetCompatibility = "17"
 javaSourceCompatibility = "11"
 
 agp = "8.2.2"
-kotlin = "1.9.10"
+kotlin = "1.9.22"
 kotlinCoroutines = "1.7.3"
 kotlinDate = "0.5.0"
 ksp = "1.9.22-1.0.16"
