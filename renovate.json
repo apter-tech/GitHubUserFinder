@@ -1,15 +1,6 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
-  ],
-  "schedule": ["every weekend"],
-  "packageRules": [
-    {
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "automerge": true
-    }
-  ],
-  "automerge": true,
-  "semanticCommits": "enabled",
-  "labels": ["BOT", "lib_update"]
+    "github>apter-tech/renovate-config#v0.6.0"
+  ]
 }
