@@ -108,6 +108,7 @@ sqldelight {
 
 mockmp {
     usesHelper = true
+    installWorkaround()
 }
 
 multiplatformResources {
