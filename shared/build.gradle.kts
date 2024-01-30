@@ -43,7 +43,6 @@ kotlin {
         }
     }
 
-    @Suppress("UNUSED_VARIABLE")
     sourceSets {
         commonMain.dependencies {
             implementation(libs.bundles.commonMain)
