@@ -43,6 +43,7 @@ kotlin {
         }
     }
 
+    @Suppress("UNUSED_VARIABLE")
     sourceSets {
         commonMain.dependencies {
             implementation(libs.bundles.commonMain)
@@ -61,9 +62,11 @@ kotlin {
             implementation(libs.ktor.android)
             api(libs.moko.compose)
         }
-        androidUnitTest.dependencies {
-            implementation(libs.test.junitKtx)
-            implementation(libs.sqldelight.sqlite.driver)
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(libs.test.junitKtx)
+                implementation(libs.sqldelight.sqlite.driver)
+            }
         }
         iosMain.dependencies {
             implementation(libs.ktor.ios)
