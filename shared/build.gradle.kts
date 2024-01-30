@@ -20,8 +20,6 @@ kotlin {
             }
         }
     }
-    ios()
-    iosSimulatorArm64()
 
     listOf(
         iosX64(),
