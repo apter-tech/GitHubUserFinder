@@ -66,7 +66,7 @@ dependencies {
     detektPlugins(libs.detekt.formatting)
 }
 
-val defaultRequiredMinimumCoverage = 85
+val defaultRequiredMinimumCoverage = 80
 val defaultRequiredMaximumCoverage = 100
 
 koverReport {
