@@ -8,7 +8,7 @@ struct GitHubUserFinder: App {
 
     init() {
         KoinApplication.start()
-        logger.v(message: { "App Started" })
+        logger.v(throwable: nil, tag: String(describing: self), message: { "App Started" })
     }
 
     var body: some Scene {
