@@ -8,21 +8,17 @@ plugins {
 }
 
 tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+    delete(rootProject.layout.buildDirectory.asFile)
 }
 
 ext {
     set("appJvmTarget", JavaVersion.VERSION_1_8)
 }
 
-val koverExcludeList = listOf(
-    "*.MR*",
-    "*.BuildConfig",
-    "*.Mock*",
-    "*.TestUtilAndroidKt",
-    "io.imrekaszab.githubuserfinder.db.*",
-    "*.di.*",
-)
+dependencies {
+    kover(project(":androidApp"))
+    kover(project(":shared"))
+}
 
 allprojects {
     apply(plugin = rootProject.libs.plugins.kover.get().pluginId)
@@ -55,9 +51,21 @@ allprojects {
     }
 
     koverReport {
+        defaults {
+            plugins.withId("com.android.library") {
+                mergeWith("release")
+            }
+            plugins.withId("com.android.application") {
+                mergeWith("release")
+            }
+        }
         filters {
             excludes {
-                classes(koverExcludeList)
+                classes(
+                    "*.MR*",
+                    "*.BuildConfig",
+                    "*.di.*",
+                )
             }
         }
     }

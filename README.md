@@ -64,7 +64,7 @@ Android | iOS
 - 📋 [Kover](https://github.com/Kotlin/kotlinx-kover) - Kotlin code coverage tool
   [![GitHub Repo stars](https://img.shields.io/github/stars/Kotlin/kotlinx-kover)](https://github.com/Kotlin/kotlinx-kover)
 
-> Use `./gradlew koverMergedVerify koverMergedReport` to verify and generate the coverage report with a custom rule:
+> Use `./gradlew koverVerify koverHtmlReport` to verify and generate the coverage report with a custom rule:
 
 ```Kotlin
 kover {
