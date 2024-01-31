@@ -34,14 +34,14 @@ jobs:
           WORKING_DIRECTORY: ./iosApp
 
       - name: Verify and generate coverage report
-        run: ./gradlew koverVerifyDebug koverXmlReportDebug --stacktrace
+        run: ./gradlew koverVerify koverXmlReport --stacktrace
 
       - name: Upload test reports
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: shared-test-report
-          path: ${{ github.workspace }}/androidApp/build/reports/kover/reportDebug.xml
+          path: ${{ github.workspace }}/build/reports/kover/report.xml
           retention-days: 5
 
   build-android:
@@ -76,7 +76,7 @@ jobs:
         id: kover
         uses: mi-kas/kover-report@v1.8
         with:
-          path: ${{ github.workspace }}/reportDebug.xml
+          path: ${{ github.workspace }}/report.xml
           token: ${{ secrets.GITHUB_TOKEN }}
           title: Code Coverage
           update-comment: true
