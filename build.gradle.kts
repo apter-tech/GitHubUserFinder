@@ -8,7 +8,7 @@ plugins {
 }
 
 tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+    delete(rootProject.layout.buildDirectory.asFile)
 }
 
 ext {
@@ -64,9 +64,6 @@ allprojects {
                 classes(
                     "*.MR*",
                     "*.BuildConfig",
-                    "*.Mock*",
-                    "*.TestUtilAndroidKt",
-                    "io.imrekaszab.githubuserfinder.db.*",
                     "*.di.*",
                 )
             }
