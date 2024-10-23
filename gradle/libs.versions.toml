@@ -5,10 +5,10 @@ javaTargetCompatibility = "17"
 javaSourceCompatibility = "11"
 
 agp = "8.4.1"
-kotlin = "1.9.23"
+kotlin = "2.0.21"
 kotlinCoroutines = "1.8.0"
 kotlinDate = "0.5.0"
-ksp = "1.9.23-1.0.20"
+ksp = "2.0.21-1.0.26"
 
 appCompat = "1.7.0"
 lifecycleViewModel = "2.8.1"
