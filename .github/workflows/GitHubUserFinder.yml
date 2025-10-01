@@ -83,7 +83,7 @@ jobs:
 
   build-ios:
     needs: pre-conditions
-    runs-on: macos-14
+    runs-on: macos-15
 
     steps:
       - name: Checkout repository
