@@ -37,7 +37,7 @@ jobs:
         run: ./gradlew koverVerify koverXmlReport --stacktrace
 
       - name: Upload test reports
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: shared-test-report
@@ -68,7 +68,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Download report
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: shared-test-report
 
